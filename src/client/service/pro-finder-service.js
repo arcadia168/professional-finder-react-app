@@ -1,4 +1,5 @@
 export default class ProFinderService {
-    constructor() {
+    constructor(axiosInstance) {
+        this.axios = axiosInstance;
     }
 }
