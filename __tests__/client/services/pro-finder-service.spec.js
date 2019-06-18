@@ -4,7 +4,7 @@ import fs from 'fs';
 
 const pathName = path.resolve(__dirname, `../../../src/client/service/profession-categories.json`);
 const mockProfessionCategories = JSON.parse(fs.readFileSync(pathName, 'utf8'));
-const visibleProfessionCategories = mockProfessionCategories.filter(currentProfessionCategory => !currentProfessionCategory.hidden);
+const visibleProfessionCategoriesMock = mockProfessionCategories.filter(currentProfessionCategory => !currentProfessionCategory.hidden);
 
 describe('Pro Finder Api Service', () => {
     let mockAxiosPostSearch = jest.fn(() => Promise.resolve());
@@ -40,7 +40,7 @@ describe('Pro Finder Api Service', () => {
             expect(
                 professionCategoriesList
             ).toEqual(
-                visibleProfessionCategories
+                visibleProfessionCategoriesMock
             )
         });
 
@@ -57,6 +57,16 @@ describe('Pro Finder Api Service', () => {
                 hiddenProfessionCategories.length
             ).toBe(
                 0
+            )
+        });
+
+        it('Caches the retrieved JSON categories for faster access next time', () => {
+            const visibleProfessionCategories = proFinderServiceInstance.getProfessionCategories();
+
+            expect(
+                proFinderServiceInstance.cachedVisibleCategories
+            ).toEqual(
+                visibleProfessionCategoriesMock
             )
         });
     })
