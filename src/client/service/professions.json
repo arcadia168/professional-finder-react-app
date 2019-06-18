@@ -1394,10 +1394,10 @@
                 "requires_booking": false,
                 "is_emergency": false,
                 "is_hidden_to": {
-    "pro": [
+                    "pro": [
                         "all"
                     ],
-    "customer": [
+                    "customer": [
                         "all"
                     ]
                 }
@@ -1414,10 +1414,10 @@
                 "requires_booking": false,
                 "is_emergency": false,
                 "is_hidden_to": {
-    "pro": [
+                    "pro": [
                         "all"
                     ],
-    "customer": [
+                    "customer": [
                         "all"
                     ]
                 }
