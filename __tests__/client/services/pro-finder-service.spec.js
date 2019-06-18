@@ -11,14 +11,13 @@ describe('Pro Finder Api Service', () => {
     let mockAxios = {
         get: mockAxiosPostSearch,
     };
+    let proFinderServiceInstance;
+
+    beforeEach(() => {
+        proFinderServiceInstance = new ProFinderService(mockAxios);
+    });
 
     describe('When a pro finder api service is instantiated', () => {
-        let proFinderServiceInstance;
-
-        beforeEach(() => {
-            proFinderServiceInstance = new ProFinderService(mockAxios);
-        });
-
         afterEach(() => {
             jest.clearAllMocks();
         });
@@ -34,7 +33,9 @@ describe('Pro Finder Api Service', () => {
         it('Can take an instance of axios and assign this to a property', () => {
             expect(proFinderServiceInstance.axios).toEqual(mockAxios);
         });
+    })
 
+    describe('When the getProfessionCategories method is invoked', () => {
         it('Returns a list of professions', () => {
             const professionCategoriesList = proFinderServiceInstance.getProfessionCategories();
             expect(
@@ -61,7 +62,7 @@ describe('Pro Finder Api Service', () => {
         });
 
         it('Caches the retrieved JSON categories for faster access next time', () => {
-            const visibleProfessionCategories = proFinderServiceInstance.getProfessionCategories();
+            proFinderServiceInstance.getProfessionCategories();
 
             expect(
                 proFinderServiceInstance.cachedVisibleCategories
@@ -76,5 +77,5 @@ describe('Pro Finder Api Service', () => {
             proFinderServiceInstance.getProfessionCategories();
             expect(fsSpy).not.toHaveBeenCalled()
         });
-    })
+    });
 });
