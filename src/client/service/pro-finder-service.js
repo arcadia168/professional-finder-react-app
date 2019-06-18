@@ -10,6 +10,7 @@ export default class ProFinderService {
 
     getProfessions() {
         const professions = JSON.parse(fs.readFileSync(pathName, 'utf8'));
-        return professions;
+        const visibleProfessions = professions.filter(currentProfession => !currentProfession.hidden);
+        return visibleProfessions;
     }
 }
