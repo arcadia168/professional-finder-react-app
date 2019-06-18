@@ -69,5 +69,12 @@ describe('Pro Finder Api Service', () => {
                 visibleProfessionCategoriesMock
             )
         });
+
+        it('Retrieves the categories from the cached property instead of reading them in from a file', () => {
+            proFinderServiceInstance.getProfessionCategories();
+            const fsSpy = jest.spyOn(fs, 'readFileSync');
+            proFinderServiceInstance.getProfessionCategories();
+            expect(fsSpy).not.toHaveBeenCalled()
+        });
     })
 });

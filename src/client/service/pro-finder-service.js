@@ -7,10 +7,14 @@ export default class ProFinderService {
     }
 
     getProfessionCategories() {
-        const pathName = path.resolve(__dirname, `../../../src/client/service/profession-categories.json`);
-        const professionCategories = JSON.parse(fs.readFileSync(pathName, 'utf8'));
-        const visibleProfessionCategories = professionCategories.filter(professionCategory => !professionCategory.hidden);
-        this.cachedVisibleCategories = visibleProfessionCategories;
-        return visibleProfessionCategories;
+        if (this.cachedVisibleCategories) {
+            return this.cachedVisibleCategories;
+        } else {
+            const pathName = path.resolve(__dirname, `../../../src/client/service/profession-categories.json`);
+            const professionCategories = JSON.parse(fs.readFileSync(pathName, 'utf8'));
+            const visibleProfessionCategories = professionCategories.filter(professionCategory => !professionCategory.hidden);
+            this.cachedVisibleCategories = visibleProfessionCategories;
+            return visibleProfessionCategories;
+        }
     }
 }
