@@ -17,4 +17,8 @@ export default class ProFinderService {
             return visibleProfessionCategories;
         }
     }
+
+    searchForLocalProfessional() {
+
+    }
 }
