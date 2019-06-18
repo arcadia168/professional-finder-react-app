@@ -4,6 +4,7 @@ import fs from 'fs';
 
 const pathName = path.resolve(__dirname, `../../../src/client/service/professions.json`);
 const mockProfessions = JSON.parse(fs.readFileSync(pathName, 'utf8'));
+const visibleProfessions = mockProfessions.filter(currentProfession => !currentProfession.hidden);
 
 describe('Pro Finder Api Service', () => {
     let mockAxiosPostSearch = jest.fn(() => Promise.resolve());
@@ -39,7 +40,23 @@ describe('Pro Finder Api Service', () => {
             expect(
                 professionList
             ).toEqual(
-                mockProfessions
+                visibleProfessions
+            )
+        });
+
+        it('Removes any hidden professions from the list before returning them', () => {
+            const visibleProfessionList = proFinderServiceInstance.getProfessions();
+            let hiddenProfessions = [];
+            visibleProfessionList.forEach(currentProfession => {
+                if (currentProfession.hidden) {
+                    hiddenProfessions.push(currentProfession);
+                }
+            });
+
+            expect(
+                hiddenProfessions.length
+            ).toBe(
+                0
             )
         });
     })
