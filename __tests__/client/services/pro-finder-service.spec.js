@@ -9,7 +9,7 @@ const visibleProfessionCategoriesMock = mockProfessionCategories.filter(currentP
 describe('Pro Finder Api Service', () => {
     let mockAxiosPostSearch = jest.fn(() => Promise.resolve());
     let mockAxios = {
-        get: mockAxiosPostSearch,
+        post: mockAxiosPostSearch,
     };
     let proFinderServiceInstance;
 
@@ -76,6 +76,14 @@ describe('Pro Finder Api Service', () => {
             const fsSpy = jest.spyOn(fs, 'readFileSync');
             proFinderServiceInstance.getProfessionCategories();
             expect(fsSpy).not.toHaveBeenCalled()
+        });
+    });
+
+    describe('When the searchForLocalProfessional method is invoked', () => {
+        const apiUrl = 'https://demo.plentific.com/find-a-pro/api/v2/public/pro/search-pros/';
+
+        it('Should make a POST request to the API', async () => {
+
         });
     });
 });
