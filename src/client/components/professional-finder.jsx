@@ -11,10 +11,10 @@ class ProfessionalFinder extends Component {
             results: ['poo', 'pee', 'blood'],
         }
 
-        this.updateResults = () => {
+        this.updateResults = params => {
             // make post call to api
             // if success or error, set appropriate state
-            const testResulsts = [Math.random(), 'red', 'green', 'yellow'];
+            const testResulsts = [...params, Math.random(), 'red', 'green', 'yellow'];
             this.setState(state => ({
                 results: testResulsts,
             }));
@@ -32,7 +32,7 @@ class ProfessionalFinder extends Component {
                     </Col>
                 </Row>
                 <Row data-testid="pro-finder__search-form-row" className="pro-finder__search-form-row">
-                    <SearchForm changeResults={this.updateResults} />
+                    <SearchForm changeResults={this.updateResults} btnText='search form'/>
                 </Row>
                 <Row>
                     {
@@ -41,6 +41,9 @@ class ProfessionalFinder extends Component {
                             return <h4>{result}</h4>
                         })
                     }
+                </Row>
+                <Row>
+                    <SearchForm changeResults={this.updateResults} btnText='pagination'/>
                 </Row>
             </Container>
         );
