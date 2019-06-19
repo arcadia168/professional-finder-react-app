@@ -2,6 +2,8 @@ import ProFinderService from '../../../src/client/service/pro-finder-service';
 import path from 'path';
 import fs from 'fs';
 
+jest.spyOn(console, 'error');
+
 const pathName = path.resolve(__dirname, `../../../src/client/service/profession-categories.json`);
 const mockProfessionCategories = JSON.parse(fs.readFileSync(pathName, 'utf8'));
 const visibleProfessionCategoriesMock = mockProfessionCategories.filter(currentProfessionCategory => !currentProfessionCategory.hidden);
@@ -22,17 +24,32 @@ describe('Pro Finder Api Service', () => {
     });
 
     describe('When a pro finder api service is instantiated', () => {
-        it('Should throw an error if no axios instance has been supplied', () => {
-            try {
-                const brokenProFinderServiceInstance = new ProFinderService();
-                expect(brokenProFinderServiceInstance).toBe(null);
-            } catch (error) {
-                expect(
-                    error.message
-                ).toBe(
-                    'ProFinderService.constructor: Please ensure you pass in a valid instance of axios when instantiating.'
-                );
-            }
+        describe('When no axios instance has been supplied', () => {
+            it('Should throw an error with a meaningful message', async () => {
+                try {
+                    const brokenProFinderServiceInstance = new ProFinderService();
+                    expect(brokenProFinderServiceInstance).toBe(null);
+                } catch (error) {
+                    expect(
+                        error.message
+                    ).toBe(
+                        'Error at ProFinderService.constructor: Please ensure you pass in a valid instance of axios when instantiating.'
+                    );
+                }
+            });
+
+            it('Should log the error to the console', () => {
+                try {
+                    const brokenProFinderServiceInstance = new ProFinderService();
+                    expect(brokenProFinderServiceInstance).toBe(null);
+                } catch (error) {
+                    expect(
+                        console.error
+                    ).toHaveBeenCalledWith(
+                        'Error at ProFinderService.constructor: Please ensure you pass in a valid instance of axios when instantiating.'
+                    );
+                }
+            });
         });
 
         it('Returns an instance of the service', () => {
@@ -95,8 +112,17 @@ describe('Pro Finder Api Service', () => {
     describe('When the searchForLocalProfessional method is invoked', () => {
         const apiUrl = 'https://demo.plentific.com/find-a-pro/api/v2/public/pro/search-pros/';
 
-        // it('Should make a POST request to the API', async () => {
-        //     const searchForLocalProfressionalResults = ProFinderService.searchForLocalProfressionalResults();
+        // it('Should throw an error if no search parameters are passed to the method', async () => {
+        //     try {
+        //         const searchForLocalProfressionalResults = ProFinderService.searchForLocalProfressionalResults();
+        //         expect(searchForLocalProfressionalResults).toBe(null);
+        //     } catch (error) {
+        //         expect(
+        //             error.message
+        //         ).toBe(
+        //             'ProFinderService.searchForLocalProfessional: Please pass in valid search parameters and headers'
+        //         )
+        //     }
 
         // });
     });

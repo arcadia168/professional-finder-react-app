@@ -4,9 +4,11 @@ import fs from 'fs';
 export default class ProFinderService {
     constructor(axiosInstance) {
         if (!axiosInstance) {
-            throw new Error(
-                'ProFinderService.constructor: Please ensure you pass in a valid instance of axios when instantiating.'
+            const proFinderServiceInstanceError = new Error(
+                'Error at ProFinderService.constructor: Please ensure you pass in a valid instance of axios when instantiating.'
             );
+            console.error(proFinderServiceInstanceError.message);
+            throw proFinderServiceInstanceError;
         }
         this.axios = axiosInstance;
     }
