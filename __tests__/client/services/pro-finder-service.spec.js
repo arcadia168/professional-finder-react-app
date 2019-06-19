@@ -246,7 +246,7 @@ describe('Pro Finder Api Service', () => {
                     proFinderServiceInstanceError = new ProFinderService(mockAxiosError);
                 })
 
-                it('Should throw a meaningful error', async () => {
+                it('Should throw a meaningful error and log to the console', async () => {
                     try {
                         const searchResults = await proFinderServiceInstanceError.searchForLocalProfessionals(
                             validCategoryId,
@@ -255,10 +255,17 @@ describe('Pro Finder Api Service', () => {
                         );
                         expect(searchResults).toBe(null);
                     } catch (error) {
+                        const expectedErrorMessage =
+                            'Error at proFinderService.searchForLocalProfessionals: api error';
                         expect(
                             error.message
                         ).toBe(
                             'Error at proFinderService.searchForLocalProfessionals: api error'
+                        )
+                        expect(
+                            console.error
+                        ).toHaveBeenCalledWith(
+                            expectedErrorMessage
                         )
                     }
                 });
