@@ -28,7 +28,7 @@ export default class ProFinderService {
     searchForLocalProfessionals(categoryId, paginationOffsetHeader) {
         if (!categoryId || typeof(categoryId) !== 'number') {
             const searchProError = new Error(
-                'ProFinderService.searchForLocalProfessional: Please pass in valid search parameter categoryId'
+                'ProFinderService.searchForLocalProfessional: Please pass in valid parameter categoryId'
             )
             console.error(searchProError.message);
             throw searchProError
@@ -40,7 +40,7 @@ export default class ProFinderService {
             typeof(paginationOffsetHeader) !== 'number'
         ) {
             const searchProError = new Error(
-                'ProFinderService.searchForLocalProfessional: Please pass in valid paginationOffsetHeader header parameter'
+                'ProFinderService.searchForLocalProfessional: Please pass in valid parameter paginationOffsetHeader'
             )
             console.error(searchProError.message);
             throw searchProError
@@ -48,7 +48,7 @@ export default class ProFinderService {
 
         if (!location || typeof(location) !== 'string') {
             const searchProError = new Error(
-                'ProFinderService.searchForLocalProfessional: Please pass in valid location parameter'
+                'ProFinderService.searchForLocalProfessional: Please pass in valid parameter location'
             )
             console.error(searchProError.message);
             throw searchProError

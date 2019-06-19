@@ -8,6 +8,21 @@ const pathName = path.resolve(__dirname, `../../../src/client/service/profession
 const mockProfessionCategories = JSON.parse(fs.readFileSync(pathName, 'utf8'));
 const visibleProfessionCategoriesMock = mockProfessionCategories.filter(currentProfessionCategory => !currentProfessionCategory.hidden);
 
+function testSearchLocalProfessionalWithParams(params, paramToCheck) {
+    try {
+        const searchForLocalProfressionalResults = proFinderServiceInstance.searchForLocalProfessionals(
+            ...params,
+        );
+        expect(searchForLocalProfressionalResults).toBe(null);
+    } catch (error) {
+        expect(
+            error.message
+        ).toBe(
+            `ProFinderService.searchForLocalProfessional: Please pass in valid ${paramToCheck} parameter`
+        )
+    }
+}
+
 describe('Pro Finder Api Service', () => {
     let mockAxiosPostSearch = jest.fn(() => Promise.resolve());
     let mockAxios = {
@@ -126,7 +141,7 @@ describe('Pro Finder Api Service', () => {
                             expect(
                                 error.message
                             ).toBe(
-                                'ProFinderService.searchForLocalProfessional: Please pass in valid search parameter categoryId'
+                                'ProFinderService.searchForLocalProfessional: Please pass in valid parameter categoryId'
                             )
                         }
                     });
@@ -139,7 +154,7 @@ describe('Pro Finder Api Service', () => {
                             expect(
                                 console.error
                             ).toHaveBeenCalledWith(
-                                'ProFinderService.searchForLocalProfessional: Please pass in valid search parameter categoryId'
+                                'ProFinderService.searchForLocalProfessional: Please pass in valid parameter categoryId'
                             )
                         }
                     })
@@ -154,7 +169,7 @@ describe('Pro Finder Api Service', () => {
                             expect(
                                 error.message
                             ).toBe(
-                                'ProFinderService.searchForLocalProfessional: Please pass in valid search parameter categoryId'
+                                'ProFinderService.searchForLocalProfessional: Please pass in valid parameter categoryId'
                             )
                         }
                     });
@@ -167,7 +182,7 @@ describe('Pro Finder Api Service', () => {
                             expect(
                                 console.error
                             ).toHaveBeenCalledWith(
-                                'ProFinderService.searchForLocalProfessional: Please pass in valid search parameter categoryId'
+                                'ProFinderService.searchForLocalProfessional: Please pass in valid parameter categoryId'
                             )
                         }
                     })
@@ -186,7 +201,7 @@ describe('Pro Finder Api Service', () => {
                         expect(
                             error.message
                         ).toBe(
-                            'ProFinderService.searchForLocalProfessional: Please pass in valid paginationOffsetHeader header parameter'
+                            'ProFinderService.searchForLocalProfessional: Please pass in valid parameter paginationOffsetHeader'
                         )
                     }
                 });
@@ -200,7 +215,7 @@ describe('Pro Finder Api Service', () => {
                         expect(
                             console.error
                         ).toHaveBeenCalledWith(
-                            'ProFinderService.searchForLocalProfessional: Please pass in valid paginationOffsetHeader header parameter'
+                            'ProFinderService.searchForLocalProfessional: Please pass in valid parameter paginationOffsetHeader'
                         )
                     }
                 })
@@ -216,7 +231,7 @@ describe('Pro Finder Api Service', () => {
                         expect(
                             error.message
                         ).toBe(
-                            'ProFinderService.searchForLocalProfessional: Please pass in valid paginationOffsetHeader header parameter'
+                            'ProFinderService.searchForLocalProfessional: Please pass in valid parameter paginationOffsetHeader'
                         )
                     }
                 });
@@ -230,7 +245,7 @@ describe('Pro Finder Api Service', () => {
                         expect(
                             console.error
                         ).toHaveBeenCalledWith(
-                            'ProFinderService.searchForLocalProfessional: Please pass in valid paginationOffsetHeader header parameter'
+                            'ProFinderService.searchForLocalProfessional: Please pass in valid parameter paginationOffsetHeader'
                         )
                     }
                 })
@@ -251,7 +266,7 @@ describe('Pro Finder Api Service', () => {
                         expect(
                             error.message
                         ).toBe(
-                            'ProFinderService.searchForLocalProfessional: Please pass in valid location parameter'
+                            'ProFinderService.searchForLocalProfessional: Please pass in valid parameter location'
                         )
                     }
                 });
@@ -267,7 +282,7 @@ describe('Pro Finder Api Service', () => {
                         expect(
                             console.error
                         ).toHaveBeenCalledWith(
-                            'ProFinderService.searchForLocalProfessional: Please pass in valid location parameter'
+                            'ProFinderService.searchForLocalProfessional: Please pass in valid parameter location'
                         )
                     }
                 })
@@ -286,7 +301,7 @@ describe('Pro Finder Api Service', () => {
                         expect(
                             error.message
                         ).toBe(
-                            'ProFinderService.searchForLocalProfessional: Please pass in valid location parameter'
+                            'ProFinderService.searchForLocalProfessional: Please pass in valid parameter location'
                         )
                     }
                 });
@@ -303,7 +318,7 @@ describe('Pro Finder Api Service', () => {
                         expect(
                             console.error
                         ).toHaveBeenCalledWith(
-                            'ProFinderService.searchForLocalProfessional: Please pass in valid location parameter'
+                            'ProFinderService.searchForLocalProfessional: Please pass in valid parameter location'
                         )
                     }
                 })
