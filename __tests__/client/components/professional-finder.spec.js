@@ -69,4 +69,15 @@ describe('Professional Finder', () => {
             );
         });
     });
+
+    describe('Search Form', () => {
+        it('Renders a row for the search form', () => {
+            const renderedApp = render();
+            expect(
+                renderedApp
+                    .find('[data-testid="pro-finder__search-form-row"]')
+                    .exists()
+            ).toBeTruthy();
+        });
+    });
 });
