@@ -141,6 +141,43 @@ describe('Pro Finder Api Service', () => {
                     }
                 })
             });
+
+            // TODO: Tests that check individual search and header params and types.
+
+            describe('When no headers are passed to the method', () => {
+                const searchParams = {
+                    "category_id": 5,
+                    "location": "sw11"
+                }
+
+                it('Should throw an error with a meaningful error message', async () => {
+                    try {
+                        const searchForLocalProfressionalResults =
+                            proFinderServiceInstance.searchForLocalProfessionals(searchParams);
+                        expect(searchForLocalProfressionalResults).toBe(null);
+                    } catch (error) {
+                        expect(
+                            error.message
+                        ).toBe(
+                            'ProFinderService.searchForLocalProfessional: Please pass in valid header parameters'
+                        )
+                    }
+                });
+
+                it('Should log the meaningful error message to the console', () => {
+                    try {
+                        const searchForLocalProfressionalResults =
+                            proFinderServiceInstance.searchForLocalProfessionals(searchParams);
+                        expect(searchForLocalProfressionalResults).toBe(null);
+                    } catch (error) {
+                        expect(
+                            console.error
+                        ).toHaveBeenCalledWith(
+                            'ProFinderService.searchForLocalProfessional: Please pass in valid header parameters'
+                        )
+                    }
+                })
+            });
         });
     });
 });

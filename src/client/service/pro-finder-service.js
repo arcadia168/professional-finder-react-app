@@ -25,10 +25,18 @@ export default class ProFinderService {
         }
     }
 
-    searchForLocalProfessionals(searchParams) {
+    searchForLocalProfessionals(searchParams, headerParams) {
         if (!searchParams) {
             const searchProError = new Error(
                 'ProFinderService.searchForLocalProfessional: Please pass in valid search parameters'
+            )
+            console.error(searchProError.message);
+            throw searchProError
+        }
+
+        if (!headerParams) {
+            const searchProError = new Error(
+                'ProFinderService.searchForLocalProfessional: Please pass in valid header parameters'
             )
             console.error(searchProError.message);
             throw searchProError
