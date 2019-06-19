@@ -25,11 +25,20 @@ describe('Professional Finder', () => {
         expect(tree).toMatchSnapshot();
     });
 
-    it('successfully renders the container for the layout', () => {
+    it('Renders the container for the layout', () => {
         const renderedApp = render();
         expect(
             renderedApp
                 .find('[data-testid="pro-finder__container"]')
+                .exists()
+        ).toBeTruthy();
+    });
+
+    it('Renders a row for the site title', () => {
+        const renderedApp = render();
+        expect(
+            renderedApp
+                .find('[data-testid="pro-finder__title-row"]')
                 .exists()
         ).toBeTruthy();
     });
