@@ -42,4 +42,13 @@ describe('Professional Finder', () => {
                 .exists()
         ).toBeTruthy();
     });
+
+    it('Renders a title container', () => {
+        const renderedApp = render();
+        expect(
+            renderedApp
+                .find('[data-testid="pro-finder__title-column"]')
+                .exists()
+        ).toBeTruthy();
+    });
 });

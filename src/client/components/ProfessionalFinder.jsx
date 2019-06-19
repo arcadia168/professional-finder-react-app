@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Row, Column } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 import PropTypes from 'prop-types'
 
 class ProfessionalFinder extends Component {
@@ -11,7 +11,9 @@ class ProfessionalFinder extends Component {
         return (
             <Container data-testid="pro-finder__container" className="pro-finder__container">
                 <Row data-testid="pro-finder__title-row" className="pro-finder__title-row">
+                    <Col data-testid="pro-finder__title-column" classNuame="pro-finder__title-column">
 
+                    </Col>
                 </Row>
             </Container>
         );
