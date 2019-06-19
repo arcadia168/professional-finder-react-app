@@ -33,7 +33,7 @@ export default class ProFinderService {
         throw searchProError
     }
 
-    searchForLocalProfessionals(categoryId, paginationOffsetHeader, location) {
+    async searchForLocalProfessionals(categoryId, paginationOffsetHeader, location) {
         if (!categoryId || typeof (categoryId) !== 'number') {
             this.throwAndLogParameterError(`categoryId`);
         }
@@ -67,14 +67,12 @@ export default class ProFinderService {
             }
         }
 
-        console.info(`The axiosConfig to be used is: ${JSON.stringify(axiosConfig)}`);
-
-        // Use async/await for cleaner more readable async code.
-        // try {
-
-        // } catch (searchError) {
-
-        // }
-        const searchResults = this.axios(axiosConfig);
+        let searchResults;
+        try {
+            searchResults = await this.axios(axiosConfig);
+        } catch (error) {
+            const searchError = new Error(`Error at proFinderService.searchForLocalProfessionals: ${error.message}`);
+            throw searchError;
+        }
     }
 }

@@ -8,9 +8,9 @@ const pathName = path.resolve(__dirname, `../../../src/client/service/profession
 const mockProfessionCategories = JSON.parse(fs.readFileSync(pathName, 'utf8'));
 const visibleProfessionCategoriesMock = mockProfessionCategories.filter(currentProfessionCategory => !currentProfessionCategory.hidden);
 
-function testSearchLocalProfessionalWithParams(proService, params, paramToCheck) {
+async function testSearchLocalProfessionalWithParams(proService, params, paramToCheck) {
     try {
-        const searchForLocalProfressionalResults = proService.searchForLocalProfessionals(
+        const searchForLocalProfressionalResults = await proService.searchForLocalProfessionals(
             ...params,
         );
         expect(searchForLocalProfressionalResults).toBe(null);
@@ -235,6 +235,33 @@ describe('Pro Finder Api Service', () => {
                 expect(
                     mockAxios
                 ).toHaveBeenCalled()
+            });
+
+            describe('When the call to the POST endoint fails', () => {
+                let mockAxiosError;
+                let proFinderServiceInstanceError;
+
+                beforeEach(() => {
+                    mockAxiosError = jest.fn(() => Promise.reject(new Error('api error')));
+                    proFinderServiceInstanceError = new ProFinderService(mockAxiosError);
+                })
+
+                it('Should throw a meaningful error', async () => {
+                    try {
+                        const searchResults = await proFinderServiceInstanceError.searchForLocalProfessionals(
+                            validCategoryId,
+                            validPaginationOffsetHeader,
+                            validLocation
+                        );
+                        expect(searchResults).toBe(null);
+                    } catch (error) {
+                        expect(
+                            error.message
+                        ).toBe(
+                            'Error at proFinderService.searchForLocalProfessionals: api error'
+                        )
+                    }
+                });
             });
         });
     });
