@@ -25,7 +25,12 @@ export default class ProFinderService {
         }
     }
 
-    searchForLocalProfessional() {
-
+    searchForLocalProfessionals(searchParams) {
+        if (!searchParams) {
+            const searchProError = new Error(
+                'ProFinderService.searchForLocalProfessional: Please pass in valid search parameters'
+            )
+            throw searchProError
+        }
     }
 }

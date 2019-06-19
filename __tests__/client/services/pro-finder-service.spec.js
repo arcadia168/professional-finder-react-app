@@ -112,18 +112,22 @@ describe('Pro Finder Api Service', () => {
     describe('When the searchForLocalProfessional method is invoked', () => {
         const apiUrl = 'https://demo.plentific.com/find-a-pro/api/v2/public/pro/search-pros/';
 
-        // it('Should throw an error if no search parameters are passed to the method', async () => {
-        //     try {
-        //         const searchForLocalProfressionalResults = ProFinderService.searchForLocalProfressionalResults();
-        //         expect(searchForLocalProfressionalResults).toBe(null);
-        //     } catch (error) {
-        //         expect(
-        //             error.message
-        //         ).toBe(
-        //             'ProFinderService.searchForLocalProfessional: Please pass in valid search parameters and headers'
-        //         )
-        //     }
+        describe('When incorrect search parameters are passed to the method', () => {
 
-        // });
+            describe('When no search query is passed to the method', () => {
+                it('Should throw an error', async () => {
+                    try {
+                        const searchForLocalProfressionalResults = proFinderServiceInstance.searchForLocalProfessionals();
+                        expect(searchForLocalProfressionalResults).toBe(null);
+                    } catch (error) {
+                        expect(
+                            error.message
+                        ).toBe(
+                            'ProFinderService.searchForLocalProfessional: Please pass in valid search parameters'
+                        )
+                    }
+                });
+            });
+        });
     });
 });
