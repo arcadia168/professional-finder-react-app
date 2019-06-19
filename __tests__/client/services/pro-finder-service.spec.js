@@ -14,10 +14,8 @@ describe('Pro Finder Api Service', () => {
         post: mockAxiosPostSearch,
     };
     let proFinderServiceInstance;
-    let validSearchParams = {
-        "category_id": 5,
-        "location": "sw11"
-    };
+    let validCategoryId = 5;
+    let validLocation = "sw11";
     let paginationOffsetHeader = 0;
     beforeEach(() => {
         proFinderServiceInstance = new ProFinderService(mockAxios);
@@ -118,63 +116,124 @@ describe('Pro Finder Api Service', () => {
 
         describe('When incorrect categoryId is passed to the method', () => {
             // TODO: Tests that check individual search and header params and types.
-            describe('When no categoryId is passed to the method', () => {
-                it('Should throw an error with a meaningful error message', async () => {
-                    try {
-                        const searchForLocalProfressionalResults = proFinderServiceInstance.searchForLocalProfessionals();
-                        expect(searchForLocalProfressionalResults).toBe(null);
-                    } catch (error) {
-                        expect(
-                            error.message
-                        ).toBe(
-                            'ProFinderService.searchForLocalProfessional: Please pass in valid search parameter categoryId'
-                        )
-                    }
+            describe('When an invalid categoryId is passed to the method', () => {
+                describe('When no categoryId is passed to the method', () => {
+                    it('Should throw an error with a meaningful error message', async () => {
+                        try {
+                            const searchForLocalProfressionalResults = proFinderServiceInstance.searchForLocalProfessionals();
+                            expect(searchForLocalProfressionalResults).toBe(null);
+                        } catch (error) {
+                            expect(
+                                error.message
+                            ).toBe(
+                                'ProFinderService.searchForLocalProfessional: Please pass in valid search parameter categoryId'
+                            )
+                        }
+                    });
+
+                    it('Should log the meaningful error message to the console', () => {
+                        try {
+                            const searchForLocalProfressionalResults = proFinderServiceInstance.searchForLocalProfessionals();
+                            expect(searchForLocalProfressionalResults).toBe(null);
+                        } catch (error) {
+                            expect(
+                                console.error
+                            ).toHaveBeenCalledWith(
+                                'ProFinderService.searchForLocalProfessional: Please pass in valid search parameter categoryId'
+                            )
+                        }
+                    })
                 });
 
-                it('Should log the meaningful error message to the console', () => {
-                    try {
-                        const searchForLocalProfressionalResults = proFinderServiceInstance.searchForLocalProfessionals();
-                        expect(searchForLocalProfressionalResults).toBe(null);
-                    } catch (error) {
-                        expect(
-                            console.error
-                        ).toHaveBeenCalledWith(
-                            'ProFinderService.searchForLocalProfessional: Please pass in valid search parameter categoryId'
-                        )
-                    }
-                })
+                describe('When a categoryId is passed to the method that is not a number', () => {
+                    it('Should throw an error with a meaningful error message', async () => {
+                        try {
+                            const searchForLocalProfressionalResults = proFinderServiceInstance.searchForLocalProfessionals('five');
+                            expect(searchForLocalProfressionalResults).toBe(null);
+                        } catch (error) {
+                            expect(
+                                error.message
+                            ).toBe(
+                                'ProFinderService.searchForLocalProfessional: Please pass in valid search parameter categoryId'
+                            )
+                        }
+                    });
+
+                    it('Should log the meaningful error message to the console', () => {
+                        try {
+                            const searchForLocalProfressionalResults = proFinderServiceInstance.searchForLocalProfessionals();
+                            expect(searchForLocalProfressionalResults).toBe(null);
+                        } catch (error) {
+                            expect(
+                                console.error
+                            ).toHaveBeenCalledWith(
+                                'ProFinderService.searchForLocalProfessional: Please pass in valid search parameter categoryId'
+                            )
+                        }
+                    })
+                });
             });
 
+            describe('When an invalid paginationOffsetHeader is passed to the method', () => {
+                describe('When no paginationOffsetHeader passed to the method', () => {
+                    it('Should throw an error with a meaningful error message', async () => {
+                        try {
+                            const searchForLocalProfressionalResults =
+                                proFinderServiceInstance.searchForLocalProfessionals(validCategoryId);
+                            expect(searchForLocalProfressionalResults).toBe(null);
+                        } catch (error) {
+                            expect(
+                                error.message
+                            ).toBe(
+                                'ProFinderService.searchForLocalProfessional: Please pass in valid paginationOffsetHeader header parameter'
+                            )
+                        }
+                    });
 
-            describe('When no headers are passed to the method', () => {
-                it('Should throw an error with a meaningful error message', async () => {
-                    try {
-                        const searchForLocalProfressionalResults =
-                            proFinderServiceInstance.searchForLocalProfessionals(validSearchParams);
-                        expect(searchForLocalProfressionalResults).toBe(null);
-                    } catch (error) {
-                        expect(
-                            error.message
-                        ).toBe(
-                            'ProFinderService.searchForLocalProfessional: Please pass in valid paginationOffsetHeader header parameter'
-                        )
-                    }
+                    it('Should log the meaningful error message to the console', () => {
+                        try {
+                            const searchForLocalProfressionalResults =
+                                proFinderServiceInstance.searchForLocalProfessionals(validCategoryId);
+                            expect(searchForLocalProfressionalResults).toBe(null);
+                        } catch (error) {
+                            expect(
+                                console.error
+                            ).toHaveBeenCalledWith(
+                                'ProFinderService.searchForLocalProfessional: Please pass in valid paginationOffsetHeader header parameter'
+                            )
+                        }
+                    })
                 });
 
-                it('Should log the meaningful error message to the console', () => {
-                    try {
-                        const searchForLocalProfressionalResults =
-                            proFinderServiceInstance.searchForLocalProfessionals(validSearchParams);
-                        expect(searchForLocalProfressionalResults).toBe(null);
-                    } catch (error) {
-                        expect(
-                            console.error
-                        ).toHaveBeenCalledWith(
-                            'ProFinderService.searchForLocalProfessional: Please pass in valid paginationOffsetHeader header parameter'
-                        )
-                    }
-                })
+                describe('When a paginationOffsetHeader is passed to the method that is not a number', () => {
+                    it('Should throw an error with a meaningful error message', async () => {
+                        try {
+                            const searchForLocalProfressionalResults =
+                                proFinderServiceInstance.searchForLocalProfessionals(validCategoryId, '5');
+                            expect(searchForLocalProfressionalResults).toBe(null);
+                        } catch (error) {
+                            expect(
+                                error.message
+                            ).toBe(
+                                'ProFinderService.searchForLocalProfessional: Please pass in valid paginationOffsetHeader header parameter'
+                            )
+                        }
+                    });
+
+                    it('Should log the meaningful error message to the console', () => {
+                        try {
+                            const searchForLocalProfressionalResults =
+                                proFinderServiceInstance.searchForLocalProfessionals(validCategoryId);
+                            expect(searchForLocalProfressionalResults).toBe(null);
+                        } catch (error) {
+                            expect(
+                                console.error
+                            ).toHaveBeenCalledWith(
+                                'ProFinderService.searchForLocalProfessional: Please pass in valid paginationOffsetHeader header parameter'
+                            )
+                        }
+                    })
+                });
             });
         });
 
