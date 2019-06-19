@@ -25,10 +25,10 @@ export default class ProFinderService {
         }
     }
 
-    searchForLocalProfessionals(searchParams, paginationOffsetHeader) {
-        if (!searchParams) {
+    searchForLocalProfessionals(categoryId, paginationOffsetHeader) {
+        if (!categoryId) {
             const searchProError = new Error(
-                'ProFinderService.searchForLocalProfessional: Please pass in valid search parameters'
+                'ProFinderService.searchForLocalProfessional: Please pass in valid search parameter categoryId'
             )
             console.error(searchProError.message);
             throw searchProError
