@@ -9,14 +9,16 @@ class ProfessionalFinder extends Component {
 
     render() {
         return (
-            <Container data-testid="pro-finder__container">
+            <Container data-testid="pro-finder__container" className="pro-finder__container">
+                <Row data-testid="pro-finder__title-row" className="pro-finder__title-row">
 
+                </Row>
             </Container>
         );
     };
 }
 
-ProfessionalFinder.PropTypes = {
+ProfessionalFinder.propTypes = {
     proFinderService: PropTypes.object,
 }
 

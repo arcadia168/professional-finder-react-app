@@ -2,7 +2,12 @@
 
 exports[`Professional Finder renders the app as expected 1`] = `
 <div
-  className="container"
+  className="pro-finder__container container"
   data-testid="pro-finder__container"
-/>
+>
+  <div
+    className="pro-finder__title-row row"
+    data-testid="pro-finder__title-row"
+  />
+</div>
 `;
