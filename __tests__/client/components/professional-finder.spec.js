@@ -1,5 +1,5 @@
 import React from 'react';
-import ProfessionalFinder from '../../../src/client/components/ProfessionalFinder';
+import ProfessionalFinder from '../../../src/client/components/professional-finder';
 import renderer from 'react-test-renderer';
 import { mount } from 'enzyme';
 import path from 'path';
