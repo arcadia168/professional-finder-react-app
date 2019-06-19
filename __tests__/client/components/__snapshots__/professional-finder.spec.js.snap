@@ -21,5 +21,9 @@ exports[`Professional Finder renders the app as expected 1`] = `
       </h1>
     </div>
   </div>
+  <div
+    className="pro-finder__search-form-row row"
+    data-testid="pro-finder__search-form-row"
+  />
 </div>
 `;
