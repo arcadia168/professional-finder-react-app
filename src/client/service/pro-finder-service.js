@@ -26,7 +26,7 @@ export default class ProFinderService {
     }
 
     searchForLocalProfessionals(categoryId, paginationOffsetHeader) {
-        if (!categoryId) {
+        if (!categoryId || typeof(categoryId) !== 'number') {
             const searchProError = new Error(
                 'ProFinderService.searchForLocalProfessional: Please pass in valid search parameter categoryId'
             )
@@ -34,7 +34,11 @@ export default class ProFinderService {
             throw searchProError
         }
 
-        if (paginationOffsetHeader === undefined || paginationOffsetHeader === null) {
+        if (
+            paginationOffsetHeader === undefined ||
+            paginationOffsetHeader === null ||
+            typeof(paginationOffsetHeader) !== 'number'
+        ) {
             const searchProError = new Error(
                 'ProFinderService.searchForLocalProfessional: Please pass in valid paginationOffsetHeader header parameter'
             )
