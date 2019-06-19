@@ -116,9 +116,9 @@ describe('Pro Finder Api Service', () => {
     describe('When the searchForLocalProfessional method is invoked', () => {
         const apiUrl = 'https://demo.plentific.com/find-a-pro/api/v2/public/pro/search-pros/';
 
-        describe('When incorrect search parameters are passed to the method', () => {
+        describe('When incorrect categoryId is passed to the method', () => {
             // TODO: Tests that check individual search and header params and types.
-            describe('When no search query is passed to the method', () => {
+            describe('When no categoryId is passed to the method', () => {
                 it('Should throw an error with a meaningful error message', async () => {
                     try {
                         const searchForLocalProfressionalResults = proFinderServiceInstance.searchForLocalProfessionals();
@@ -127,7 +127,7 @@ describe('Pro Finder Api Service', () => {
                         expect(
                             error.message
                         ).toBe(
-                            'ProFinderService.searchForLocalProfessional: Please pass in valid search parameters'
+                            'ProFinderService.searchForLocalProfessional: Please pass in valid search parameter categoryId'
                         )
                     }
                 });
@@ -140,7 +140,7 @@ describe('Pro Finder Api Service', () => {
                         expect(
                             console.error
                         ).toHaveBeenCalledWith(
-                            'ProFinderService.searchForLocalProfessional: Please pass in valid search parameters'
+                            'ProFinderService.searchForLocalProfessional: Please pass in valid search parameter categoryId'
                         )
                     }
                 })
