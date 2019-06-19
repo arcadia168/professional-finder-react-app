@@ -12,7 +12,7 @@ class ProfessionalFinder extends Component {
             <Container data-testid="pro-finder__container" className="pro-finder__container">
                 <Row data-testid="pro-finder__title-row" className="pro-finder__title-row">
                     <Col data-testid="pro-finder__title-column" classNuame="pro-finder__title-column">
-
+                        <h1 data-testid="pro-finder__title">Find a Local Professional</h1>
                     </Col>
                 </Row>
             </Container>
