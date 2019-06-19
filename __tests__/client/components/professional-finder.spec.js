@@ -51,4 +51,20 @@ describe('Professional Finder', () => {
                 .exists()
         ).toBeTruthy();
     });
+
+    it('Renders the title text', () => {
+        const renderedApp = render();
+        expect(
+            renderedApp
+                .find('[data-testid="pro-finder__title"]')
+                .exists()
+        ).toBeTruthy();
+        expect(
+            renderedApp
+                .find('[data-testid="pro-finder__title"]')
+                .text()
+        ).toEqual(
+            'Find a Local Professional'
+        );
+    });
 });

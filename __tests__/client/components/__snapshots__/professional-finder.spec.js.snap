@@ -13,7 +13,13 @@ exports[`Professional Finder renders the app as expected 1`] = `
       className="col"
       classNuame="pro-finder__title-column"
       data-testid="pro-finder__title-column"
-    />
+    >
+      <h1
+        data-testid="pro-finder__title"
+      >
+        Find a Local Professional
+      </h1>
+    </div>
   </div>
 </div>
 `;
