@@ -134,102 +134,108 @@ describe('Pro Finder Api Service', () => {
     describe('When the searchForLocalProfessional method is invoked', () => {
         const apiUrl = 'https://demo.plentific.com/find-a-pro/api/v2/public/pro/search-pros/';
 
-        describe('When incorrect categoryId is passed to the method', () => {
-            describe('When an invalid categoryId is passed to the method', () => {
-                describe('When no categoryId is passed to the method', () => {
+        describe('When invalid parameters are passed to the method', () => {
+            describe('When incorrect categoryId is passed to the method', () => {
+                describe('When an invalid categoryId is passed to the method', () => {
+                    describe('When no categoryId is passed to the method', () => {
+                        it('Should throw an error with a meaningful error message and log to console', async () => {
+                            testSearchLocalProfessionalWithParams(
+                                proFinderServiceInstance,
+                                [
+                                    null,
+                                ],
+                                'categoryId'
+                            );
+                        });
+                    });
+
+                    describe('When a categoryId is passed to the method that is not a number', () => {
+                        it('Should throw an error with a meaningful error message and log to console', async () => {
+                            testSearchLocalProfessionalWithParams(
+                                proFinderServiceInstance,
+                                [
+                                    'five',
+                                ],
+                                'categoryId'
+                            );
+                        });
+                    });
+                });
+            });
+
+            describe('When an invalid paginationOffsetHeader is passed to the method', () => {
+                describe('When no paginationOffsetHeader passed to the method', () => {
                     it('Should throw an error with a meaningful error message and log to console', async () => {
                         testSearchLocalProfessionalWithParams(
                             proFinderServiceInstance,
                             [
-                                null,
+                                validCategoryId,
                             ],
-                            'categoryId'
+                            'paginationOffsetHeader'
                         );
                     });
                 });
 
-                describe('When a categoryId is passed to the method that is not a number', () => {
-                    it('Should throw an error with a meaningful error message and log to console', async () => {
+                describe('When a paginationOffsetHeader is passed to the method that is not a number', () => {
+                    it('Should throw an error with a meaningful error message and log to the console', async () => {
                         testSearchLocalProfessionalWithParams(
                             proFinderServiceInstance,
                             [
-                                'five',
+                                validCategoryId,
+                                '5'
                             ],
-                            'categoryId'
+                            'paginationOffsetHeader'
+                        );
+                    });
+                });
+            });
+
+            describe('When incorrect location is passed to the method', () => {
+                describe('When no location is passed to the method', () => {
+                    it('Should throw an error with a meaningful error message and log to the console', async () => {
+                        testSearchLocalProfessionalWithParams(
+                            proFinderServiceInstance,
+                            [
+                                validCategoryId,
+                                validPaginationOffsetHeader
+                            ],
+                            'location'
+                        );
+                    });
+                });
+
+                describe('When a categoryId is passed to the method that is not a string', () => {
+                    it('Should throw an error with a meaningful error message', async () => {
+                        testSearchLocalProfessionalWithParams(
+                            proFinderServiceInstance,
+                            [
+                                validCategoryId,
+                                validPaginationOffsetHeader,
+                                123
+                            ],
+                            'location'
                         );
                     });
                 });
             });
         });
 
-        describe('When an invalid paginationOffsetHeader is passed to the method', () => {
-            describe('When no paginationOffsetHeader passed to the method', () => {
-                it('Should throw an error with a meaningful error message and log to console', async () => {
-                    testSearchLocalProfessionalWithParams(
-                        proFinderServiceInstance,
-                        [
-                            validCategoryId,
-                        ],
-                        'paginationOffsetHeader'
-                    );
-                });
-            });
+        describe('When valid search paramters are passed to the method', () => {
+            it('Should make a POST call to the API to get local professionals', async () => {
+                mockAxios = jest.fn(() => Promise.resolve());
+                proFinderServiceInstance = new ProFinderService(mockAxios);
 
-            describe('When a paginationOffsetHeader is passed to the method that is not a number', () => {
-                it('Should throw an error with a meaningful error message and log to the console', async () => {
-                    testSearchLocalProfessionalWithParams(
-                        proFinderServiceInstance,
-                        [
-                            validCategoryId,
-                            '5'
-                        ],
-                        'paginationOffsetHeader'
-                    );
-                });
+                const localProfessionals =
+                    proFinderServiceInstance.searchForLocalProfessionals(
+                        validCategoryId,
+                        validPaginationOffsetHeader,
+                        validLocation
+                    )
+
+                expect(
+                    mockAxios
+                ).toHaveBeenCalled()
             });
         });
-
-        describe('When incorrect location is passed to the method', () => {
-            describe('When no location is passed to the method', () => {
-                it('Should throw an error with a meaningful error message and log to the console', async () => {
-                    testSearchLocalProfessionalWithParams(
-                        proFinderServiceInstance,
-                        [
-                            validCategoryId,
-                            validPaginationOffsetHeader
-                        ],
-                        'location'
-                    );
-                });
-            });
-
-            describe('When a categoryId is passed to the method that is not a string', () => {
-                it('Should throw an error with a meaningful error message', async () => {
-                    testSearchLocalProfessionalWithParams(
-                        proFinderServiceInstance,
-                        [
-                            validCategoryId,
-                            validPaginationOffsetHeader,
-                            123
-                        ],
-                        'location'
-                    );
-                });
-            });
-        });
-
-        // describe('When valid search paramters are passed to the method', () => {
-        //     it('Should make a POST call to the API to get local professionals', async () => {
-        //         const localProfessionals =
-        //             proFinderServiceInstance.searchForLocalProfessionals(
-        //                 validSearchParams,
-        //                 paginationOffsetHeader,
-        //             )
-
-        //         expect(
-        //             mockAxios.post
-        //         ).toHaveBeenCalled();
-        //     });
-        // });
     });
 });
