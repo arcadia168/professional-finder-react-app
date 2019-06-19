@@ -14,7 +14,7 @@ describe('Professional Finder', () => {
             // Default props
             ...customProps,
         }
-        return mount(<ProfessionalFinder {...props}/>);
+        return mount(<ProfessionalFinder {...props} />);
     }
 
     it('renders the app as expected', () => {
@@ -34,37 +34,39 @@ describe('Professional Finder', () => {
         ).toBeTruthy();
     });
 
-    it('Renders a row for the site title', () => {
-        const renderedApp = render();
-        expect(
-            renderedApp
-                .find('[data-testid="pro-finder__title-row"]')
-                .exists()
-        ).toBeTruthy();
-    });
+    describe('Page Title', () => {
+        it('Renders a row for the site title', () => {
+            const renderedApp = render();
+            expect(
+                renderedApp
+                    .find('[data-testid="pro-finder__title-row"]')
+                    .exists()
+            ).toBeTruthy();
+        });
 
-    it('Renders a title container', () => {
-        const renderedApp = render();
-        expect(
-            renderedApp
-                .find('[data-testid="pro-finder__title-column"]')
-                .exists()
-        ).toBeTruthy();
-    });
+        it('Renders a title container', () => {
+            const renderedApp = render();
+            expect(
+                renderedApp
+                    .find('[data-testid="pro-finder__title-column"]')
+                    .exists()
+            ).toBeTruthy();
+        });
 
-    it('Renders the title text', () => {
-        const renderedApp = render();
-        expect(
-            renderedApp
-                .find('[data-testid="pro-finder__title"]')
-                .exists()
-        ).toBeTruthy();
-        expect(
-            renderedApp
-                .find('[data-testid="pro-finder__title"]')
-                .text()
-        ).toEqual(
-            'Find a Local Professional'
-        );
+        it('Renders the title text', () => {
+            const renderedApp = render();
+            expect(
+                renderedApp
+                    .find('[data-testid="pro-finder__title"]')
+                    .exists()
+            ).toBeTruthy();
+            expect(
+                renderedApp
+                    .find('[data-testid="pro-finder__title"]')
+                    .text()
+            ).toEqual(
+                'Find a Local Professional'
+            );
+        });
     });
 });

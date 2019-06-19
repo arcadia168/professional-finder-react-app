@@ -10,11 +10,11 @@ exports[`Professional Finder renders the app as expected 1`] = `
     data-testid="pro-finder__title-row"
   >
     <div
-      className="col"
-      classNuame="pro-finder__title-column"
+      className="pro-finder__title-column col"
       data-testid="pro-finder__title-column"
     >
       <h1
+        className="pro-finder__title"
         data-testid="pro-finder__title"
       >
         Find a Local Professional
