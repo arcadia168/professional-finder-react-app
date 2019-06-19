@@ -46,6 +46,14 @@ export default class ProFinderService {
             throw searchProError
         }
 
+        if (!location || typeof(location) !== 'string') {
+            const searchProError = new Error(
+                'ProFinderService.searchForLocalProfessional: Please pass in valid location parameter'
+            )
+            console.error(searchProError.message);
+            throw searchProError
+        }
+
         // We always want this to be 20, this can be configured here.
         const xPaginationLimitHeader = 20;
 
