@@ -9,7 +9,6 @@ const App = () => {
   return (
     <Router>
       <Route exact path="/" component={HelloWorld} />
-      <Button>Hello React Start with Bootstrap!</Button>
     </Router>
   )
 }

@@ -273,10 +273,6 @@ describe('Pro Finder Api Service', () => {
             });
 
             describe('When the call to the POST API endpoint succeeds', () => {
-                // beforeEach(() => {
-                //     mockAxios
-                // });
-
                 it('Returns the search results', async () => {
                     try {
                         const searchResults = await proFinderServiceInstance.searchForLocalProfessionals(
