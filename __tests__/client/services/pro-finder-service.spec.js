@@ -115,7 +115,7 @@ describe('Pro Finder Api Service', () => {
         describe('When incorrect search parameters are passed to the method', () => {
 
             describe('When no search query is passed to the method', () => {
-                it('Should throw an error', async () => {
+                it('Should throw an error with a meaningful error message', async () => {
                     try {
                         const searchForLocalProfressionalResults = proFinderServiceInstance.searchForLocalProfessionals();
                         expect(searchForLocalProfressionalResults).toBe(null);
@@ -127,6 +127,19 @@ describe('Pro Finder Api Service', () => {
                         )
                     }
                 });
+
+                it('Should log the meaningful error message to the console', () => {
+                    try {
+                        const searchForLocalProfressionalResults = proFinderServiceInstance.searchForLocalProfessionals();
+                        expect(searchForLocalProfressionalResults).toBe(null);
+                    } catch (error) {
+                        expect(
+                            console.error
+                        ).toHaveBeenCalledWith(
+                            'ProFinderService.searchForLocalProfessional: Please pass in valid search parameters'
+                        )
+                    }
+                })
             });
         });
     });

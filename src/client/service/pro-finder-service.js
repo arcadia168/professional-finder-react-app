@@ -30,6 +30,7 @@ export default class ProFinderService {
             const searchProError = new Error(
                 'ProFinderService.searchForLocalProfessional: Please pass in valid search parameters'
             )
+            console.error(searchProError.message);
             throw searchProError
         }
     }
