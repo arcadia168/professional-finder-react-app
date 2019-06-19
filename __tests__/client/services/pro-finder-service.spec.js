@@ -17,9 +17,22 @@ describe('Pro Finder Api Service', () => {
         proFinderServiceInstance = new ProFinderService(mockAxios);
     });
 
+    afterEach(() => {
+        jest.clearAllMocks();
+    });
+
     describe('When a pro finder api service is instantiated', () => {
-        afterEach(() => {
-            jest.clearAllMocks();
+        it('Should throw an error if no axios instance has been supplied', () => {
+            try {
+                const brokenProFinderServiceInstance = new ProFinderService();
+                expect(brokenProFinderServiceInstance).toBe(null);
+            } catch (error) {
+                expect(
+                    error.message
+                ).toBe(
+                    'ProFinderService.constructor: Please ensure you pass in a valid instance of axios when instantiating.'
+                );
+            }
         });
 
         it('Returns an instance of the service', () => {
@@ -82,8 +95,9 @@ describe('Pro Finder Api Service', () => {
     describe('When the searchForLocalProfessional method is invoked', () => {
         const apiUrl = 'https://demo.plentific.com/find-a-pro/api/v2/public/pro/search-pros/';
 
-        it('Should make a POST request to the API', async () => {
+        // it('Should make a POST request to the API', async () => {
+        //     const searchForLocalProfressionalResults = ProFinderService.searchForLocalProfressionalResults();
 
-        });
+        // });
     });
 });
