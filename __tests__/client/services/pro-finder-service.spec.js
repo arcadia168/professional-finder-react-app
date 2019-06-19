@@ -8,9 +8,9 @@ const pathName = path.resolve(__dirname, `../../../src/client/service/profession
 const mockProfessionCategories = JSON.parse(fs.readFileSync(pathName, 'utf8'));
 const visibleProfessionCategoriesMock = mockProfessionCategories.filter(currentProfessionCategory => !currentProfessionCategory.hidden);
 
-function testSearchLocalProfessionalWithParams(params, paramToCheck) {
+function testSearchLocalProfessionalWithParams(proService, params, paramToCheck) {
     try {
-        const searchForLocalProfressionalResults = proFinderServiceInstance.searchForLocalProfessionals(
+        const searchForLocalProfressionalResults = proService.searchForLocalProfessionals(
             ...params,
         );
         expect(searchForLocalProfressionalResults).toBe(null);
@@ -18,7 +18,12 @@ function testSearchLocalProfessionalWithParams(params, paramToCheck) {
         expect(
             error.message
         ).toBe(
-            `ProFinderService.searchForLocalProfessional: Please pass in valid ${paramToCheck} parameter`
+            `ProFinderService.searchForLocalProfessional: Please pass in valid parameter ${paramToCheck}`
+        )
+        expect(
+            console.error
+        ).toHaveBeenCalledWith(
+            `ProFinderService.searchForLocalProfessional: Please pass in valid parameter ${paramToCheck}`
         )
     }
 }
@@ -130,198 +135,86 @@ describe('Pro Finder Api Service', () => {
         const apiUrl = 'https://demo.plentific.com/find-a-pro/api/v2/public/pro/search-pros/';
 
         describe('When incorrect categoryId is passed to the method', () => {
-            // TODO: Tests that check individual search and header params and types.
             describe('When an invalid categoryId is passed to the method', () => {
                 describe('When no categoryId is passed to the method', () => {
-                    it('Should throw an error with a meaningful error message', async () => {
-                        try {
-                            const searchForLocalProfressionalResults = proFinderServiceInstance.searchForLocalProfessionals();
-                            expect(searchForLocalProfressionalResults).toBe(null);
-                        } catch (error) {
-                            expect(
-                                error.message
-                            ).toBe(
-                                'ProFinderService.searchForLocalProfessional: Please pass in valid parameter categoryId'
-                            )
-                        }
+                    it('Should throw an error with a meaningful error message and log to console', async () => {
+                        testSearchLocalProfessionalWithParams(
+                            proFinderServiceInstance,
+                            [
+                                null,
+                            ],
+                            'categoryId'
+                        );
                     });
-
-                    it('Should log the meaningful error message to the console', () => {
-                        try {
-                            const searchForLocalProfressionalResults = proFinderServiceInstance.searchForLocalProfessionals();
-                            expect(searchForLocalProfressionalResults).toBe(null);
-                        } catch (error) {
-                            expect(
-                                console.error
-                            ).toHaveBeenCalledWith(
-                                'ProFinderService.searchForLocalProfessional: Please pass in valid parameter categoryId'
-                            )
-                        }
-                    })
                 });
 
                 describe('When a categoryId is passed to the method that is not a number', () => {
-                    it('Should throw an error with a meaningful error message', async () => {
-                        try {
-                            const searchForLocalProfressionalResults = proFinderServiceInstance.searchForLocalProfessionals('five');
-                            expect(searchForLocalProfressionalResults).toBe(null);
-                        } catch (error) {
-                            expect(
-                                error.message
-                            ).toBe(
-                                'ProFinderService.searchForLocalProfessional: Please pass in valid parameter categoryId'
-                            )
-                        }
+                    it('Should throw an error with a meaningful error message and log to console', async () => {
+                        testSearchLocalProfessionalWithParams(
+                            proFinderServiceInstance,
+                            [
+                                'five',
+                            ],
+                            'categoryId'
+                        );
                     });
-
-                    it('Should log the meaningful error message to the console', () => {
-                        try {
-                            const searchForLocalProfressionalResults = proFinderServiceInstance.searchForLocalProfessionals();
-                            expect(searchForLocalProfressionalResults).toBe(null);
-                        } catch (error) {
-                            expect(
-                                console.error
-                            ).toHaveBeenCalledWith(
-                                'ProFinderService.searchForLocalProfessional: Please pass in valid parameter categoryId'
-                            )
-                        }
-                    })
                 });
             });
         });
 
         describe('When an invalid paginationOffsetHeader is passed to the method', () => {
             describe('When no paginationOffsetHeader passed to the method', () => {
-                it('Should throw an error with a meaningful error message', async () => {
-                    try {
-                        const searchForLocalProfressionalResults =
-                            proFinderServiceInstance.searchForLocalProfessionals(validCategoryId);
-                        expect(searchForLocalProfressionalResults).toBe(null);
-                    } catch (error) {
-                        expect(
-                            error.message
-                        ).toBe(
-                            'ProFinderService.searchForLocalProfessional: Please pass in valid parameter paginationOffsetHeader'
-                        )
-                    }
+                it('Should throw an error with a meaningful error message and log to console', async () => {
+                    testSearchLocalProfessionalWithParams(
+                        proFinderServiceInstance,
+                        [
+                            validCategoryId,
+                        ],
+                        'paginationOffsetHeader'
+                    );
                 });
-
-                it('Should log the meaningful error message to the console', () => {
-                    try {
-                        const searchForLocalProfressionalResults =
-                            proFinderServiceInstance.searchForLocalProfessionals(validCategoryId);
-                        expect(searchForLocalProfressionalResults).toBe(null);
-                    } catch (error) {
-                        expect(
-                            console.error
-                        ).toHaveBeenCalledWith(
-                            'ProFinderService.searchForLocalProfessional: Please pass in valid parameter paginationOffsetHeader'
-                        )
-                    }
-                })
             });
 
             describe('When a paginationOffsetHeader is passed to the method that is not a number', () => {
-                it('Should throw an error with a meaningful error message', async () => {
-                    try {
-                        const searchForLocalProfressionalResults =
-                            proFinderServiceInstance.searchForLocalProfessionals(validCategoryId, '5');
-                        expect(searchForLocalProfressionalResults).toBe(null);
-                    } catch (error) {
-                        expect(
-                            error.message
-                        ).toBe(
-                            'ProFinderService.searchForLocalProfessional: Please pass in valid parameter paginationOffsetHeader'
-                        )
-                    }
+                it('Should throw an error with a meaningful error message and log to the console', async () => {
+                    testSearchLocalProfessionalWithParams(
+                        proFinderServiceInstance,
+                        [
+                            validCategoryId,
+                            '5'
+                        ],
+                        'paginationOffsetHeader'
+                    );
                 });
-
-                it('Should log the meaningful error message to the console', () => {
-                    try {
-                        const searchForLocalProfressionalResults =
-                            proFinderServiceInstance.searchForLocalProfessionals(validCategoryId, '5');
-                        expect(searchForLocalProfressionalResults).toBe(null);
-                    } catch (error) {
-                        expect(
-                            console.error
-                        ).toHaveBeenCalledWith(
-                            'ProFinderService.searchForLocalProfessional: Please pass in valid parameter paginationOffsetHeader'
-                        )
-                    }
-                })
             });
         });
 
         describe('When incorrect location is passed to the method', () => {
-            // TODO: Tests that check individual search and header params and types.
             describe('When no location is passed to the method', () => {
-                it('Should throw an error with a meaningful error message', async () => {
-                    try {
-                        const searchForLocalProfressionalResults = proFinderServiceInstance.searchForLocalProfessionals(
+                it('Should throw an error with a meaningful error message and log to the console', async () => {
+                    testSearchLocalProfessionalWithParams(
+                        proFinderServiceInstance,
+                        [
                             validCategoryId,
                             validPaginationOffsetHeader
-                        );
-                        expect(searchForLocalProfressionalResults).toBe(null);
-                    } catch (error) {
-                        expect(
-                            error.message
-                        ).toBe(
-                            'ProFinderService.searchForLocalProfessional: Please pass in valid parameter location'
-                        )
-                    }
+                        ],
+                        'location'
+                    );
                 });
-
-                it('Should log the meaningful error message to the console', () => {
-                    try {
-                        const searchForLocalProfressionalResults = proFinderServiceInstance.searchForLocalProfessionals(
-                            validCategoryId,
-                            validPaginationOffsetHeader,
-                        );
-                        expect(searchForLocalProfressionalResults).toBe(null);
-                    } catch (error) {
-                        expect(
-                            console.error
-                        ).toHaveBeenCalledWith(
-                            'ProFinderService.searchForLocalProfessional: Please pass in valid parameter location'
-                        )
-                    }
-                })
             });
 
             describe('When a categoryId is passed to the method that is not a string', () => {
                 it('Should throw an error with a meaningful error message', async () => {
-                    try {
-                        const searchForLocalProfressionalResults = proFinderServiceInstance.searchForLocalProfessionals(
+                    testSearchLocalProfessionalWithParams(
+                        proFinderServiceInstance,
+                        [
                             validCategoryId,
                             validPaginationOffsetHeader,
                             123
-                        );
-                        expect(searchForLocalProfressionalResults).toBe(null);
-                    } catch (error) {
-                        expect(
-                            error.message
-                        ).toBe(
-                            'ProFinderService.searchForLocalProfessional: Please pass in valid parameter location'
-                        )
-                    }
+                        ],
+                        'location'
+                    );
                 });
-
-                it('Should log the meaningful error message to the console', () => {
-                    try {
-                        const searchForLocalProfressionalResults = proFinderServiceInstance.searchForLocalProfessionals(
-                            validCategoryId,
-                            validPaginationOffsetHeader,
-                            123
-                        );
-                        expect(searchForLocalProfressionalResults).toBe(null);
-                    } catch (error) {
-                        expect(
-                            console.error
-                        ).toHaveBeenCalledWith(
-                            'ProFinderService.searchForLocalProfessional: Please pass in valid parameter location'
-                        )
-                    }
-                })
             });
         });
 
