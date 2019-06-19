@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col } from 'react-bootstrap';
+import { Row, Col, Button } from 'react-bootstrap';
 import PropTypes from 'prop-types'
 
 class SearchForm extends Component {
@@ -10,7 +10,9 @@ class SearchForm extends Component {
     render() {
         return (
             <div data-testid="search-form__container">
-
+                <Button onClick={this.props.changeResults}>
+                    Update results
+                </Button>
             </div>
         );
     };
@@ -18,6 +20,7 @@ class SearchForm extends Component {
 
 SearchForm.propTypes = {
     proFinderService: PropTypes.object,
+    changeResults: PropTypes.func,
 }
 
 export default SearchForm;
