@@ -25,7 +25,7 @@ export default class ProFinderService {
         }
     }
 
-    searchForLocalProfessionals(searchParams, headerParams) {
+    searchForLocalProfessionals(searchParams, paginationOffsetHeader) {
         if (!searchParams) {
             const searchProError = new Error(
                 'ProFinderService.searchForLocalProfessional: Please pass in valid search parameters'
@@ -34,12 +34,17 @@ export default class ProFinderService {
             throw searchProError
         }
 
-        if (!headerParams) {
+        if (paginationOffsetHeader === undefined || paginationOffsetHeader === null) {
             const searchProError = new Error(
-                'ProFinderService.searchForLocalProfessional: Please pass in valid header parameters'
+                'ProFinderService.searchForLocalProfessional: Please pass in valid paginationOffsetHeader header parameter'
             )
             console.error(searchProError.message);
             throw searchProError
         }
+
+        // We always want this to be 20, this can be configured here.
+        const xPaginationLimitHeader = 20;
+
+        // Now use the axios instance to make the post request.
     }
 }
