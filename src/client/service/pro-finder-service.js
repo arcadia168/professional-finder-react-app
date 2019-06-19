@@ -25,33 +25,29 @@ export default class ProFinderService {
         }
     }
 
+    throwAndLogParameterError(invalidParameter) {
+        const searchProError = new Error(
+            `ProFinderService.searchForLocalProfessional: Please pass in valid parameter ${invalidParameter}`
+        )
+        console.error(searchProError.message);
+        throw searchProError
+    }
+
     searchForLocalProfessionals(categoryId, paginationOffsetHeader) {
-        if (!categoryId || typeof(categoryId) !== 'number') {
-            const searchProError = new Error(
-                'ProFinderService.searchForLocalProfessional: Please pass in valid parameter categoryId'
-            )
-            console.error(searchProError.message);
-            throw searchProError
+        if (!categoryId || typeof (categoryId) !== 'number') {
+            this.throwAndLogParameterError(`categoryId`);
         }
 
         if (
             paginationOffsetHeader === undefined ||
             paginationOffsetHeader === null ||
-            typeof(paginationOffsetHeader) !== 'number'
+            typeof (paginationOffsetHeader) !== 'number'
         ) {
-            const searchProError = new Error(
-                'ProFinderService.searchForLocalProfessional: Please pass in valid parameter paginationOffsetHeader'
-            )
-            console.error(searchProError.message);
-            throw searchProError
+            this.throwAndLogParameterError(`paginationOffsetHeader`);
         }
 
-        if (!location || typeof(location) !== 'string') {
-            const searchProError = new Error(
-                'ProFinderService.searchForLocalProfessional: Please pass in valid parameter location'
-            )
-            console.error(searchProError.message);
-            throw searchProError
+        if (!location || typeof (location) !== 'string') {
+            this.throwAndLogParameterError(`location`);
         }
 
         // We always want this to be 20, this can be configured here.
