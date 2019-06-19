@@ -4,9 +4,13 @@ import fs from 'fs';
 
 jest.spyOn(console, 'error');
 
-const pathName = path.resolve(__dirname, `../../../src/client/service/profession-categories.json`);
-const mockProfessionCategories = JSON.parse(fs.readFileSync(pathName, 'utf8'));
+const mockCategoriesPathName = path.resolve(__dirname, `../../__mocks__/profession-categories-mock.json`);
+const mockLocalProfessionalsPathName = path.resolve(__dirname, `../../__mocks__/local-professionals-mock.json`);
+
+const mockProfessionCategories = JSON.parse(fs.readFileSync(mockCategoriesPathName, 'utf8'));
 const visibleProfessionCategoriesMock = mockProfessionCategories.filter(currentProfessionCategory => !currentProfessionCategory.hidden);
+
+const mockLocalProfessionals = JSON.parse(fs.readFileSync(mockLocalProfessionalsPathName, 'utf8'));
 
 async function testSearchLocalProfessionalWithParams(proService, params, paramToCheck) {
     try {
@@ -29,10 +33,7 @@ async function testSearchLocalProfessionalWithParams(proService, params, paramTo
 }
 
 describe('Pro Finder Api Service', () => {
-    let mockAxiosPostSearch = jest.fn(() => Promise.resolve());
-    let mockAxios = {
-        post: mockAxiosPostSearch,
-    };
+    let mockAxios = jest.fn(() => Promise.resolve(mockLocalProfessionals));
     let proFinderServiceInstance;
     let validCategoryId = 5;
     let validLocation = "sw11";
@@ -222,22 +223,22 @@ describe('Pro Finder Api Service', () => {
 
         describe('When valid search paramters are passed to the method', () => {
             it('Should make a POST call to the API to get local professionals', async () => {
-                mockAxios = jest.fn(() => Promise.resolve());
-                proFinderServiceInstance = new ProFinderService(mockAxios);
-
-                const localProfessionals =
-                    proFinderServiceInstance.searchForLocalProfessionals(
-                        validCategoryId,
-                        validPaginationOffsetHeader,
-                        validLocation
-                    )
-
-                expect(
-                    mockAxios
-                ).toHaveBeenCalled()
+                try {
+                    const localProfessionals =
+                        await proFinderServiceInstance.searchForLocalProfessionals(
+                            validCategoryId,
+                            validPaginationOffsetHeader,
+                            validLocation
+                        )
+                    expect(
+                        mockAxios
+                    ).toHaveBeenCalled()
+                } catch (error) {
+                    expect(error).toBe(null);
+                }
             });
 
-            describe('When the call to the POST endoint fails', () => {
+            describe('When the call to the POST API endpoint fails', () => {
                 let mockAxiosError;
                 let proFinderServiceInstanceError;
 
@@ -267,6 +268,25 @@ describe('Pro Finder Api Service', () => {
                         ).toHaveBeenCalledWith(
                             expectedErrorMessage
                         )
+                    }
+                });
+            });
+
+            describe('When the call to the POST API endpoint succeeds', () => {
+                // beforeEach(() => {
+                //     mockAxios
+                // });
+
+                it('Returns the search results', async () => {
+                    try {
+                        const searchResults = await proFinderServiceInstance.searchForLocalProfessionals(
+                            validCategoryId,
+                            validPaginationOffsetHeader,
+                            validLocation
+                        )
+                        expect(searchResults).toEqual(mockLocalProfessionals);
+                    } catch (error) {
+                        expect(error).toBe(null);
                     }
                 });
             });

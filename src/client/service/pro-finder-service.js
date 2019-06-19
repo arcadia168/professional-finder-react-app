@@ -70,6 +70,7 @@ export default class ProFinderService {
         let searchResults;
         try {
             searchResults = await this.axios(axiosConfig);
+            return searchResults;
         } catch (error) {
             const searchError = new Error(`Error at proFinderService.searchForLocalProfessionals: ${error.message}`);
             console.error(searchError.message);
