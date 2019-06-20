@@ -13,15 +13,25 @@ export default class ProFinderService {
         this.axios = axiosInstance;
     }
 
-    getProfessionCategories() {
+    async getProfessionCategories() {
         if (this.cachedVisibleCategories) {
             return this.cachedVisibleCategories;
         } else {
-            // const pathName = path.resolve(__dirname, `../../../src/client/service/profession-categories.json`);
-            // const professionCategories = JSON.parse(fs.readFileSync(pathName, 'utf8'));
-            // const visibleProfessionCategories = professionCategories.filter(professionCategory => !professionCategory.hidden);
-            // this.cachedVisibleCategories = visibleProfessionCategories;
-            // return visibleProfessionCategories;
+            const axiosConfig = {
+                method: 'get',
+                url: 'http://localhost/api/categories'
+            }
+            try {
+                const professionCategories = await this.axios(axiosConfig);
+                const visibleProfessionCategories = professionCategories.filter(professionCategory => !professionCategory.hidden);
+                this.cachedVisibleCategories = visibleProfessionCategories;
+                return visibleProfessionCategories;
+            } catch (error) {
+                const getCategoriesError =
+                    new Error(`Error at proFinderService.getProfessionCategories: ${error.message}`);
+                console.error(getCategoriesError.message);
+                throw getCategoriesError;
+            }
         }
     }
 
