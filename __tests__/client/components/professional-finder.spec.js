@@ -55,7 +55,7 @@ describe('Professional Finder', () => {
     describe('When the method updateSearchResults is invoked', () => {
         describe('When the search results call to the API is successful', () => {
             it('Assigns the search resulsts to the state', async () => {
-                const mockApiSuccessfulSearch = jest.fn(() => Promise.resolve(mockLocalProfessionals));
+                const mockApiSuccessfulSearch = jest.fn(() => Promise.resolve(mockLocalProfessionals.response.pros));
                 const failingProFinderService = {
                     searchForLocalProfessionals: mockApiSuccessfulSearch,
                 }
@@ -65,7 +65,7 @@ describe('Professional Finder', () => {
                 expect(
                     component.state('searchResults')
                 ).toEqual(
-                    mockLocalProfessionals
+                    mockLocalProfessionals.response.pros
                 );
             })
         });
