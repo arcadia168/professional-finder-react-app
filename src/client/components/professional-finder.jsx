@@ -14,16 +14,34 @@ class ProfessionalFinder extends Component {
         super(props);
 
         this.state = {
-            searchResults: []
+            searchResults: [],
+            error: undefined
         };
 
-        // this.updateSearchResults = () => {
-        //     this.setState(state => ({
-        //         // Make a call off of the proFinderService
-        //         // If successful add results to state.
-        //         // If unsuccessful add an error to state.
-        //     }));
-        // };
+        this.updateSearchResults = async (
+            categoryId,
+            location,
+            offset,
+        ) => {
+            try {
+                // Make a call off of the proFinderService
+                await this.props.proFinderService.searchForLocalProfessionals(
+                    categoryId,
+                    location,
+                    offset
+                );
+                this.setState(state => ({
+                    // If successful add results to state.
+
+                }));
+            } catch (error) {
+                const userFriendlyError = `Oops! Something went wrong: ${error.message}`;
+                this.setState({
+                    // If unsuccessful add an error to state.
+                    error: userFriendlyError
+                });
+            }
+        };
     }
 
     render() {

@@ -14,6 +14,7 @@ import { fail } from 'assert';
 
 // const pathName = path.resolve(__dirname, `../../__mocks__/validCardResults.json`);
 // const mockCards = fs.readFileSync(pathName, 'utf8');
+const waitForAsync = () => new Promise(resolve => setImmediate(resolve))
 
 describe('Professional Finder', () => {
     const render = customProps => {
@@ -38,13 +39,16 @@ describe('Professional Finder', () => {
             component
                 .state('searchResults')
         ).toEqual([]);
+        expect(
+            component.state('error')
+        ).toBe(undefined)
     });
 
     it('Takes in a proFinderService instance and assigns this to a property', () => {
         const mockAxios = jest.fn();
         const proFinderServiceInstanceProp = new proFinderService(mockAxios);
         const component = render({
-            'proFinderService' : proFinderServiceInstanceProp
+            'proFinderService': proFinderServiceInstanceProp
         });
         expect(
             component
@@ -52,27 +56,30 @@ describe('Professional Finder', () => {
         ).toBe(proFinderServiceInstanceProp)
     });
 
-    // describe('When the method updateSearchResults is invoked', () => {
-    //     describe('When the search results call to the API is successful', () => {
+    describe('When the method updateSearchResults is invoked', () => {
+        describe('When the search results call to the API is successful', () => {
 
-    //     });
+        });
 
-    //     describe('When the search results call to the API fails', () => {
-    //         it('Assigns a meaningful error message to the state', async () => {
-    //             const mockApiFailingSearch = jest.fn(() => { Promise.reject('Some service error') });
-    //             const failingProFinderService = {
-    //                 searchForLocalProfessionals: mockApiFailingSearch,
-    //             }
-    //             const component = render({ 'proFinderService': failingProFinderService });
+        describe('When the search results call to the API fails', () => {
+            it('Assigns a meaningful error message to the state', async () => {
+                const mockApiFailingSearch = jest.fn(() => Promise.reject(new Error('Some service error')));
+                const failingProFinderService = {
+                    searchForLocalProfessionals: mockApiFailingSearch,
+                }
+                const component = render({ 'proFinderService': failingProFinderService });
 
-
-    //             await component.updateSerchResults();
-    //             expect(
-    //                 component.state('error')
-    //             ).toEqual('Oops! Something went wrong: Some service error');
-    //         });
-    //     });
-    // });
+                await component.instance().updateSearchResults();
+                await waitForAsync();
+                component.update();
+                expect(
+                    component.state('error')
+                ).toEqual(
+                    'Oops! Something went wrong: Some service error'
+                );
+            });
+        });
+    });
 
     it('Renders the container for the layout', () => {
         const component = render();
