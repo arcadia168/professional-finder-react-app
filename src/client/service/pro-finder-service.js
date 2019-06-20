@@ -43,7 +43,7 @@ export default class ProFinderService {
         throw searchProError
     }
 
-    async searchForLocalProfessionals(categoryId, paginationOffsetHeader, location) {
+    searchForLocalProfessionals(categoryId, paginationOffsetHeader, location) {
         if (!categoryId || typeof (categoryId) !== 'number') {
             this.throwAndLogParameterError(`categoryId`);
         }
