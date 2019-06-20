@@ -1,4 +1,5 @@
 import React from 'react';
+import { Dropdown } from 'react-bootstrap'
 import SearchForm from '../../../src/client/components/search-form';
 import renderer from 'react-test-renderer';
 import { mount } from 'enzyme';
@@ -42,4 +43,22 @@ describe('Search Form', () => {
                 .props().updateSearchResults
         ).toBe(mockUpdateResults);
     })
+
+    it('Should render a dropdown container', () => {
+        const renderedApp = render();
+        expect(
+            renderedApp
+                .find('[data-testid="search-form__category-dropdown"]')
+                .exists()
+        ).toBeTruthy()
+    });
+
+    // it('Should render a dropdown', () => {
+    //     const renderedApp = render();
+    //     expect(
+    //         renderedApp
+    //             .find(Dropdown)
+    //             .exists()
+    //     ).toBeTruthy();
+    // });
 });

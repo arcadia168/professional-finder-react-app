@@ -10,7 +10,12 @@ class SearchForm extends Component {
     render() {
         return (
             <div data-testid="search-form__container">
+                <div
+                    data-testid="search-form__category-dropdown"
+                    className="search-form__category-dropdown"
+                >
 
+                </div>
             </div>
         );
     };
