@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dropdown } from 'react-bootstrap'
+import { Dropdown, Button } from 'react-bootstrap'
 import SearchForm from '../../../src/client/components/search-form';
 import renderer from 'react-test-renderer';
 import { mount } from 'enzyme';
@@ -58,6 +58,15 @@ describe('Search Form', () => {
         expect(
             renderedApp
                 .find(Dropdown)
+                .exists()
+        ).toBeTruthy();
+    });
+
+    it('Should render a search button', () => {
+        const renderedApp = render();
+        expect(
+            renderedApp
+                .find(Button)
                 .exists()
         ).toBeTruthy();
     });
