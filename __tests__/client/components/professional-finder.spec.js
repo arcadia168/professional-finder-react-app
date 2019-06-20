@@ -4,16 +4,15 @@ import renderer from 'react-test-renderer';
 import { mount } from 'enzyme';
 import path from 'path';
 import fs from 'fs';
+import { Pagination } from 'react-bootstrap';
 import SearchForm from '../../../src/client/components/search-form';
 import SearchResultsTable from '../../../src/client/components/search-results-table';
-import { Pagination } from 'react-bootstrap';
-import proFinderService from '../../../src/client/service/pro-finder-service';
 import ProFinderService from '../../../src/client/service/pro-finder-service';
-import { JestEnvironment } from '@jest/environment';
-import { fail } from 'assert';
 
 // const pathName = path.resolve(__dirname, `../../__mocks__/validCardResults.json`);
 // const mockCards = fs.readFileSync(pathName, 'utf8');
+const mockLocalProfessionalsPathName = path.resolve(__dirname, `../../__mocks__/local-professionals-mock.json`);
+const mockLocalProfessionals = JSON.parse(fs.readFileSync(mockLocalProfessionalsPathName, 'utf8'));
 const waitForAsync = () => new Promise(resolve => setImmediate(resolve))
 
 describe('Professional Finder', () => {
@@ -46,7 +45,7 @@ describe('Professional Finder', () => {
 
     it('Takes in a proFinderService instance and assigns this to a property', () => {
         const mockAxios = jest.fn();
-        const proFinderServiceInstanceProp = new proFinderService(mockAxios);
+        const proFinderServiceInstanceProp = new ProFinderService(mockAxios);
         const component = render({
             'proFinderService': proFinderServiceInstanceProp
         });
@@ -58,7 +57,22 @@ describe('Professional Finder', () => {
 
     describe('When the method updateSearchResults is invoked', () => {
         describe('When the search results call to the API is successful', () => {
+            it('Assigns the search resulsts to the state', async () => {
+                const mockApiSuccessfulSearch = jest.fn(() => Promise.resolve(mockLocalProfessionals));
+                const failingProFinderService = {
+                    searchForLocalProfessionals: mockApiSuccessfulSearch,
+                }
+                const component = render({ 'proFinderService': failingProFinderService });
 
+                await component.instance().updateSearchResults();
+                await waitForAsync();
+                component.update();
+                expect(
+                    component.state('searchResults')
+                ).toEqual(
+                    mockLocalProfessionals
+                );
+            })
         });
 
         describe('When the search results call to the API fails', () => {

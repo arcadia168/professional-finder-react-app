@@ -5,11 +5,10 @@ import fs from 'fs';
 jest.spyOn(console, 'error');
 
 const mockCategoriesPathName = path.resolve(__dirname, `../../__mocks__/profession-categories-mock.json`);
-const mockLocalProfessionalsPathName = path.resolve(__dirname, `../../__mocks__/local-professionals-mock.json`);
-
 const mockProfessionCategories = JSON.parse(fs.readFileSync(mockCategoriesPathName, 'utf8'));
 const visibleProfessionCategoriesMock = mockProfessionCategories.filter(currentProfessionCategory => !currentProfessionCategory.hidden);
 
+const mockLocalProfessionalsPathName = path.resolve(__dirname, `../../__mocks__/local-professionals-mock.json`);
 const mockLocalProfessionals = JSON.parse(fs.readFileSync(mockLocalProfessionalsPathName, 'utf8'));
 
 async function testSearchLocalProfessionalWithParams(proService, params, paramToCheck) {
