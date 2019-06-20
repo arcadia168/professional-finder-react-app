@@ -1,18 +1,28 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import PropTypes from 'prop-types'
 import ProfessionalFinder from './professional-finder.jsx';
 
-const App = () => {
-  return (
-    <Router>
-      <Route
-      exact path="/" component={ProfessionalFinder} />
-    </Router>
-    // render={() => {
-    //   return <ProfessionalFinder proFinderService={this.props.proFinderService} />
-    // }}
-  )
+class App extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    return (
+      <Router>
+        <Route
+          exact
+          path="/"
+          render={() => {
+            return <ProfessionalFinder
+              proFinderService={this.props.proFinderService}
+            />
+          }}
+        />
+      </Router>
+    )
+  }
 }
 
 App.propTypes = {
