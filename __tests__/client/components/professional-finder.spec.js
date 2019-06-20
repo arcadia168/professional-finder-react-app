@@ -7,6 +7,10 @@ import fs from 'fs';
 import SearchForm from '../../../src/client/components/search-form';
 import SearchResultsTable from '../../../src/client/components/search-results-table';
 import { Pagination } from 'react-bootstrap';
+import proFinderService from '../../../src/client/service/pro-finder-service';
+import ProFinderService from '../../../src/client/service/pro-finder-service';
+import { JestEnvironment } from '@jest/environment';
+import { fail } from 'assert';
 
 // const pathName = path.resolve(__dirname, `../../__mocks__/validCardResults.json`);
 // const mockCards = fs.readFileSync(pathName, 'utf8');
@@ -29,17 +33,51 @@ describe('Professional Finder', () => {
     });
 
     it('Sets some default state with empty searchResulsts on render', () => {
-        const renderedApp = render();
+        const component = render();
         expect(
-            renderedApp
+            component
                 .state('searchResults')
         ).toEqual([]);
     });
 
-    it('Renders the container for the layout', () => {
-        const renderedApp = render();
+    it('Takes in a proFinderService instance and assigns this to a property', () => {
+        const mockAxios = jest.fn();
+        const proFinderServiceInstanceProp = new proFinderService(mockAxios);
+        const component = render({
+            'proFinderService' : proFinderServiceInstanceProp
+        });
         expect(
-            renderedApp
+            component
+                .props().proFinderService
+        ).toBe(proFinderServiceInstanceProp)
+    });
+
+    // describe('When the method updateSearchResults is invoked', () => {
+    //     describe('When the search results call to the API is successful', () => {
+
+    //     });
+
+    //     describe('When the search results call to the API fails', () => {
+    //         it('Assigns a meaningful error message to the state', async () => {
+    //             const mockApiFailingSearch = jest.fn(() => { Promise.reject('Some service error') });
+    //             const failingProFinderService = {
+    //                 searchForLocalProfessionals: mockApiFailingSearch,
+    //             }
+    //             const component = render({ 'proFinderService': failingProFinderService });
+
+
+    //             await component.updateSerchResults();
+    //             expect(
+    //                 component.state('error')
+    //             ).toEqual('Oops! Something went wrong: Some service error');
+    //         });
+    //     });
+    // });
+
+    it('Renders the container for the layout', () => {
+        const component = render();
+        expect(
+            component
                 .find('[data-testid="pro-finder__container"]')
                 .exists()
         ).toBeTruthy();
@@ -47,32 +85,32 @@ describe('Professional Finder', () => {
 
     describe('Page Title', () => {
         it('Renders a row for the site title', () => {
-            const renderedApp = render();
+            const component = render();
             expect(
-                renderedApp
+                component
                     .find('[data-testid="pro-finder__title-row"]')
                     .exists()
             ).toBeTruthy();
         });
 
         it('Renders a title container', () => {
-            const renderedApp = render();
+            const component = render();
             expect(
-                renderedApp
+                component
                     .find('[data-testid="pro-finder__title-col"]')
                     .exists()
             ).toBeTruthy();
         });
 
         it('Renders the title text', () => {
-            const renderedApp = render();
+            const component = render();
             expect(
-                renderedApp
+                component
                     .find('[data-testid="pro-finder__title"]')
                     .exists()
             ).toBeTruthy();
             expect(
-                renderedApp
+                component
                     .find('[data-testid="pro-finder__title"]')
                     .text()
             ).toEqual(
@@ -83,9 +121,9 @@ describe('Professional Finder', () => {
 
     describe('Search Form', () => {
         it('Renders a row for the search form', () => {
-            const renderedApp = render();
+            const component = render();
             expect(
-                renderedApp
+                component
                     .find(SearchForm)
                     .exists()
             ).toBeTruthy();
@@ -95,18 +133,18 @@ describe('Professional Finder', () => {
         });
 
         it('Renders a column for the search form', () => {
-            const renderedApp = render();
+            const component = render();
             expect(
-                renderedApp
+                component
                     .find('[data-testid="pro-finder__search-form-col"]')
                     .exists()
             ).toBeTruthy();
         });
 
         it('Renders the Search Form component', () => {
-            const renderedApp = render();
+            const component = render();
             expect(
-                renderedApp
+                component
                     .find('[data-testid="pro-finder__search-form"]')
                     .exists()
             ).toBeTruthy();
@@ -115,27 +153,27 @@ describe('Professional Finder', () => {
 
     describe('Search Results Table', () => {
         it('Renders a row to show the search results', () => {
-            const renderedApp = render();
+            const component = render();
             expect(
-                renderedApp
+                component
                     .find('[data-testid="pro-finder__search-results-row"]')
                     .exists()
             ).toBeTruthy();
         });
 
         it('Renders a column for the search results table', () => {
-            const renderedApp = render();
+            const component = render();
             expect(
-                renderedApp
+                component
                     .find('[data-testid="pro-finder__search-results-table-col"]')
                     .exists()
             ).toBeTruthy();
         });
 
         it('Renders the Search Results Table component', () => {
-            const renderedApp = render();
+            const component = render();
             expect(
-                renderedApp
+                component
                     .find(SearchResultsTable)
                     .exists()
             ).toBeTruthy();
@@ -144,27 +182,27 @@ describe('Professional Finder', () => {
 
     describe('Pagination Control', () => {
         it('Renders a row to house the pagination controls', () => {
-            const renderedApp = render();
+            const component = render();
             expect(
-                renderedApp
+                component
                     .find('[data-testid="pro-finder__pagination-control-row"]')
                     .exists()
             ).toBeTruthy();
         });
 
         it('Renders a pagination container column', () => {
-            const renderedApp = render();
+            const component = render();
             expect(
-                renderedApp
+                component
                     .find('[data-testid="pro-finder__pagination-control-col"]')
                     .exists()
             ).toBeTruthy();
         })
 
         it('Renders a pagination control', () => {
-            const renderedApp = render();
+            const component = render();
             expect(
-                renderedApp
+                component
                     .find(Pagination)
                     .exists()
             ).toBeTruthy();
