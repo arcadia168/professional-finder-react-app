@@ -4,6 +4,7 @@ import renderer from 'react-test-renderer';
 import { mount } from 'enzyme';
 import path from 'path';
 import fs from 'fs';
+import SearchForm from '../../../src/client/components/search-form';
 
 // const pathName = path.resolve(__dirname, `../../__mocks__/validCardResults.json`);
 // const mockCards = fs.readFileSync(pathName, 'utf8');
@@ -75,7 +76,7 @@ describe('Professional Finder', () => {
             const renderedApp = render();
             expect(
                 renderedApp
-                    .find('[data-testid="pro-finder__search-form-row"]')
+                    .find(SearchForm)
                     .exists()
             ).toBeTruthy();
         });
@@ -99,5 +100,14 @@ describe('Professional Finder', () => {
                     .exists()
             ).toBeTruthy();
         });
+
+        // it('Renders the Search Results Table component', () => {
+        //     const renderedApp = render();
+        //     expect(
+        //         renderedApp
+        //             .find(')
+        //             .exists()
+        //     ).toBeTruthy();
+        // })
     });
 });
