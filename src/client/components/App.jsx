@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import PropTypes from 'prop-types'
-import ProfessionalFinder from '../components/professional-finder';
+import ProfessionalFinder from './professional-finder.jsx';
 
 const App = () => {
   return (
