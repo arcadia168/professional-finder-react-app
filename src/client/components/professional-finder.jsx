@@ -31,6 +31,9 @@ class ProfessionalFinder extends Component {
                         className="pro-finder__search-results-table"
                     />
                 </Row>
+                <Row data-testid="pro-finder__pagination-control-row" className="pro-finder__pagination-control-row">
+
+                </Row>
             </Container>
         );
     };

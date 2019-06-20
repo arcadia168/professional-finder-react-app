@@ -111,4 +111,15 @@ describe('Professional Finder', () => {
             ).toBeTruthy();
         })
     });
+
+    describe('Pagination Control', () => {
+        it('Renders a row to house the pagination controls', () => {
+            const renderedApp = render();
+            expect(
+                renderedApp
+                    .find('[data-testid="pro-finder__pagination-control-row"]')
+                    .exists()
+            ).toBeTruthy();
+        });
+    });
 });
