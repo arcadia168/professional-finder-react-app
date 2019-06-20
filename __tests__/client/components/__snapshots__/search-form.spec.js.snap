@@ -3,5 +3,10 @@
 exports[`Search Form renders the app as expected 1`] = `
 <div
   data-testid="search-form__container"
-/>
+>
+  <div
+    className="search-form__category-dropdown"
+    data-testid="search-form__category-dropdown"
+  />
+</div>
 `;
