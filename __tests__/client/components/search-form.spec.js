@@ -48,17 +48,17 @@ describe('Search Form', () => {
         const renderedApp = render();
         expect(
             renderedApp
-                .find('[data-testid="search-form__category-dropdown"]')
+                .find('[data-testid="search-form__category-dropdown-container"]')
                 .exists()
         ).toBeTruthy()
     });
 
-    // it('Should render a dropdown', () => {
-    //     const renderedApp = render();
-    //     expect(
-    //         renderedApp
-    //             .find(Dropdown)
-    //             .exists()
-    //     ).toBeTruthy();
-    // });
+    it('Should render a dropdown', () => {
+        const renderedApp = render();
+        expect(
+            renderedApp
+                .find(Dropdown)
+                .exists()
+        ).toBeTruthy();
+    });
 });

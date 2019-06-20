@@ -33,9 +33,15 @@ exports[`Professional Finder renders the app as expected 1`] = `
         data-testid="search-form__container"
       >
         <div
-          className="search-form__category-dropdown"
-          data-testid="search-form__category-dropdown"
-        />
+          className="search-form__category-dropdown-container"
+          data-testid="search-form__category-dropdown-container"
+        >
+          <div
+            className="search-form__category-dropdown dropdown"
+            data-testid="search-form__category-dropdown"
+            onKeyDown={[Function]}
+          />
+        </div>
       </div>
     </div>
   </div>
