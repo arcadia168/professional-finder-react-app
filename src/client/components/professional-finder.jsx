@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
+import {
+    Container,
+    Row,
+    Col,
+    Pagination,
+ } from 'react-bootstrap';
 import PropTypes from 'prop-types'
 import SearchForm from '../components/search-form.jsx'
 import SearchResultsTable from './search-results-table.jsx';
@@ -13,17 +18,19 @@ class ProfessionalFinder extends Component {
         return (
             <Container data-testid="pro-finder__container" className="pro-finder__container">
                 <Row data-testid="pro-finder__title-row" className="pro-finder__title-row">
-                    <Col data-testid="pro-finder__title-column" className="pro-finder__title-column">
+                    <Col data-testid="pro-finder__title-col" className="pro-finder__title-col">
                         <h1 data-testid="pro-finder__title" className="pro-finder__title">
                             Find a Local Professional
                         </h1>
                     </Col>
                 </Row>
                 <Row data-testid="pro-finder__search-form-row" className="pro-finder__search-form-row">
-                    <SearchForm
-                        data-testid="pro-finder__search-form"
-                        className="pro-finder__search-form"
-                    />
+                    <Col data-testid="pro-finder__search-form-col" className="pro-finder__search-form-col">
+                        <SearchForm
+                            data-testid="pro-finder__search-form"
+                            className="pro-finder__search-form"
+                        />
+                    </Col>
                 </Row>
                 <Row data-testid="pro-finder__search-results-row">
                     <SearchResultsTable
