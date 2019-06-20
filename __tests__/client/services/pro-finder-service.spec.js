@@ -88,46 +88,93 @@ describe('Pro Finder Api Service', () => {
     })
 
     describe('When the getProfessionCategories method is invoked', () => {
-        it('Returns a list of professions', () => {
-            const professionCategoriesList = proFinderServiceInstance.getProfessionCategories();
-            expect(
-                professionCategoriesList
-            ).toEqual(
-                visibleProfessionCategoriesMock
-            )
-        });
+        describe('When the call to the API is successful', () => {
+            let mockAxiosCategories;
+            let proFinderServiceInstance;
 
-        it('Removes any hidden professions from the list before returning them', () => {
-            const visibleProfessionCategories = proFinderServiceInstance.getProfessionCategories();
-            let hiddenProfessionCategories = [];
-            visibleProfessionCategories.forEach(currentProfessionCategory => {
-                if (currentProfessionCategory.hidden) {
-                    hiddenProfessionCategories.push(currentProfessionCategory);
+            beforeEach(() => {
+                mockAxiosCategories = jest.fn(() => Promise.resolve(mockProfessionCategories));
+                proFinderServiceInstance = new ProFinderService(mockAxiosCategories);
+            })
+
+            it('Returns a list of professions', async () => {
+                try {
+                    const professionCategoriesList = await proFinderServiceInstance.getProfessionCategories();
+                    expect(
+                        professionCategoriesList
+                    ).toEqual(
+                        visibleProfessionCategoriesMock
+                    )
+                } catch (error) {
+                    expect(error).toBe(null);
                 }
             });
 
-            expect(
-                hiddenProfessionCategories.length
-            ).toBe(
-                0
-            )
-        });
+            it('Removes any hidden professions from the list before returning them', async () => {
+                try {
+                    const visibleProfessionCategories = await proFinderServiceInstance.getProfessionCategories();
+                    let hiddenProfessionCategories = [];
+                    visibleProfessionCategories.forEach(currentProfessionCategory => {
+                        if (currentProfessionCategory.hidden) {
+                            hiddenProfessionCategories.push(currentProfessionCategory);
+                        }
+                    });
 
-        it('Caches the retrieved JSON categories for faster access next time', () => {
-            proFinderServiceInstance.getProfessionCategories();
+                    expect(
+                        hiddenProfessionCategories.length
+                    ).toBe(
+                        0
+                    )
+                } catch (error) {
+                    expect(error).toBe(null);
+                }
+            });
 
-            expect(
-                proFinderServiceInstance.cachedVisibleCategories
-            ).toEqual(
-                visibleProfessionCategoriesMock
-            )
-        });
+            it('Caches the retrieved JSON categories for faster access next time', async () => {
+                await proFinderServiceInstance.getProfessionCategories();
+                expect(
+                    proFinderServiceInstance.cachedVisibleCategories
+                ).toEqual(
+                    visibleProfessionCategoriesMock
+                )
+            });
 
-        it('Retrieves the categories from the cached property instead of reading them in from a file', () => {
-            proFinderServiceInstance.getProfessionCategories();
-            const fsSpy = jest.spyOn(fs, 'readFileSync');
-            proFinderServiceInstance.getProfessionCategories();
-            expect(fsSpy).not.toHaveBeenCalled()
+            it('Retrieves the categories from the cached property instead of reading them in from a file', async () => {
+                await proFinderServiceInstance.getProfessionCategories();
+                const fsSpy = jest.spyOn(fs, 'readFileSync');
+                await proFinderServiceInstance.getProfessionCategories();
+                expect(fsSpy).not.toHaveBeenCalled()
+            });
+        })
+
+        describe('When the call to the API fails', () => {
+            let mockAxiosError;
+            let proFinderServiceInstanceError;
+
+            beforeEach(() => {
+                mockAxiosError = jest.fn(() => Promise.reject(new Error('api error')));
+                proFinderServiceInstanceError = new ProFinderService(mockAxiosError);
+            })
+
+            it('Should throw a meaningful error and log to the console', async () => {
+                try {
+                    const searchResults = await proFinderServiceInstanceError.getProfessionCategories();
+                    expect(searchResults).toBe(null);
+                } catch (error) {
+                    const expectedErrorMessage =
+                        'Error at proFinderService.getProfessionCategories: api error';
+                    expect(
+                        error.message
+                    ).toBe(
+                        'Error at proFinderService.getProfessionCategories: api error'
+                    )
+                    expect(
+                        console.error
+                    ).toHaveBeenCalledWith(
+                        expectedErrorMessage
+                    )
+                }
+            });
         });
     });
 
