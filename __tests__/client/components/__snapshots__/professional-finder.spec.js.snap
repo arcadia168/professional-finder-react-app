@@ -37,5 +37,9 @@ exports[`Professional Finder renders the app as expected 1`] = `
       data-testid="search-form-results__container"
     />
   </div>
+  <div
+    className="pro-finder__pagination-control-row row"
+    data-testid="pro-finder__pagination-control-row"
+  />
 </div>
 `;
