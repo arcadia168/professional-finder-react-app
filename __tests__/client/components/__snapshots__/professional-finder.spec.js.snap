@@ -24,6 +24,10 @@ exports[`Professional Finder renders the app as expected 1`] = `
   <div
     className="pro-finder__search-form-row row"
     data-testid="pro-finder__search-form-row"
-  />
+  >
+    <div
+      data-testid="search-form__container"
+    />
+  </div>
 </div>
 `;
