@@ -24,20 +24,17 @@ class ProfessionalFinder extends Component {
             offset,
         ) => {
             try {
-                // Make a call off of the proFinderService
-                await this.props.proFinderService.searchForLocalProfessionals(
+                const searchResults = await this.props.proFinderService.searchForLocalProfessionals(
                     categoryId,
                     location,
                     offset
                 );
-                this.setState(state => ({
-                    // If successful add results to state.
-
-                }));
+                this.setState({
+                    searchResults: searchResults
+                });
             } catch (error) {
                 const userFriendlyError = `Oops! Something went wrong: ${error.message}`;
                 this.setState({
-                    // If unsuccessful add an error to state.
                     error: userFriendlyError
                 });
             }
