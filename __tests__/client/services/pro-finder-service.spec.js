@@ -279,7 +279,7 @@ describe('Pro Finder Api Service', () => {
                             validPaginationOffsetHeader,
                             validLocation
                         )
-                        expect(searchResults).toEqual(mockLocalProfessionals);
+                        expect(searchResults).toEqual(mockLocalProfessionals.response.pros);
                     } catch (error) {
                         expect(error).toBe(null);
                     }
