@@ -12,7 +12,14 @@ exports[`Search Form renders the app as expected 1`] = `
       className="search-form__category-dropdown dropdown"
       data-testid="search-form__category-dropdown"
       onKeyDown={[Function]}
-    />
+    >
+      <button
+        className="search-form__search-btn btn btn-primary"
+        data-testid="search-form__search-btn"
+        disabled={false}
+        type="button"
+      />
+    </div>
   </div>
 </div>
 `;
