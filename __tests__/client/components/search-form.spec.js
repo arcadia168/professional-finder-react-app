@@ -33,4 +33,13 @@ describe('Search Form', () => {
                 .exists()
         ).toBeTruthy();
     });
+
+    it('Sets a prop to update the search results', () => {
+        const mockUpdateResults = jest.fn();
+        const renderedApp = render({ 'updateSearchResults': mockUpdateResults});
+        expect(
+            renderedApp
+                .props().updateSearchResults
+        ).toBe(mockUpdateResults);
+    })
 });

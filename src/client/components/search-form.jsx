@@ -17,7 +17,7 @@ class SearchForm extends Component {
 }
 
 SearchForm.propTypes = {
-    proFinderService: PropTypes.object,
+    updateSearchResults: PropTypes.func,
 }
 
 export default SearchForm;
