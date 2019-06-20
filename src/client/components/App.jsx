@@ -6,13 +6,17 @@ import ProfessionalFinder from './professional-finder.jsx';
 const App = () => {
   return (
     <Router>
-      <Route exact path="/" component={ProfessionalFinder} />
+      <Route
+      exact path="/" component={ProfessionalFinder} />
     </Router>
+    // render={() => {
+    //   return <ProfessionalFinder proFinderService={this.props.proFinderService} />
+    // }}
   )
 }
 
 App.propTypes = {
-  axiosInstance: PropTypes.func,
+  proFinderService: PropTypes.object,
 }
 
 export default App;
