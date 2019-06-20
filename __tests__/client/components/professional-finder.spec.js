@@ -28,6 +28,14 @@ describe('Professional Finder', () => {
         expect(tree).toMatchSnapshot();
     });
 
+    it('Sets some default state with empty searchResulsts on render', () => {
+        const renderedApp = render();
+        expect(
+            renderedApp
+                .state('searchResults')
+        ).toEqual([]);
+    });
+
     it('Renders the container for the layout', () => {
         const renderedApp = render();
         expect(
