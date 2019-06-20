@@ -11,6 +11,6 @@ const axiosInstance = axios;
 const proFinderService = new ProFinderService(axiosInstance);
 
 render(
-  <App />,
+  <App proFinderService={proFinderService}/>,
   document.getElementById('root')
 );

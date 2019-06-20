@@ -39,6 +39,15 @@ describe('App', () => {
         ).toBe(newProFinderService);
     });
 
+    it('Passes the proFinderService down to the child component', () => {
+        const mockAxios = jest.fn();
+        const newProFinderService = new ProFinderService(mockAxios);
+        const renderedApp = render({proFinderService: newProFinderService});
+        expect(
+            renderedApp.find(ProfessionalFinder).props().proFinderService,
+        ).toBe(newProFinderService);
+    });
+
     it('Assigns an object to the prop axiosInstance when passed', () => {
         const axiosInstanceMock = jest.fn();
         const renderedApp = render({ axiosInstance: axiosInstanceMock});
