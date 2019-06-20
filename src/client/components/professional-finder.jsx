@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import PropTypes from 'prop-types'
 import SearchForm from '../components/search-form.jsx'
+import SearchResultsTable from './search-results-table.jsx';
 
 class ProfessionalFinder extends Component {
     constructor(props) {
@@ -25,7 +26,10 @@ class ProfessionalFinder extends Component {
                     />
                 </Row>
                 <Row data-testid="pro-finder__search-results-row">
-
+                    <SearchResultsTable
+                        data-testid="pro-finder__search-results-table"
+                        className="pro-finder__search-results-table"
+                    />
                 </Row>
             </Container>
         );
