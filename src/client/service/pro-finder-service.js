@@ -13,7 +13,7 @@ export default class ProFinderService {
         this.axios = axiosInstance;
     }
 
-    async getProfessionCategories() {
+    getProfessionCategories() {
         if (this.cachedVisibleCategories) {
             return this.cachedVisibleCategories;
         } else {
@@ -21,17 +21,17 @@ export default class ProFinderService {
                 method: 'get',
                 url: 'http://localhost/api/categories'
             }
-            try {
-                const professionCategories = await this.axios(axiosConfig);
+
+            return this.axios(axiosConfig).then(professionCategories => {
                 const visibleProfessionCategories = professionCategories.filter(professionCategory => !professionCategory.hidden);
                 this.cachedVisibleCategories = visibleProfessionCategories;
                 return visibleProfessionCategories;
-            } catch (error) {
+            }).catch(error => {
                 const getCategoriesError =
                     new Error(`Error at proFinderService.getProfessionCategories: ${error.message}`);
                 console.error(getCategoriesError.message);
                 throw getCategoriesError;
-            }
+            })
         }
     }
 
@@ -76,14 +76,12 @@ export default class ProFinderService {
             }
         }
 
-        let searchResults;
-        try {
-            searchResults = await this.axios(axiosConfig);
+        return this.axios(axiosConfig).then(searchResults => {
             return searchResults.response.pros;
-        } catch (error) {
+        }).catch(error => {
             const searchError = new Error(`Error at proFinderService.searchForLocalProfessionals: ${error.message}`);
             console.error(searchError.message);
             throw searchError;
-        }
+        });
     }
 }
