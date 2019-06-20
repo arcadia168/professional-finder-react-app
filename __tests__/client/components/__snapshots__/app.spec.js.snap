@@ -1,10 +1,65 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`App renders the app as expected 1`] = `
-<h1
-  className="app__title"
-  data-testid="app-title"
+<div
+  className="pro-finder__container container"
+  data-testid="pro-finder__container"
 >
-  Hello World
-</h1>
+  <div
+    className="pro-finder__title-row row"
+    data-testid="pro-finder__title-row"
+  >
+    <div
+      className="pro-finder__title-col col"
+      data-testid="pro-finder__title-col"
+    >
+      <h1
+        className="pro-finder__title"
+        data-testid="pro-finder__title"
+      >
+        Find a Local Professional
+      </h1>
+    </div>
+  </div>
+  <div
+    className="pro-finder__search-form-row row"
+    data-testid="pro-finder__search-form-row"
+  >
+    <div
+      className="pro-finder__search-form-col col"
+      data-testid="pro-finder__search-form-col"
+    >
+      <div
+        data-testid="search-form__container"
+      />
+    </div>
+  </div>
+  <div
+    className="row"
+    data-testid="pro-finder__search-results-row"
+  >
+    <div
+      className="pro-finder__search-results-table-col col"
+      data-testid="pro-finder__search-results-table-col"
+    >
+      <div
+        data-testid="search-form-results__container"
+      />
+    </div>
+  </div>
+  <div
+    className="pro-finder__pagination-control-row row"
+    data-testid="pro-finder__pagination-control-row"
+  >
+    <div
+      className="pro-finder__pagingation-control-col col"
+      data-testid="pro-finder__pagination-control-col"
+    >
+      <ul
+        className="pro-finder__pagination-control pagination"
+        data-testid="pro-finder__pagination-control"
+      />
+    </div>
+  </div>
+</div>
 `;

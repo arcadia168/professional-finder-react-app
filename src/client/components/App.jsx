@@ -1,14 +1,12 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import { Button } from 'react-bootstrap';
 import PropTypes from 'prop-types'
-
-const HelloWorld = () => <h1 data-testid="app-title" className="app__title">Hello World</h1>;
+import ProfessionalFinder from '../components/professional-finder';
 
 const App = () => {
   return (
     <Router>
-      <Route exact path="/" component={HelloWorld} />
+      <Route exact path="/" component={ProfessionalFinder} />
     </Router>
   )
 }

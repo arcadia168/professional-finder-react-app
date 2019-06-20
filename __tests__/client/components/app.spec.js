@@ -2,11 +2,7 @@ import React from 'react';
 import App from '../../../src/client/components/app';
 import renderer from 'react-test-renderer';
 import { mount } from 'enzyme';
-import path from 'path';
-import fs from 'fs';
-
-// const pathName = path.resolve(__dirname, `../../__mocks__/validCardResults.json`);
-// const mockCards = fs.readFileSync(pathName, 'utf8');
+import ProfessionalFinder from '../../../src/client/components/professional-finder'
 
 describe('App', () => {
     const render = customProps => {
@@ -28,8 +24,8 @@ describe('App', () => {
     it('successfully renders the app', () => {
         const renderedApp = render();
         expect(
-            renderedApp.find('[data-testid="app-title"]').text(),
-        ).toBe('Hello World');
+            renderedApp.find(ProfessionalFinder).exists(),
+        ).toBeTruthy();
     });
 
     it('Assigns an object to the prop axiosInstance when passed', () => {
