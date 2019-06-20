@@ -12,6 +12,18 @@ import SearchResultsTable from './search-results-table.jsx';
 class ProfessionalFinder extends Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            searchResults: []
+        };
+
+        // this.updateSearchResults = () => {
+        //     this.setState(state => ({
+        //         // Make a call off of the proFinderService
+        //         // If successful add results to state.
+        //         // If unsuccessful add an error to state.
+        //     }));
+        // };
     }
 
     render() {
@@ -52,7 +64,6 @@ class ProfessionalFinder extends Component {
                             data-testid="pro-finder__pagination-control"
                             className="pro-finder__pagination-control"
                         >
-
                         </Pagination>
                     </Col>
                 </Row>
