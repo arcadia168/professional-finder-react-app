@@ -114,6 +114,15 @@ describe('Professional Finder', () => {
             ).toBeTruthy();
         });
 
+        it('Renders a column for the search results table', () => {
+            const renderedApp = render();
+            expect(
+                renderedApp
+                    .find('[data-testid="pro-finder__search-results-table-col"]')
+                    .exists()
+            ).toBeTruthy();
+        });
+
         it('Renders the Search Results Table component', () => {
             const renderedApp = render();
             expect(
@@ -134,13 +143,13 @@ describe('Professional Finder', () => {
             ).toBeTruthy();
         });
 
-        // it('Renders a pagination container', () => {
-        //     const renderedApp = render();
-        //     expect(
-        //         renderedApp
-        //             .find(Pagination)
-        //             .exists()
-        //     ).toBeTruthy();
-        // })
+        it('Renders a pagination container column', () => {
+            const renderedApp = render();
+            expect(
+                renderedApp
+                    .find('[data-testid="pro-finder__pagination-control-col"]')
+                    .exists()
+            ).toBeTruthy();
+        })
     });
 });
