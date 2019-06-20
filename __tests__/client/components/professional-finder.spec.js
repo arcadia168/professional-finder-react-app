@@ -9,11 +9,8 @@ import SearchForm from '../../../src/client/components/search-form';
 import SearchResultsTable from '../../../src/client/components/search-results-table';
 import ProFinderService from '../../../src/client/service/pro-finder-service';
 
-// const pathName = path.resolve(__dirname, `../../__mocks__/validCardResults.json`);
-// const mockCards = fs.readFileSync(pathName, 'utf8');
 const mockLocalProfessionalsPathName = path.resolve(__dirname, `../../__mocks__/local-professionals-mock.json`);
 const mockLocalProfessionals = JSON.parse(fs.readFileSync(mockLocalProfessionalsPathName, 'utf8'));
-const waitForAsync = () => new Promise(resolve => setImmediate(resolve))
 
 describe('Professional Finder', () => {
     const render = customProps => {
@@ -65,8 +62,6 @@ describe('Professional Finder', () => {
                 const component = render({ 'proFinderService': failingProFinderService });
 
                 await component.instance().updateSearchResults();
-                await waitForAsync();
-                component.update();
                 expect(
                     component.state('searchResults')
                 ).toEqual(
@@ -84,8 +79,6 @@ describe('Professional Finder', () => {
                 const component = render({ 'proFinderService': failingProFinderService });
 
                 await component.instance().updateSearchResults();
-                await waitForAsync();
-                component.update();
                 expect(
                     component.state('error')
                 ).toEqual(
