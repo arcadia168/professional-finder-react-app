@@ -48,6 +48,12 @@ class ProfessionalFinder extends Component {
                         data-testid="pro-finder__pagination-control-col"
                         className="pro-finder__pagingation-control-col"
                     >
+                        <Pagination
+                            data-testid="pro-finder__pagination-control"
+                            className="pro-finder__pagination-control"
+                        >
+
+                        </Pagination>
                     </Col>
                 </Row>
             </Container>
