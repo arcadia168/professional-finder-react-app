@@ -24,6 +24,9 @@ class ProfessionalFinder extends Component {
                         className="pro-finder__search-form"
                     />
                 </Row>
+                <Row data-testid="pro-finder__search-results-row">
+
+                </Row>
             </Container>
         );
     };

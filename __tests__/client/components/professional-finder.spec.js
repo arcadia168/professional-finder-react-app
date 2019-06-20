@@ -89,4 +89,15 @@ describe('Professional Finder', () => {
             ).toBeTruthy();
         })
     });
+
+    describe('Search Results Table', () => {
+        it('Renders a row to show the search results', () => {
+            const renderedApp = render();
+            expect(
+                renderedApp
+                    .find('[data-testid="pro-finder__search-results-row"]')
+                    .exists()
+            ).toBeTruthy();
+        });
+    });
 });
