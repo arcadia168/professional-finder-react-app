@@ -4,7 +4,7 @@ import {
     Row,
     Col,
     Pagination,
- } from 'react-bootstrap';
+} from 'react-bootstrap';
 import PropTypes from 'prop-types'
 import SearchForm from '../components/search-form.jsx'
 import SearchResultsTable from './search-results-table.jsx';
@@ -33,13 +33,22 @@ class ProfessionalFinder extends Component {
                     </Col>
                 </Row>
                 <Row data-testid="pro-finder__search-results-row">
-                    <SearchResultsTable
-                        data-testid="pro-finder__search-results-table"
-                        className="pro-finder__search-results-table"
-                    />
+                    <Col
+                        data-testid="pro-finder__search-results-table-col"
+                        className="pro-finder__search-results-table-col"
+                    >
+                        <SearchResultsTable
+                            data-testid="pro-finder__search-results-table"
+                            className="pro-finder__search-results-table"
+                        />
+                    </Col>
                 </Row>
                 <Row data-testid="pro-finder__pagination-control-row" className="pro-finder__pagination-control-row">
-
+                    <Col
+                        data-testid="pro-finder__pagination-control-col"
+                        className="pro-finder__pagingation-control-col"
+                    >
+                    </Col>
                 </Row>
             </Container>
         );
