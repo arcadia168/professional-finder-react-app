@@ -79,5 +79,14 @@ describe('Professional Finder', () => {
                     .exists()
             ).toBeTruthy();
         });
+
+        it('Renders the Search Form component', () => {
+            const renderedApp = render();
+            expect(
+                renderedApp
+                    .find('[data-testid="pro-finder__search-form"]')
+                    .exists()
+            ).toBeTruthy();
+        })
     });
 });
