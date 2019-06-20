@@ -5,6 +5,7 @@ import { mount } from 'enzyme';
 import path from 'path';
 import fs from 'fs';
 import SearchForm from '../../../src/client/components/search-form';
+import SearchResultsTable from '../../../src/client/components/search-results-table';
 
 // const pathName = path.resolve(__dirname, `../../__mocks__/validCardResults.json`);
 // const mockCards = fs.readFileSync(pathName, 'utf8');
@@ -101,13 +102,13 @@ describe('Professional Finder', () => {
             ).toBeTruthy();
         });
 
-        // it('Renders the Search Results Table component', () => {
-        //     const renderedApp = render();
-        //     expect(
-        //         renderedApp
-        //             .find(')
-        //             .exists()
-        //     ).toBeTruthy();
-        // })
+        it('Renders the Search Results Table component', () => {
+            const renderedApp = render();
+            expect(
+                renderedApp
+                    .find(SearchResultsTable)
+                    .exists()
+            ).toBeTruthy();
+        })
     });
 });
