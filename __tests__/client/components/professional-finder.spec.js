@@ -6,6 +6,7 @@ import path from 'path';
 import fs from 'fs';
 import SearchForm from '../../../src/client/components/search-form';
 import SearchResultsTable from '../../../src/client/components/search-results-table';
+import { Pagination } from 'react-bootstrap';
 
 // const pathName = path.resolve(__dirname, `../../__mocks__/validCardResults.json`);
 // const mockCards = fs.readFileSync(pathName, 'utf8');
@@ -151,5 +152,14 @@ describe('Professional Finder', () => {
                     .exists()
             ).toBeTruthy();
         })
+
+        it('Renders a pagination control', () => {
+            const renderedApp = render();
+            expect(
+                renderedApp
+                    .find(Pagination)
+                    .exists()
+            ).toBeTruthy();
+        });
     });
 });

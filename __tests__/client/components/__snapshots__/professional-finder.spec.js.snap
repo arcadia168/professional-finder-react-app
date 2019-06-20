@@ -54,7 +54,12 @@ exports[`Professional Finder renders the app as expected 1`] = `
     <div
       className="pro-finder__pagingation-control-col col"
       data-testid="pro-finder__pagination-control-col"
-    />
+    >
+      <ul
+        className="pro-finder__pagination-control pagination"
+        data-testid="pro-finder__pagination-control"
+      />
+    </div>
   </div>
 </div>
 `;
