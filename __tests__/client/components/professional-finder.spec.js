@@ -50,7 +50,7 @@ describe('Professional Finder', () => {
             const renderedApp = render();
             expect(
                 renderedApp
-                    .find('[data-testid="pro-finder__title-column"]')
+                    .find('[data-testid="pro-finder__title-col"]')
                     .exists()
             ).toBeTruthy();
         });
@@ -78,6 +78,18 @@ describe('Professional Finder', () => {
             expect(
                 renderedApp
                     .find(SearchForm)
+                    .exists()
+            ).toBeTruthy();
+        });
+
+        it('Renders a column to layout the search form', () => {
+        });
+
+        it('Renders a column for the search form', () => {
+            const renderedApp = render();
+            expect(
+                renderedApp
+                    .find('[data-testid="pro-finder__search-form-col"]')
                     .exists()
             ).toBeTruthy();
         });
@@ -121,5 +133,14 @@ describe('Professional Finder', () => {
                     .exists()
             ).toBeTruthy();
         });
+
+        // it('Renders a pagination container', () => {
+        //     const renderedApp = render();
+        //     expect(
+        //         renderedApp
+        //             .find(Pagination)
+        //             .exists()
+        //     ).toBeTruthy();
+        // })
     });
 });

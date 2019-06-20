@@ -10,8 +10,8 @@ exports[`Professional Finder renders the app as expected 1`] = `
     data-testid="pro-finder__title-row"
   >
     <div
-      className="pro-finder__title-column col"
-      data-testid="pro-finder__title-column"
+      className="pro-finder__title-col col"
+      data-testid="pro-finder__title-col"
     >
       <h1
         className="pro-finder__title"
@@ -26,8 +26,13 @@ exports[`Professional Finder renders the app as expected 1`] = `
     data-testid="pro-finder__search-form-row"
   >
     <div
-      data-testid="search-form__container"
-    />
+      className="pro-finder__search-form-col col"
+      data-testid="pro-finder__search-form-col"
+    >
+      <div
+        data-testid="search-form__container"
+      />
+    </div>
   </div>
   <div
     className="row"
