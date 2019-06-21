@@ -45,6 +45,7 @@ exports[`Professional Finder renders the app as expected 1`] = `
             aria-label="Enter UK Postcode here..."
             className="form-control"
             data-testid="search-form__search-field-input"
+            onChange={[Function]}
             placeholder="Enter UK Postcode here..."
           />
         </div>
