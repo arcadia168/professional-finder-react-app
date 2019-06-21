@@ -54,6 +54,7 @@ class SearchForm extends Component {
 
 SearchForm.propTypes = {
     updateSearchResults: PropTypes.func,
+    getCategories: PropTypes.func,
 }
 
 export default SearchForm;

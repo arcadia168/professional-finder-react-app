@@ -11,6 +11,9 @@ import ProFinderService from '../../../src/client/service/pro-finder-service';
 
 const mockLocalProfessionalsPathName = path.resolve(__dirname, `../../__mocks__/local-professionals-mock.json`);
 const mockLocalProfessionals = JSON.parse(fs.readFileSync(mockLocalProfessionalsPathName, 'utf8'));
+const mockCategoriesPathName = path.resolve(__dirname, `../../__mocks__/profession-categories-mock.json`);
+const mockProfessionCategories = JSON.parse(fs.readFileSync(mockCategoriesPathName, 'utf8'));
+const visibleProfessionCategoriesMock = mockProfessionCategories.filter(currentProfessionCategory => !currentProfessionCategory.hidden);
 
 describe('Professional Finder', () => {
     const render = customProps => {
@@ -29,7 +32,7 @@ describe('Professional Finder', () => {
         expect(tree).toMatchSnapshot();
     });
 
-    it('Sets some default state with empty searchResulsts on render', () => {
+    it('Sets some default state with empty searchResulst on render', () => {
         const component = render();
         expect(
             component
@@ -141,6 +144,19 @@ describe('Professional Finder', () => {
                     .find(SearchForm)
                     .exists()
             ).toBeTruthy();
+        });
+
+        it('Passes the proFinderService prop down to the SearchForm', () => {
+            const mockAxios = jest.fn();
+            const newProFinderService = new ProFinderService(mockAxios);
+            const component = render({'proFinderService' : newProFinderService});
+            expect(
+                component
+                    .find(SearchForm)
+                    .props().proFinderService
+            ).toBe(
+                newProFinderService
+            );
         });
 
         it('Renders a column to layout the search form', () => {
