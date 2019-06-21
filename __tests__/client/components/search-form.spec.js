@@ -17,6 +17,7 @@ describe('Search Form', () => {
     const render = customProps => {
         const props = {
             // Default props
+            categories: visibleProfessionCategoriesMock,
             ...customProps,
         }
         return mount(<SearchForm {...props} />);
@@ -24,7 +25,9 @@ describe('Search Form', () => {
 
     it('renders the app as expected', () => {
         const component = renderer.create(
-            <SearchForm />,
+            <SearchForm
+                categories={visibleProfessionCategoriesMock}
+            />,
         );
         let tree = component.toJSON();
         expect(tree).toMatchSnapshot();

@@ -19,6 +19,7 @@ describe('Professional Finder', () => {
     const render = customProps => {
         const props = {
             // Default props
+            categories: visibleProfessionCategoriesMock,
             ...customProps,
         }
         return mount(<ProfessionalFinder {...props} />);
@@ -26,7 +27,7 @@ describe('Professional Finder', () => {
 
     it('renders the app as expected', () => {
         const component = renderer.create(
-            <ProfessionalFinder />,
+            <ProfessionalFinder categories={visibleProfessionCategoriesMock}/>,
         );
         let tree = component.toJSON();
         expect(tree).toMatchSnapshot();

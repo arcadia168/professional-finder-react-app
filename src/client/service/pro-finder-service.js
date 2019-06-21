@@ -19,11 +19,11 @@ export default class ProFinderService {
         } else {
             const axiosConfig = {
                 method: 'get',
-                url: 'http://localhost/api/categories'
+                url: 'http://localhost:3000/api/categories'
             }
 
             return this.axios(axiosConfig).then(professionCategories => {
-                const visibleProfessionCategories = professionCategories.filter(professionCategory => !professionCategory.hidden);
+                const visibleProfessionCategories = professionCategories.data.filter(professionCategory => !professionCategory.hidden);
                 this.cachedVisibleCategories = visibleProfessionCategories;
                 return visibleProfessionCategories;
             }).catch(error => {
