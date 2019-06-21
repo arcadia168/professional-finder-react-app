@@ -16,6 +16,7 @@ class App extends Component {
           path="/"
           render={() => {
             return <ProfessionalFinder
+              categories={this.props.categories}
               proFinderService={this.props.proFinderService}
             />
           }}
@@ -27,6 +28,7 @@ class App extends Component {
 
 App.propTypes = {
   proFinderService: PropTypes.object,
+  categories: PropTypes.array,
 }
 
 export default App;

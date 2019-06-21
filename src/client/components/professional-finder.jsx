@@ -55,8 +55,8 @@ class ProfessionalFinder extends Component {
                         <SearchForm
                             data-testid="pro-finder__search-form"
                             className="pro-finder__search-form"
+                            categories={this.props.categories}
                             proFinderService={this.props.proFinderService}
-
                         />
                     </Col>
                 </Row>
@@ -90,6 +90,7 @@ class ProfessionalFinder extends Component {
 
 ProfessionalFinder.propTypes = {
     proFinderService: PropTypes.object,
+    categories: PropTypes.array
 }
 
 export default ProfessionalFinder;
