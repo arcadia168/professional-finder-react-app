@@ -35,6 +35,17 @@ describe('Search Form', () => {
         ).toBeTruthy();
     });
 
+    it('Sets up the default state', () => {
+        const renderedApp = render();
+        expect(
+            renderedApp
+                .state()
+        ).toEqual({
+            postcode: '',
+            categories: [],
+        });
+    });
+
     it('Sets a prop to update the search results', () => {
         const mockUpdateResults = jest.fn();
         const renderedApp = render({ 'updateSearchResults': mockUpdateResults });
@@ -144,4 +155,14 @@ describe('Search Form', () => {
             renderedApp.state('postcode')
         ).toBe('OL16 4HF');
     });
+
+    // describe('When search button is pressed', () => {
+    //     describe('When the postcode entered is invalid', () => {
+
+    //     });
+
+    //     describe('When the postcode entered is valid', () => {
+
+    //     });
+    // });
 });

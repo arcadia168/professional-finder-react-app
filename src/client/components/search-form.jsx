@@ -7,7 +7,8 @@ class SearchForm extends Component {
         super(props);
 
         this.state = {
-            postcode: ''
+            postcode: '',
+            categories: [],
         }
 
         this.validatePostcode = postcode => {
