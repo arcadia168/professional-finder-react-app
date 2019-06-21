@@ -128,4 +128,20 @@ describe('Search Form', () => {
             validPostcode
         ).toBe(false);
     })
+
+    it('Should set valid postcode on state when typed into field', () => {
+        const renderedApp = render();
+        renderedApp.find(FormControl)
+            .simulate(
+                'change',
+                { target:
+                    {
+                        value: 'OL16 4HF'
+                    }
+                }
+            )
+        expect(
+            renderedApp.state('postcode')
+        ).toBe('OL16 4HF');
+    });
 });

@@ -6,10 +6,20 @@ class SearchForm extends Component {
     constructor(props) {
         super(props);
 
+        this.state = {
+            postcode: ''
+        }
+
         this.validatePostcode = postcode => {
             postcode = postcode.replace(/\s/g, "");
             const regex = /^[A-Z]{1,2}[0-9]{1,2}[A-Z]{0,1} ?[0-9][A-Z]{2}$/i
             return regex.test(postcode);
+        }
+
+        this.updateInputValue = evt => {
+            this.setState({
+                postcode: evt.target.value
+            });
         }
     }
 
@@ -28,6 +38,8 @@ class SearchForm extends Component {
                         data-testid="search-form__search-field-input"
                         placeholder="Enter UK Postcode here..."
                         aria-label="Enter UK Postcode here..."
+                        ref="searchField"
+                        onChange={this.updateInputValue}
                     >
                     </FormControl>
                 </InputGroup>
