@@ -101,6 +101,17 @@ describe('Search Form', () => {
                         .prop('placeholder')
                 ).toBe('Enter UK Postcode here...');
             });
-        })
+
+            it('Should have a an aria label', () => {
+                const renderedApp = render();
+                expect(
+                    renderedApp
+                        .find('[data-testid="search-form__search-field-input"]').at(0)
+                        .prop('aria-label')
+                ).toBe('Enter UK Postcode here...');
+            });
+        });
+
+        describe('Should ')
     });
 });
