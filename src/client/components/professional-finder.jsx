@@ -68,6 +68,7 @@ class ProfessionalFinder extends Component {
                         <SearchResultsTable
                             data-testid="pro-finder__search-results-table"
                             className="pro-finder__search-results-table"
+                            searchResults={this.state.searchResults}
                         />
                     </Col>
                 </Row>

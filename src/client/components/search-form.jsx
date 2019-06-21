@@ -31,11 +31,16 @@ class SearchForm extends Component {
                     data-testid="search-form__category-dropdown"
                     className="search-form__category-dropdown"
                 >
-                    {
-                        this.props.categories.map(category => {
-                            return <Dropdown.Item key={category.id}>{category.name}</Dropdown.Item>
-                        })
-                    }
+                    <Dropdown.Toggle variant="success" id="dropdown-basic">
+                        Choose category
+                    </Dropdown.Toggle>
+                    <Dropdown.Menu>
+                        {
+                            this.props.categories.map(category => {
+                                return <Dropdown.Item key={category.id}>{category.name}</Dropdown.Item>
+                            })
+                        }
+                    </Dropdown.Menu>
                 </Dropdown>
                 <InputGroup
                     data-testid="search-form__search-field"
