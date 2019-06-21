@@ -23,7 +23,6 @@ class SearchForm extends Component {
                         placeholder="Enter UK Postcode here..."
                         aria-label="Enter UK Postcode here..."
                     >
-
                     </FormControl>
                 </InputGroup>
                 <Button data-testid="search-form__search-btn" className="search-form__search-btn">
