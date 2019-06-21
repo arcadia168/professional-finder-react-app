@@ -9,7 +9,11 @@ import ProFinderService from '../client/service/pro-finder-service';
 const axiosInstance = axios;
 const proFinderService = new ProFinderService(axiosInstance);
 
-render(
-  <App proFinderService={proFinderService}/>,
-  document.getElementById('root')
-);
+proFinderService.getProfessionCategories().then(
+  categories => {
+    render(
+      <App categories={categories} proFinderService={proFinderService}/>,
+      document.getElementById('root')
+    );
+  }
+)

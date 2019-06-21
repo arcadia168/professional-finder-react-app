@@ -6,6 +6,10 @@ import { mount } from 'enzyme';
 import path from 'path';
 import fs from 'fs';
 
+const mockCategoriesPathName = path.resolve(__dirname, `../../__mocks__/profession-categories-mock.json`);
+const mockProfessionCategories = JSON.parse(fs.readFileSync(mockCategoriesPathName, 'utf8'));
+const visibleProfessionCategoriesMock = mockProfessionCategories.filter(currentProfessionCategory => !currentProfessionCategory.hidden);
+
 // const pathName = path.resolve(__dirname, `../../__mocks__/validCardResults.json`);
 // const mockCards = fs.readFileSync(pathName, 'utf8');
 
@@ -44,6 +48,27 @@ describe('Search Form', () => {
             postcode: '',
             categories: [],
         });
+    });
+
+    it('Sets up the default props', () => {
+        const fakeResultsUpdater = jest.fn();
+        const fakeProFinderService = jest.fn();
+        const renderedApp = render({
+            updateSearchResults: fakeResultsUpdater,
+            proFinderService: fakeProFinderService,
+        });
+        expect(
+            renderedApp
+                .props().updateSearchResults
+        ).toEqual(
+            fakeResultsUpdater
+        );
+        expect(
+            renderedApp
+                .props().proFinderService
+        ).toEqual(
+            fakeProFinderService
+        );
     });
 
     it('Sets a prop to update the search results', () => {
@@ -145,7 +170,8 @@ describe('Search Form', () => {
         renderedApp.find(FormControl)
             .simulate(
                 'change',
-                { target:
+                {
+                    target:
                     {
                         value: 'OL16 4HF'
                     }
