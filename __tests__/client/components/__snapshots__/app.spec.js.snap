@@ -37,6 +37,10 @@ exports[`App renders the app as expected 1`] = `
           data-testid="search-form__category-dropdown"
           onKeyDown={[Function]}
         />
+        <div
+          className="input-group"
+          data-testid="search-form__search-field"
+        />
         <button
           className="search-form__search-btn btn btn-primary"
           data-testid="search-form__search-btn"

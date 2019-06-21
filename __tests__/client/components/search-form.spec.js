@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dropdown, Button } from 'react-bootstrap'
+import { Dropdown, Button, InputGroup, FormControl } from 'react-bootstrap'
 import SearchForm from '../../../src/client/components/search-form';
 import renderer from 'react-test-renderer';
 import { mount } from 'enzyme';
@@ -37,7 +37,7 @@ describe('Search Form', () => {
 
     it('Sets a prop to update the search results', () => {
         const mockUpdateResults = jest.fn();
-        const renderedApp = render({ 'updateSearchResults': mockUpdateResults});
+        const renderedApp = render({ 'updateSearchResults': mockUpdateResults });
         expect(
             renderedApp
                 .props().updateSearchResults
@@ -48,7 +48,7 @@ describe('Search Form', () => {
         const renderedApp = render();
         expect(
             renderedApp
-                .find(Dropdown)
+                .find('[data-testid="search-form__category-dropdown"]')
                 .exists()
         ).toBeTruthy();
     });
@@ -57,7 +57,7 @@ describe('Search Form', () => {
         const renderedApp = render();
         expect(
             renderedApp
-                .find(Button)
+                .find('[data-testid="search-form__search-btn"]')
                 .exists()
         ).toBeTruthy();
     });
@@ -66,10 +66,21 @@ describe('Search Form', () => {
         const renderedApp = render();
         expect(
             renderedApp
-                .find(Button)
+                .find('[data-testid="search-form__search-btn"]').at(0)
                 .text()
         ).toEqual(
             'Search'
         );
+    });
+
+    describe('Search Postcode Field', () => {
+        it('Should have a container for the search field', () => {
+            const renderedApp = render();
+            expect(
+                renderedApp
+                    .find('[data-testid="search-form__search-field"]').at(0)
+                    .exists()
+            ).toBeTruthy();
+        });
     });
 });
