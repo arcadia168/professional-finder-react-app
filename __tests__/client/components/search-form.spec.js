@@ -44,15 +44,6 @@ describe('Search Form', () => {
         ).toBe(mockUpdateResults);
     })
 
-    it('Should render a dropdown container', () => {
-        const renderedApp = render();
-        expect(
-            renderedApp
-                .find('[data-testid="search-form__category-dropdown-container"]')
-                .exists()
-        ).toBeTruthy()
-    });
-
     it('Should render a dropdown', () => {
         const renderedApp = render();
         expect(
@@ -69,5 +60,16 @@ describe('Search Form', () => {
                 .find(Button)
                 .exists()
         ).toBeTruthy();
+    });
+
+    it('Should have a button label', () => {
+        const renderedApp = render();
+        expect(
+            renderedApp
+                .find(Button)
+                .text()
+        ).toEqual(
+            'Search'
+        );
     });
 });
