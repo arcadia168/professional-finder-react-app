@@ -33,22 +33,18 @@ exports[`App renders the app as expected 1`] = `
         data-testid="search-form__container"
       >
         <div
-          className="search-form__category-dropdown-container"
-          data-testid="search-form__category-dropdown-container"
+          className="search-form__category-dropdown dropdown"
+          data-testid="search-form__category-dropdown"
+          onKeyDown={[Function]}
+        />
+        <button
+          className="search-form__search-btn btn btn-primary"
+          data-testid="search-form__search-btn"
+          disabled={false}
+          type="button"
         >
-          <div
-            className="search-form__category-dropdown dropdown"
-            data-testid="search-form__category-dropdown"
-            onKeyDown={[Function]}
-          >
-            <button
-              className="search-form__search-btn btn btn-primary"
-              data-testid="search-form__search-btn"
-              disabled={false}
-              type="button"
-            />
-          </div>
-        </div>
+          Search
+        </button>
       </div>
     </div>
   </div>
