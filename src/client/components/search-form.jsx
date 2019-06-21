@@ -20,7 +20,8 @@ class SearchForm extends Component {
                 >
                     <FormControl
                         data-testid="search-form__search-field-input"
-
+                        placeholder="Enter UK Postcode here..."
+                        aria-label="Enter UK Postcode here..."
                     >
 
                     </FormControl>
