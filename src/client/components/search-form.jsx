@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col, Dropdown, Button, InputGroup } from 'react-bootstrap';
+import { Row, Col, Dropdown, Button, InputGroup, FormControl } from 'react-bootstrap';
 import PropTypes from 'prop-types'
 
 class SearchForm extends Component {
@@ -18,6 +18,12 @@ class SearchForm extends Component {
                 <InputGroup
                     data-testid="search-form__search-field"
                 >
+                    <FormControl
+                        data-testid="search-form__search-field-input"
+
+                    >
+
+                    </FormControl>
                 </InputGroup>
                 <Button data-testid="search-form__search-btn" className="search-form__search-btn">
                     Search

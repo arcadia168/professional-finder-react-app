@@ -12,7 +12,12 @@ exports[`Search Form renders the app as expected 1`] = `
   <div
     className="input-group"
     data-testid="search-form__search-field"
-  />
+  >
+    <input
+      className="form-control"
+      data-testid="search-form__search-field-input"
+    />
+  </div>
   <button
     className="search-form__search-btn btn btn-primary"
     data-testid="search-form__search-btn"

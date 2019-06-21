@@ -82,5 +82,14 @@ describe('Search Form', () => {
                     .exists()
             ).toBeTruthy();
         });
+
+        it('Should have an input field for the postcode', () => {
+            const renderedApp = render();
+            expect(
+                renderedApp
+                    .find('[data-testid="search-form__search-field-input"]').at(0)
+                    .exists()
+            ).toBeTruthy();
+        });
     });
 });
