@@ -111,7 +111,21 @@ describe('Search Form', () => {
                 ).toBe('Enter UK Postcode here...');
             });
         });
-
-        describe('Should ')
     });
+
+    it('Should take a valid postcode as valid', () => {
+        const renderedApp = render();
+        const validPostcode = renderedApp.instance().validatePostcode('OL16 3QS');
+        expect(
+            validPostcode
+        ).toBe(true);
+    });
+
+    it('Should take an invalid postcode as invalid', () => {
+        const renderedApp = render();
+        const validPostcode = renderedApp.instance().validatePostcode('sdfsdfsdf');
+        expect(
+            validPostcode
+        ).toBe(false);
+    })
 });

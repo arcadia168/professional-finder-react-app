@@ -5,6 +5,12 @@ import PropTypes from 'prop-types'
 class SearchForm extends Component {
     constructor(props) {
         super(props);
+
+        this.validatePostcode = postcode => {
+            postcode = postcode.replace(/\s/g, "");
+            const regex = /^[A-Z]{1,2}[0-9]{1,2}[A-Z]{0,1} ?[0-9][A-Z]{2}$/i
+            return regex.test(postcode);
+        }
     }
 
     render() {
