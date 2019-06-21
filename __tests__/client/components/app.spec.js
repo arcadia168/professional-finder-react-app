@@ -1,15 +1,20 @@
 import React from 'react';
 import App from '../../../src/client/components/app';
 import renderer from 'react-test-renderer';
+import path from 'path';
+import fs from 'fs';
 import { mount } from 'enzyme';
 import ProfessionalFinder from '../../../src/client/components/professional-finder'
 import proFinderService from '../../../src/client/components/professional-finder';
 import ProFinderService from '../../../src/client/service/pro-finder-service';
-
+const mockCategoriesPathName = path.resolve(__dirname, `../../__mocks__/profession-categories-mock.json`);
+const mockProfessionCategories = JSON.parse(fs.readFileSync(mockCategoriesPathName, 'utf8'));
+const visibleProfessionCategoriesMock = mockProfessionCategories.filter(currentProfessionCategory => !currentProfessionCategory.hidden);
 describe('App', () => {
     const render = customProps => {
         const props = {
             // Default props
+            categories: visibleProfessionCategoriesMock,
             ...customProps,
         }
         return mount(<App {...props}/>);
@@ -17,7 +22,9 @@ describe('App', () => {
 
     it('renders the app as expected', () => {
         const component = renderer.create(
-            <App />,
+            <App
+                categories={visibleProfessionCategoriesMock}
+            />,
         );
         let tree = component.toJSON();
         expect(tree).toMatchSnapshot();

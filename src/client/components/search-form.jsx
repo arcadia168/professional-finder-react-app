@@ -31,6 +31,11 @@ class SearchForm extends Component {
                     data-testid="search-form__category-dropdown"
                     className="search-form__category-dropdown"
                 >
+                    {
+                        this.props.categories.map(category => {
+                            return <Dropdown.Item key={category.id}>{category.name}</Dropdown.Item>
+                        })
+                    }
                 </Dropdown>
                 <InputGroup
                     data-testid="search-form__search-field"
@@ -54,7 +59,7 @@ class SearchForm extends Component {
 
 SearchForm.propTypes = {
     updateSearchResults: PropTypes.func,
-    proFinderService: PropTypes.object,
+    categories: PropTypes.array,
 }
 
 export default SearchForm;

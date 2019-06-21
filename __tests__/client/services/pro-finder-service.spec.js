@@ -93,7 +93,9 @@ describe('Pro Finder Api Service', () => {
             let proFinderServiceInstance;
 
             beforeEach(() => {
-                mockAxiosCategories = jest.fn(() => Promise.resolve(mockProfessionCategories));
+                mockAxiosCategories = jest.fn(() => Promise.resolve({
+                    data: mockProfessionCategories
+                }));
                 proFinderServiceInstance = new ProFinderService(mockAxiosCategories);
             })
 
