@@ -85,8 +85,10 @@ export default class ProFinderService {
             // console.log(`response is: ${JSON.stringify(response)}`);
 
             // Attach total header to pros
+            const originalResponse = response.data.response.pros;
+            const testResults = originalResponse.concat(originalResponse).concat(originalResponse).concat(originalResponse);
 
-            return response.data.response.pros;
+            return testResults;
         }).catch(error => {
             const searchError = new Error(`Error at proFinderService.searchForLocalProfessionals: ${error.message}`);
             console.error(searchError.message);
