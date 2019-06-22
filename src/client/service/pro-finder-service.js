@@ -70,7 +70,6 @@ export default class ProFinderService {
             'category_id': categoryId,
             location
         };
-        debugger;
         const axiosConfig = {
             method: 'post',
             url: proFinderApiUrl,

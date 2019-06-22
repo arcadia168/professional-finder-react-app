@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Row, Col, Container } from 'react-bootstrap';
 import PropTypes from 'prop-types'
+import StarRatingComponent from 'react-star-rating-component';
 
 export default class SearchResultsTable extends Component {
     constructor(props) {
@@ -18,15 +19,25 @@ export default class SearchResultsTable extends Component {
                 </Row>
                 {
                     this.props.searchResults.map(searchResult => {
-                        return <Row>
+                        return <Row key={searchResult.id}>
                             <Col>{searchResult.id}</Col>
-                            <Col>{searchResult.name}</Col>
+                            <Col>{searchResult.name.slice(0, -32)}</Col>
                             <Col>{searchResult.main_address.postcode}</Col>
-                            <Col>{searchResult.review_rating}</Col>
+                            <Col>
+                                <StarRatingComponent
+                                    name={searchResult.name}
+                                    starCount={5}
+                                    value={searchResult.review_rating}
+                                />
+                            </Col>
                         </Row>
                     })
                 }
             </Container>
         );
     }
+}
+
+SearchResultsTable.propTypes = {
+    searchResults: PropTypes.array,
 }

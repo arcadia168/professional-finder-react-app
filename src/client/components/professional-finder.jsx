@@ -15,7 +15,9 @@ class ProfessionalFinder extends Component {
 
         this.state = {
             searchResults: [],
-            error: undefined
+            numPages: 0,
+            error: undefined,
+            activePage: 1,
         };
 
         this.updateSearchResults = (
@@ -29,13 +31,13 @@ class ProfessionalFinder extends Component {
                 offset,
                 location
             ).then(searchResults => {
-                debugger;
-                console.log('updating search resulsts');
+                console.log(`updating search resulsts with ${searchResults.length}`);
+                let numPages = Math.ceil(searchResults.length / 20)
                 this.setState({
-                    searchResults: searchResults
+                    searchResults: searchResults,
+                    numPages: numPages,
                 });
             }).catch(error => {
-                debugger;
                 console.log('error in search results')
                 const userFriendlyError = `Oops! Something went wrong: ${error.message}`;
                 this.setState({
@@ -46,6 +48,15 @@ class ProfessionalFinder extends Component {
     };
 
     render() {
+        let pages = [];
+        debugger;
+        for (let i = 0; i < this.state.numPages; i++) {
+            pages.push(
+                <Pagination.Item key={i} active={this.state.activePage}>
+                    {i + 1}
+                </Pagination.Item>
+            )
+        }
         return (
             <Container data-testid="pro-finder__container" className="pro-finder__container">
                 <Row data-testid="pro-finder__title-row" className="pro-finder__title-row">
@@ -83,11 +94,15 @@ class ProfessionalFinder extends Component {
                         data-testid="pro-finder__pagination-control-col"
                         className="pro-finder__pagingation-control-col"
                     >
-                        <Pagination
-                            data-testid="pro-finder__pagination-control"
-                            className="pro-finder__pagination-control"
-                        >
-                        </Pagination>
+                        {
+                            pages.length > 1 ?
+                                <Pagination
+                                    data-testid="pro-finder__pagination-control"
+                                    className="pro-finder__pagination-control"
+                                >
+                                    {pages}
+                                </Pagination> : null
+                        }
                     </Col>
                 </Row>
             </Container>
