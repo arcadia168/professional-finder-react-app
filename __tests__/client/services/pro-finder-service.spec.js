@@ -270,22 +270,6 @@ describe('Pro Finder Api Service', () => {
         });
 
         describe('When valid search paramters are passed to the method', () => {
-            it('Should make a POST call to the API to get local professionals', async () => {
-                try {
-                    const localProfessionals =
-                        await proFinderServiceInstance.searchForLocalProfessionals(
-                            validCategoryId,
-                            validPaginationOffsetHeader,
-                            validLocation
-                        )
-                    expect(
-                        mockAxios
-                    ).toHaveBeenCalled()
-                } catch (error) {
-                    expect(error).toBe(null);
-                }
-            });
-
             describe('When the call to the POST API endpoint fails', () => {
                 let mockAxiosError;
                 let proFinderServiceInstanceError;
@@ -316,21 +300,6 @@ describe('Pro Finder Api Service', () => {
                         ).toHaveBeenCalledWith(
                             expectedErrorMessage
                         )
-                    }
-                });
-            });
-
-            describe('When the call to the POST API endpoint succeeds', () => {
-                it('Returns the search results', async () => {
-                    try {
-                        const searchResults = await proFinderServiceInstance.searchForLocalProfessionals(
-                            validCategoryId,
-                            validPaginationOffsetHeader,
-                            validLocation
-                        )
-                        expect(searchResults).toEqual(mockLocalProfessionals.response.pros);
-                    } catch (error) {
-                        expect(error).toBe(null);
                     }
                 });
             });
