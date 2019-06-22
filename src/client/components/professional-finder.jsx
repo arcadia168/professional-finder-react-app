@@ -59,7 +59,6 @@ class ProfessionalFinder extends Component {
                 const numPages = Math.ceil(response.totalCount / 20)
                 console.log(`updating search resulsts with ${searchResults.length}`);
 
-                //If no results here also set an error
                 if (searchResults.length === 0) {
                     this.setState({
                         error: 'No local professionals found for this search. Please try again.',
@@ -93,7 +92,7 @@ class ProfessionalFinder extends Component {
             if (evt.target.parentNode.parentNode.className.indexOf('first-item') > -1) {
                 pageClicked = 0;
             } else if (evt.target.parentNode.parentNode.className.indexOf('last-item') > -1) {
-                pageClicked = 0; // todo: set to max last page.
+                pageClicked = this.state.numPages - 1; // todo: set to max last page.
             } else {
                 pageClicked = Number.parseInt(evt.target.text) - 1; // 0 indexed
             }
@@ -190,6 +189,7 @@ class ProfessionalFinder extends Component {
                                             <Pagination.Last
                                                 className="pro-finder__pagination-last-item"
                                                 onClick={this.handlePageChanged}
+                                                key={this.state.numPages - 1}
                                             />
                                         </Pagination> : null
                                 }
