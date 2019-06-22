@@ -1,8 +1,3 @@
-// import path from 'path';
-// import fs from 'fs';
-import qs from 'qs';
-import axios from 'axios';
-
 export default class ProFinderService {
     constructor(axiosInstance) {
         if (!axiosInstance) {
