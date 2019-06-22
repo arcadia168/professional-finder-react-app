@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col, Dropdown, DropdownButton, Button, InputGroup, FormControl } from 'react-bootstrap';
+import { Dropdown, DropdownButton, Button, InputGroup, FormControl } from 'react-bootstrap';
 import PropTypes from 'prop-types'
 
 class SearchForm extends Component {

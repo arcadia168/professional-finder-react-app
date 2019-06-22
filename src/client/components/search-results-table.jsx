@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, td, Table, Alert } from 'react-bootstrap';
+import { Table, Alert } from 'react-bootstrap';
 import PropTypes from 'prop-types'
 import StarRatingComponent from 'react-star-rating-component';
 
