@@ -23,15 +23,20 @@ class ProfessionalFinder extends Component {
             location,
             offset,
         ) => {
+            console.log(`params are: ${categoryId} ${location} ${offset}`)
             return this.props.proFinderService.searchForLocalProfessionals(
                 categoryId,
-                location,
-                offset
+                offset,
+                location
             ).then(searchResults => {
+                debugger;
+                console.log('updating search resulsts');
                 this.setState({
                     searchResults: searchResults
                 });
             }).catch(error => {
+                debugger;
+                console.log('error in search results')
                 const userFriendlyError = `Oops! Something went wrong: ${error.message}`;
                 this.setState({
                     error: userFriendlyError
@@ -57,6 +62,7 @@ class ProfessionalFinder extends Component {
                             className="pro-finder__search-form"
                             categories={this.props.categories}
                             proFinderService={this.props.proFinderService}
+                            updateSearchResults={this.updateSearchResults}
                         />
                     </Col>
                 </Row>

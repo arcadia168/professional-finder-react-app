@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col, Dropdown, Button, InputGroup, FormControl } from 'react-bootstrap';
+import { Row, Col, Dropdown, DropdownButton, Button, InputGroup, FormControl } from 'react-bootstrap';
 import PropTypes from 'prop-types'
 
 class SearchForm extends Component {
@@ -9,11 +9,13 @@ class SearchForm extends Component {
         this.state = {
             postcode: '',
             categories: [],
+            categoryId: '',
+            categoryName: 'Choose a category',
         }
 
         this.validatePostcode = postcode => {
             postcode = postcode.replace(/\s/g, "");
-            const regex = /^[A-Z]{1,2}[0-9]{1,2}[A-Z]{0,1} ?[0-9][A-Z]{2}$/i
+            const regex = /^[A-Z]{1,2}[0-9]{1,2}[A-Z]{0,1}/i
             return regex.test(postcode);
         }
 
@@ -22,26 +24,55 @@ class SearchForm extends Component {
                 postcode: evt.target.value
             });
         }
+
+        this.handleCategoryChosen = (evt, evtKey) => {
+            console.log(`Setting category on state: ${evtKey}`);
+            console.log(`category chosen is: ${JSON.stringify(evt)}`)
+            this.setState({
+                categoryId: evt
+            })
+        }
+
+        this.handleSearchBtn = () => {
+            console.log('search btn clicked');
+
+            const postcode = this.state.postcode;
+            const categoryId = this.state.categoryId;
+
+            console.log(`postcode is: ${postcode}`);
+            console.log(`categoryId is: ${categoryId}`);
+            console.log('validating postcode');
+            if (!this.validatePostcode(postcode) || !categoryId) {
+                console.log('enter valid postcode and category');
+                this.setState({
+                    error: 'Please enter a valid UK postcode and choose a category'
+                });
+            } else {
+                // Make the call to the API
+                this.props.updateSearchResults(
+                    Number.parseInt(categoryId),
+                    postcode,
+                    0
+                );
+            };
+        }
     }
 
     render() {
         return (
             <div data-testid="search-form__container">
-                <Dropdown
+                <DropdownButton
+                    title={this.state.categoryName}
+                    onSelect={this.handleCategoryChosen}
                     data-testid="search-form__category-dropdown"
                     className="search-form__category-dropdown"
                 >
-                    <Dropdown.Toggle variant="success" id="dropdown-basic">
-                        Choose category
-                    </Dropdown.Toggle>
-                    <Dropdown.Menu>
-                        {
-                            this.props.categories.map(category => {
-                                return <Dropdown.Item key={category.id}>{category.name}</Dropdown.Item>
-                            })
-                        }
-                    </Dropdown.Menu>
-                </Dropdown>
+                    {
+                        this.props.categories.map(category => {
+                            return <Dropdown.Item key={category.id} eventKey={category.id}>{category.name}</Dropdown.Item>
+                        })
+                    }
+                </DropdownButton>
                 <InputGroup
                     data-testid="search-form__search-field"
                 >
@@ -54,7 +85,11 @@ class SearchForm extends Component {
                     >
                     </FormControl>
                 </InputGroup>
-                <Button data-testid="search-form__search-btn" className="search-form__search-btn">
+                <Button
+                    data-testid="search-form__search-btn"
+                    className="search-form__search-btn"
+                    onClick={this.handleSearchBtn}
+                >
                     Search
                 </Button>
             </div >

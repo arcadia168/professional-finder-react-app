@@ -12,7 +12,7 @@ export default class SearchResultsTable extends Component {
             <div data-testid="search-form-results__container">
                 {
                     this.props.searchResults.map(searchResult => {
-                        return <h1>result</h1>
+                        return <h1>{searchResult.name}</h1>
                     })
                 }
             </div>
