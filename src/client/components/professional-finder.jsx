@@ -53,9 +53,11 @@ class ProfessionalFinder extends Component {
                 categoryId,
                 offset,
                 location
-            ).then(searchResults => {
+            ).then(response => {
+                const searchResults = response.results;
+                debugger;
+                const numPages = Math.ceil(response.totalCount / 20)
                 console.log(`updating search resulsts with ${searchResults.length}`);
-                let numPages = Math.ceil(searchResults.length / 20)
 
                 //If no results here also set an error
                 if (searchResults.length === 0) {
@@ -85,7 +87,17 @@ class ProfessionalFinder extends Component {
         }
 
         this.handlePageChanged = evt => {
-            const pageClicked = Number.parseInt(evt.target.text) - 1; // 0 indexed
+            debugger;
+            let pageClicked;
+
+            if (evt.target.parentNode.parentNode.className.indexOf('first-item') > -1) {
+                pageClicked = 0;
+            } else if (evt.target.parentNode.parentNode.className.indexOf('last-item') > -1) {
+                pageClicked = 0; // todo: set to max last page.
+            } else {
+                pageClicked = Number.parseInt(evt.target.text) - 1; // 0 indexed
+            }
+
             const newPageResultsOffset = pageClicked * 20;
 
             this.updateSearchResults(
@@ -169,7 +181,16 @@ class ProfessionalFinder extends Component {
                                             data-testid="pro-finder__pagination-control"
                                             className="pro-finder__pagination-control"
                                         >
+                                            <Pagination.First
+                                                className="pro-finder__pagination-first-item"
+                                                onClick={this.handlePageChanged}
+                                                key={0}
+                                            />
                                             {pages}
+                                            <Pagination.Last
+                                                className="pro-finder__pagination-last-item"
+                                                onClick={this.handlePageChanged}
+                                            />
                                         </Pagination> : null
                                 }
                             </Col>

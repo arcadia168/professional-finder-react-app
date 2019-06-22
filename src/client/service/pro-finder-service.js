@@ -88,7 +88,12 @@ export default class ProFinderService {
             const originalResponse = response.data.response.pros;
             const testResults = originalResponse.concat(originalResponse).concat(originalResponse).concat(originalResponse);
 
-            return testResults;
+            const totalCount = response.headers['x-pagination-count'];
+
+            return {
+                totalCount: totalCount,
+                results: testResults
+            };
         }).catch(error => {
             const searchError = new Error(`Error at proFinderService.searchForLocalProfessionals: ${error.message}`);
             console.error(searchError.message);
