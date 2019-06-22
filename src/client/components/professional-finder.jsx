@@ -156,22 +156,25 @@ class ProfessionalFinder extends Component {
 
                     </Col>
                 </Row>
-                <Row data-testid="pro-finder__pagination-control-row" className="pro-finder__pagination-control-row">
-                    <Col
-                        data-testid="pro-finder__pagination-control-col"
-                        className="pro-finder__pagingation-control-col"
-                    >
-                        {
-                            pages.length > 1 ?
-                                <Pagination
-                                    data-testid="pro-finder__pagination-control"
-                                    className="pro-finder__pagination-control"
-                                >
-                                    {pages}
-                                </Pagination> : null
-                        }
-                    </Col>
-                </Row>
+                {
+                    this.state.loading === true ? null :
+                        <Row data-testid="pro-finder__pagination-control-row" className="pro-finder__pagination-control-row">
+                            <Col
+                                data-testid="pro-finder__pagination-control-col"
+                                className="pro-finder__pagingation-control-col"
+                            >
+                                {
+                                    pages.length > 1 ?
+                                        <Pagination
+                                            data-testid="pro-finder__pagination-control"
+                                            className="pro-finder__pagination-control"
+                                        >
+                                            {pages}
+                                        </Pagination> : null
+                                }
+                            </Col>
+                        </Row>
+                }
             </Container>
         );
     };
