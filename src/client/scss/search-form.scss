@@ -1,0 +1,9 @@
+.search-form__container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.search-form__search-field {
+    flex-basis: 33%;
+}

@@ -65,7 +65,7 @@ class SearchForm extends Component {
 
     render() {
         return (
-            <div data-testid="search-form__container">
+            <div data-testid="search-form__container" className="search-form__container">
                 <DropdownButton
                     title={this.state.categoryName || 'Choose a category'}
                     onSelect={this.handleCategoryChosen}
@@ -80,9 +80,11 @@ class SearchForm extends Component {
                 </DropdownButton>
                 <InputGroup
                     data-testid="search-form__search-field"
+                    className="search-form__search-field"
                 >
                     <FormControl
                         data-testid="search-form__search-field-input"
+                        className="search-form__search-field-input"
                         placeholder="Enter UK Postcode here..."
                         aria-label="Enter UK Postcode here..."
                         ref="searchField"
