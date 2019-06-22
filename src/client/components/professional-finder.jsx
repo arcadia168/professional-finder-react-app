@@ -15,6 +15,8 @@ class ProfessionalFinder extends Component {
     constructor(props) {
         super(props);
 
+        this.maxResultsPerPage = 20;
+
         this.state = {
             searchResults: [],
             numPages: 0,
@@ -55,9 +57,7 @@ class ProfessionalFinder extends Component {
                 location
             ).then(response => {
                 const searchResults = response.results;
-                const numPages = Math.ceil(response.totalCount / 20)
-                console.log(`updating search resulsts with ${searchResults.length}`);
-
+                const numPages = Math.ceil(response.totalCount / this.maxResultsPerPage);
                 if (searchResults.length === 0) {
                     this.setState({
                         error: 'No local professionals found for this search. Please try again.',
@@ -69,7 +69,7 @@ class ProfessionalFinder extends Component {
                         numPages: numPages,
                         categoryId: categoryId,
                         location: location,
-                        activePage: (offset / 20) + 1,
+                        activePage: Math.ceil((offset / this.maxResultsPerPage) + 1),
                         error: undefined,
                         loading: false,
                     });
@@ -87,15 +87,15 @@ class ProfessionalFinder extends Component {
         this.handlePageChanged = evt => {
             let pageClicked;
 
-            if (evt.target.parentNode.parentNode.className.indexOf('first-item') > -1) {
+            if (evt.target.innerText.indexOf("«") > -1) {
                 pageClicked = 0;
-            } else if (evt.target.parentNode.parentNode.className.indexOf('last-item') > -1) {
-                pageClicked = this.state.numPages - 1; // todo: set to max last page.
+            } else if (evt.target.innerText.indexOf("»") > -1) {
+                pageClicked = this.state.numPages - 1;
             } else {
                 pageClicked = Number.parseInt(evt.target.text) - 1; // 0 indexed
             }
 
-            const newPageResultsOffset = pageClicked * 20;
+            const newPageResultsOffset = pageClicked * (this.maxResultsPerPage - 1) // 0 indexed;
 
             this.updateSearchResults(
                 this.state.categoryId,
@@ -111,7 +111,7 @@ class ProfessionalFinder extends Component {
             pages.push(
                 <Pagination.Item
                     key={i}
-                    active={this.state.activePage === i + 1}
+                    active={this.state.activePage === (i + 1)}
                     onClick={this.handlePageChanged}
                 >
                     {i + 1}

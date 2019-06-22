@@ -75,8 +75,8 @@ export default class ProFinderService {
             url: proFinderApiUrl,
             headers: {
                 'content-type': 'application/json',
-                xPaginationLimitHeader,
-                paginationOffsetHeader
+                'x-pagination-limit': xPaginationLimitHeader,
+                'x-pagination-offset': paginationOffsetHeader
             },
             data: data,
         }
