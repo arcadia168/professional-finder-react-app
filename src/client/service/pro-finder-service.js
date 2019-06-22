@@ -74,15 +74,19 @@ export default class ProFinderService {
             method: 'post',
             url: proFinderApiUrl,
             headers: {
-                'content-type': 'application/x-www-form-urlencoded',
+                'content-type': 'application/json',
                 xPaginationLimitHeader,
                 paginationOffsetHeader
             },
-            data: qs.stringify(data),
+            data: data,
         }
-        console.log(`axiosConfig is: ${JSON.stringify(axiosConfig)}`);
-        return this.axios(axiosConfig).then(searchResults => {
-            return searchResults.data.response.pros;
+        return this.axios(axiosConfig).then(response => {
+            console.log(`headers are: ${JSON.stringify(response.headers)}`);
+            // console.log(`response is: ${JSON.stringify(response)}`);
+
+            // Attach total header to pros
+
+            return response.data.response.pros;
         }).catch(error => {
             const searchError = new Error(`Error at proFinderService.searchForLocalProfessionals: ${error.message}`);
             console.error(searchError.message);

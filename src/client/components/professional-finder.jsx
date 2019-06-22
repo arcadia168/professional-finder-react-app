@@ -4,6 +4,7 @@ import {
     Row,
     Col,
     Pagination,
+    Alert,
 } from 'react-bootstrap';
 import PropTypes from 'prop-types'
 import SearchForm from '../components/search-form.jsx'
@@ -112,12 +113,18 @@ class ProfessionalFinder extends Component {
                         data-testid="pro-finder__search-results-table-col"
                         className="pro-finder__search-results-table-col"
                     >
-                        <SearchResultsTable
-                            data-testid="pro-finder__search-results-table"
-                            className="pro-finder__search-results-table"
-                            searchResults={this.state.searchResults}
-                            error={this.state.error}
-                        />
+                        {
+                            this.state.searchResults.length === 0 ?
+                                <Alert variant="info">Make a search above!</Alert>
+                                :
+                                <SearchResultsTable
+                                    data-testid="pro-finder__search-results-table"
+                                    className="pro-finder__search-results-table"
+                                    searchResults={this.state.searchResults}
+                                    error={this.state.error}
+                                />
+                        }
+
                     </Col>
                 </Row>
                 <Row data-testid="pro-finder__pagination-control-row" className="pro-finder__pagination-control-row">
@@ -131,9 +138,7 @@ class ProfessionalFinder extends Component {
                                     data-testid="pro-finder__pagination-control"
                                     className="pro-finder__pagination-control"
                                 >
-                                    <Pagination.First />
                                     {pages}
-                                    <Pagination.Last />
                                 </Pagination> : null
                         }
                     </Col>
