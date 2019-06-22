@@ -23,4 +23,4 @@ Notes:
 - Added error messaging for validation failures.
 
 Screenshots:
-- [Some Searcg Results](https://www.dropbox.com/s/9sdg4is1f6adpr4/Screenshot%202019-06-22%2014.30.05.png?dl=0)
+- ![Example Search Results](example_results.png)
