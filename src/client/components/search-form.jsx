@@ -47,9 +47,12 @@ class SearchForm extends Component {
             console.log('validating postcode');
             if (!this.validatePostcode(postcode) || !categoryId) {
                 console.log('enter valid postcode and category');
-                this.setState({
-                    error: 'Please enter a valid UK postcode and choose a category'
-                });
+                this.props.updateSearchResults(
+                    categoryId,
+                    postcode,
+                    0,
+                    true
+                );
             } else {
                 // Make the call to the API
                 this.props.updateSearchResults(
