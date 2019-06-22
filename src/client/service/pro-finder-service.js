@@ -81,18 +81,9 @@ export default class ProFinderService {
             data: data,
         }
         return this.axios(axiosConfig).then(response => {
-            console.log(`headers are: ${JSON.stringify(response.headers)}`);
-            // console.log(`response is: ${JSON.stringify(response)}`);
-
-            // Attach total header to pros
-            const originalResponse = response.data.response.pros;
-            const testResults = originalResponse.concat(originalResponse).concat(originalResponse).concat(originalResponse);
-
-            const totalCount = response.headers['x-pagination-count'];
-
             return {
-                totalCount: totalCount,
-                results: testResults
+                totalCount: response.headers['x-pagination-count'],
+                results: response.data.response.pros,
             };
         }).catch(error => {
             const searchError = new Error(`Error at proFinderService.searchForLocalProfessionals: ${error.message}`);
