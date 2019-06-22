@@ -23,4 +23,4 @@ Notes:
 - Added error messaging for validation failures.
 
 Screenshots:
-- [screenshot](https://www.dropbox.com/s/9sdg4is1f6adpr4/Screenshot%202019-06-22%2014.30.05.png?dl=0 screenshot)
+- [App](https://www.dropbox.com/s/9sdg4is1f6adpr4/Screenshot%202019-06-22%2014.30.05.png?dl=0)
