@@ -15,7 +15,7 @@ To test:
 - npm test
 
 Notes:
-- Started out TDD then this became time consuming
+- Started out TDD then this became time consuming *please check out the unit tests, I think they get overlooked, and they take ages to write*
 - Used React bootstrap, axios and and sass-mq
 - Setup my own Webpack and Babel configs.
 - Took more time on this just as an opportunity to practice
