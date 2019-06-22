@@ -25,11 +25,13 @@ class SearchForm extends Component {
             });
         }
 
-        this.handleCategoryChosen = (evt, evtKey) => {
-            console.log(`Setting category on state: ${evtKey}`);
-            console.log(`category chosen is: ${JSON.stringify(evt)}`)
+        this.handleCategoryChosen = (evtKey, evt) => {
+            console.log(`Setting categoryId on state: ${evtKey}`);
+            console.log(`category chosen is: ${evt.currentTarget.text}`)
+            debugger;
             this.setState({
-                categoryId: evt
+                categoryName: evt.currentTarget.text,
+                categoryId: evtKey
             })
         }
 
@@ -37,6 +39,9 @@ class SearchForm extends Component {
             console.log('search btn clicked');
 
             const postcode = this.state.postcode;
+
+            // get category id from name...
+            debugger;
             const categoryId = this.state.categoryId;
 
             console.log(`postcode is: ${postcode}`);
@@ -62,7 +67,7 @@ class SearchForm extends Component {
         return (
             <div data-testid="search-form__container">
                 <DropdownButton
-                    title={this.state.categoryName}
+                    title={this.state.categoryName || 'Choose a category'}
                     onSelect={this.handleCategoryChosen}
                     data-testid="search-form__category-dropdown"
                     className="search-form__category-dropdown"
