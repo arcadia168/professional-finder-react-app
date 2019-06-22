@@ -26,8 +26,6 @@ class SearchForm extends Component {
         }
 
         this.handleCategoryChosen = (evtKey, evt) => {
-            console.log(`Setting categoryId on state: ${evtKey}`);
-            console.log(`category chosen is: ${evt.currentTarget.text}`)
             this.setState({
                 categoryName: evt.currentTarget.text,
                 categoryId: evtKey
@@ -35,18 +33,10 @@ class SearchForm extends Component {
         }
 
         this.handleSearchBtn = () => {
-            console.log('search btn clicked');
-
             const postcode = this.state.postcode;
-
-            // get category id from name...
             const categoryId = this.state.categoryId;
 
-            console.log(`postcode is: ${postcode}`);
-            console.log(`categoryId is: ${categoryId}`);
-            console.log('validating postcode');
             if (!this.validatePostcode(postcode) || !categoryId) {
-                console.log('enter valid postcode and category');
                 this.props.updateSearchResults(
                     categoryId,
                     postcode,
@@ -54,7 +44,6 @@ class SearchForm extends Component {
                     true
                 );
             } else {
-                // Make the call to the API
                 this.props.updateSearchResults(
                     Number.parseInt(categoryId),
                     postcode,

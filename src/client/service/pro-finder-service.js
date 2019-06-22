@@ -50,7 +50,6 @@ export default class ProFinderService {
             this.throwAndLogParameterError(`categoryId`);
         }
 
-        console.log(`paginationOffsetHeader is: ${paginationOffsetHeader}`);
         if (
             paginationOffsetHeader === undefined ||
             paginationOffsetHeader === null ||

@@ -33,8 +33,6 @@ class ProfessionalFinder extends Component {
             offset,
             invalidPostcode
         ) => {
-            console.log(`params are: ${categoryId} ${location} ${offset}`)
-
             this.setState({
                 loading: true
             })
@@ -75,7 +73,6 @@ class ProfessionalFinder extends Component {
                     });
                 }
             }).catch(error => {
-                console.log('error in search results')
                 const userFriendlyError = `Oops! Something went wrong: ${error.message}`;
                 this.setState({
                     error: userFriendlyError,
