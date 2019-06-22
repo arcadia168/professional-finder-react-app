@@ -6,6 +6,7 @@ $mq-breakpoints: (
 );
 
 @import 'mq';
+@import './search-form.scss';
 
 body {
     background: #ACCEEC;
