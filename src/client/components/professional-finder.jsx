@@ -27,8 +27,23 @@ class ProfessionalFinder extends Component {
             categoryId,
             location,
             offset,
+            invalidPostcode
         ) => {
             console.log(`params are: ${categoryId} ${location} ${offset}`)
+
+            debugger;
+            if (!categoryId) {
+                debugger;
+                return this.setState({
+                    error: 'Please choose a valid job category'
+                });
+            } else if (!location || invalidPostcode) {
+                debugger;
+                return this.setState({
+                    error: 'Please enter a valid UK postcode'
+                });
+            }
+
             return this.props.proFinderService.searchForLocalProfessionals(
                 categoryId,
                 offset,
@@ -51,6 +66,7 @@ class ProfessionalFinder extends Component {
                         categoryId: categoryId,
                         location: location,
                         activePage: (offset / 20) + 1,
+                        error: undefined,
                     });
                 }
             }).catch(error => {
@@ -114,15 +130,19 @@ class ProfessionalFinder extends Component {
                         className="pro-finder__search-results-table-col"
                     >
                         {
-                            this.state.searchResults.length === 0 ?
-                                <Alert variant="info">Make a search above!</Alert>
-                                :
-                                <SearchResultsTable
-                                    data-testid="pro-finder__search-results-table"
-                                    className="pro-finder__search-results-table"
-                                    searchResults={this.state.searchResults}
-                                    error={this.state.error}
-                                />
+                            this.state.error ?
+                                <Alert variant="danger">
+                                    {this.state.error}
+                                </Alert>
+                                : this.state.searchResults.length === 0 ?
+                                    <Alert variant="info">Make a search above!</Alert>
+                                    :
+                                    <SearchResultsTable
+                                        data-testid="pro-finder__search-results-table"
+                                        className="pro-finder__search-results-table"
+                                        searchResults={this.state.searchResults}
+                                        error={this.state.error}
+                                    />
                         }
 
                     </Col>
