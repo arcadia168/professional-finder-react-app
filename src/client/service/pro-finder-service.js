@@ -15,13 +15,13 @@ export default class ProFinderService {
         this.axios = axiosInstance;
     }
 
-    getProfessionCategories() {
+    getProfessionCategories(port) {
         if (this.cachedVisibleCategories) {
             return this.cachedVisibleCategories;
         } else {
             const axiosConfig = {
                 method: 'get',
-                url: 'http://localhost:3000/api/categories'
+                url: 'http://localhost:8080/api/categories'
             }
 
             return this.axios(axiosConfig).then(professionCategories => {

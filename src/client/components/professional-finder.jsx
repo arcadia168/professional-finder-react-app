@@ -55,7 +55,6 @@ class ProfessionalFinder extends Component {
                 location
             ).then(response => {
                 const searchResults = response.results;
-                debugger;
                 const numPages = Math.ceil(response.totalCount / 20)
                 console.log(`updating search resulsts with ${searchResults.length}`);
 
@@ -86,7 +85,6 @@ class ProfessionalFinder extends Component {
         }
 
         this.handlePageChanged = evt => {
-            debugger;
             let pageClicked;
 
             if (evt.target.parentNode.parentNode.className.indexOf('first-item') > -1) {

@@ -13,12 +13,12 @@ exports[`App renders the app as expected 1`] = `
       className="pro-finder__title-col col"
       data-testid="pro-finder__title-col"
     >
-      <h1
+      <h3
         className="pro-finder__title"
         data-testid="pro-finder__title"
       >
         Find a Local Professional
-      </h1>
+      </h3>
     </div>
   </div>
   <div
@@ -68,7 +68,7 @@ exports[`App renders the app as expected 1`] = `
           onClick={[Function]}
           type="button"
         >
-          Search
+          Submit
         </button>
       </div>
     </div>
@@ -82,33 +82,10 @@ exports[`App renders the app as expected 1`] = `
       data-testid="pro-finder__search-results-table-col"
     >
       <div
-        className="container"
-        data-testid="search-form-results__container"
+        className="fade alert alert-info show"
+        role="alert"
       >
-        <div
-          className="row"
-        >
-          <div
-            className="col"
-          >
-            Id
-          </div>
-          <div
-            className="col"
-          >
-            Name
-          </div>
-          <div
-            className="col"
-          >
-            Postcode
-          </div>
-          <div
-            className="col"
-          >
-            Review rating
-          </div>
-        </div>
+        Make a search above!
       </div>
     </div>
   </div>
@@ -119,12 +96,7 @@ exports[`App renders the app as expected 1`] = `
     <div
       className="pro-finder__pagingation-control-col col"
       data-testid="pro-finder__pagination-control-col"
-    >
-      <ul
-        className="pro-finder__pagination-control pagination"
-        data-testid="pro-finder__pagination-control"
-      />
-    </div>
+    />
   </div>
 </div>
 `;

@@ -40,7 +40,7 @@ exports[`Search Form renders the app as expected 1`] = `
     onClick={[Function]}
     type="button"
   >
-    Search
+    Submit
   </button>
 </div>
 `;
