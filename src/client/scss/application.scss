@@ -1,16 +1,20 @@
 $mq-breakpoints: (
-    mobile:  320px,
-    tablet:  740px,
-    desktop: 980px,
-    wide:    1300px
+  mobile: 320px,
+  tablet: 740px,
+  desktop: 980px,
+  wide: 1300px
 );
 
-@import 'mq';
-@import './professional-finder.scss';
-@import './search-form.scss';
+@import "mq";
+@import "./professional-finder.scss";
+@import "./search-form.scss";
+
+[data-reactroot] {
+  height: 100% !important;
+}
 
 body {
-    background: rgb(255, 255, 255);
-    color: rgb(25, 38, 21);
-    text-align: center;
+  background: rgb(255, 255, 255);
+  color: rgb(25, 38, 21);
+  text-align: center;
 }

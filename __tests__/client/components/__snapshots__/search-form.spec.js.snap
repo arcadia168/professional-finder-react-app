@@ -2,6 +2,7 @@
 
 exports[`Search Form renders the app as expected 1`] = `
 <div
+  className="search-form__container"
   data-testid="search-form__container"
 >
   <div
@@ -21,12 +22,12 @@ exports[`Search Form renders the app as expected 1`] = `
     </button>
   </div>
   <div
-    className="input-group"
+    className="search-form__search-field input-group"
     data-testid="search-form__search-field"
   >
     <input
       aria-label="Enter UK Postcode here..."
-      className="form-control"
+      className="search-form__search-field-input form-control"
       data-testid="search-form__search-field-input"
       onChange={[Function]}
       placeholder="Enter UK Postcode here..."

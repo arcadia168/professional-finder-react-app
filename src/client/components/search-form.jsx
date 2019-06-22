@@ -28,7 +28,6 @@ class SearchForm extends Component {
         this.handleCategoryChosen = (evtKey, evt) => {
             console.log(`Setting categoryId on state: ${evtKey}`);
             console.log(`category chosen is: ${evt.currentTarget.text}`)
-            debugger;
             this.setState({
                 categoryName: evt.currentTarget.text,
                 categoryId: evtKey
@@ -41,7 +40,6 @@ class SearchForm extends Component {
             const postcode = this.state.postcode;
 
             // get category id from name...
-            debugger;
             const categoryId = this.state.categoryId;
 
             console.log(`postcode is: ${postcode}`);
@@ -97,7 +95,7 @@ class SearchForm extends Component {
                     className="search-form__search-btn"
                     onClick={this.handleSearchBtn}
                 >
-                    Search
+                    Submit
                 </Button>
             </div >
         );

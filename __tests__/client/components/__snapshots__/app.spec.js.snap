@@ -30,6 +30,7 @@ exports[`App renders the app as expected 1`] = `
       data-testid="pro-finder__search-form-col"
     >
       <div
+        className="search-form__container"
         data-testid="search-form__container"
       >
         <div
@@ -49,12 +50,12 @@ exports[`App renders the app as expected 1`] = `
           </button>
         </div>
         <div
-          className="input-group"
+          className="search-form__search-field input-group"
           data-testid="search-form__search-field"
         >
           <input
             aria-label="Enter UK Postcode here..."
-            className="form-control"
+            className="search-form__search-field-input form-control"
             data-testid="search-form__search-field-input"
             onChange={[Function]}
             placeholder="Enter UK Postcode here..."
@@ -81,8 +82,34 @@ exports[`App renders the app as expected 1`] = `
       data-testid="pro-finder__search-results-table-col"
     >
       <div
+        className="container"
         data-testid="search-form-results__container"
-      />
+      >
+        <div
+          className="row"
+        >
+          <div
+            className="col"
+          >
+            Id
+          </div>
+          <div
+            className="col"
+          >
+            Name
+          </div>
+          <div
+            className="col"
+          >
+            Postcode
+          </div>
+          <div
+            className="col"
+          >
+            Review rating
+          </div>
+        </div>
+      </div>
     </div>
   </div>
   <div
