@@ -4,3 +4,12 @@
 .pro-finder__pagination-control {
     justify-content: center;
 }
+
+.pro-finder__title {
+    text-align: left;
+    margin: $spacing-unit * 2;
+}
+
+.pro-finder__search-form-row {
+    margin-bottom: $spacing-unit * 3;
+}

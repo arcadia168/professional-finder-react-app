@@ -5,9 +5,12 @@ $mq-breakpoints: (
   wide: 1300px
 );
 
+$spacing-unit: 8px;
+
 @import "mq";
 @import "./professional-finder.scss";
 @import "./search-form.scss";
+
 
 [data-reactroot] {
   height: 100% !important;
