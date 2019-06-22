@@ -5,6 +5,7 @@ import {
     Col,
     Pagination,
     Alert,
+    Spinner,
 } from 'react-bootstrap';
 import PropTypes from 'prop-types'
 import SearchForm from '../components/search-form.jsx'
@@ -20,7 +21,8 @@ class ProfessionalFinder extends Component {
             error: undefined,
             activePage: 1,
             categoryId: undefined,
-            location: undefined
+            location: undefined,
+            loading: false,
         };
 
         this.updateSearchResults = (
@@ -31,13 +33,19 @@ class ProfessionalFinder extends Component {
         ) => {
             console.log(`params are: ${categoryId} ${location} ${offset}`)
 
+            this.setState({
+                loading: true
+            })
+
             if (!categoryId) {
                 return this.setState({
-                    error: 'Please choose a valid job category'
+                    error: 'Please choose a valid job category',
+                    loading: false,
                 });
             } else if (!location || invalidPostcode) {
                 return this.setState({
-                    error: 'Please enter a valid UK postcode'
+                    error: 'Please enter a valid UK postcode',
+                    loading: false
                 });
             }
 
@@ -52,7 +60,8 @@ class ProfessionalFinder extends Component {
                 //If no results here also set an error
                 if (searchResults.length === 0) {
                     this.setState({
-                        error: 'No local professionals found for this search. Please try again.'
+                        error: 'No local professionals found for this search. Please try again.',
+                        loading: false,
                     })
                 } else {
                     this.setState({
@@ -62,13 +71,15 @@ class ProfessionalFinder extends Component {
                         location: location,
                         activePage: (offset / 20) + 1,
                         error: undefined,
+                        loading: false,
                     });
                 }
             }).catch(error => {
                 console.log('error in search results')
                 const userFriendlyError = `Oops! Something went wrong: ${error.message}`;
                 this.setState({
-                    error: userFriendlyError
+                    error: userFriendlyError,
+                    loading: false,
                 });
             });
         }
@@ -102,9 +113,9 @@ class ProfessionalFinder extends Component {
             <Container data-testid="pro-finder__container" className="pro-finder__container">
                 <Row data-testid="pro-finder__title-row" className="pro-finder__title-row">
                     <Col data-testid="pro-finder__title-col" className="pro-finder__title-col">
-                        <h1 data-testid="pro-finder__title" className="pro-finder__title">
+                        <h3 data-testid="pro-finder__title" className="pro-finder__title">
                             Find a Local Professional
-                        </h1>
+                        </h3>
                     </Col>
                 </Row>
                 <Row data-testid="pro-finder__search-form-row" className="pro-finder__search-form-row">
@@ -124,19 +135,23 @@ class ProfessionalFinder extends Component {
                         className="pro-finder__search-results-table-col"
                     >
                         {
-                            this.state.error ?
-                                <Alert variant="danger">
-                                    {this.state.error}
-                                </Alert>
-                                : this.state.searchResults.length === 0 ?
-                                    <Alert variant="info">Make a search above!</Alert>
-                                    :
-                                    <SearchResultsTable
-                                        data-testid="pro-finder__search-results-table"
-                                        className="pro-finder__search-results-table"
-                                        searchResults={this.state.searchResults}
-                                        error={this.state.error}
-                                    />
+                            this.state.loading ?
+                                <Spinner animation="border" role="status">
+                                    <span className="sr-only">Loading...</span>
+                                </Spinner>
+                                : this.state.error ?
+                                    <Alert variant="danger">
+                                        {this.state.error}
+                                    </Alert>
+                                    : this.state.searchResults.length === 0 ?
+                                        <Alert variant="info">Make a search above!</Alert>
+                                        :
+                                        <SearchResultsTable
+                                            data-testid="pro-finder__search-results-table"
+                                            className="pro-finder__search-results-table"
+                                            searchResults={this.state.searchResults}
+                                            error={this.state.error}
+                                        />
                         }
 
                     </Col>
