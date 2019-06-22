@@ -31,14 +31,11 @@ class ProfessionalFinder extends Component {
         ) => {
             console.log(`params are: ${categoryId} ${location} ${offset}`)
 
-            debugger;
             if (!categoryId) {
-                debugger;
                 return this.setState({
                     error: 'Please choose a valid job category'
                 });
             } else if (!location || invalidPostcode) {
-                debugger;
                 return this.setState({
                     error: 'Please enter a valid UK postcode'
                 });
@@ -54,12 +51,10 @@ class ProfessionalFinder extends Component {
 
                 //If no results here also set an error
                 if (searchResults.length === 0) {
-                    debugger;
                     this.setState({
                         error: 'No local professionals found for this search. Please try again.'
                     })
                 } else {
-                    debugger;
                     this.setState({
                         searchResults: searchResults,
                         numPages: numPages,
@@ -79,7 +74,6 @@ class ProfessionalFinder extends Component {
         }
 
         this.handlePageChanged = evt => {
-            debugger;
             const pageClicked = Number.parseInt(evt.target.text) - 1; // 0 indexed
             const newPageResultsOffset = pageClicked * 20;
 
