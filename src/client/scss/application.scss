@@ -11,12 +11,4 @@ body {
     background: #ACCEEC;
     color: #005CC5;
     text-align: center;
-
-    @include mq(mobile, tablet) {
-        background: red;
-    }
-
-    @include mq(tablet, desktop) {
-        background: purple;
-    }
 }

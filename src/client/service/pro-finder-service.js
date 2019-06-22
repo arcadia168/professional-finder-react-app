@@ -1,5 +1,7 @@
 // import path from 'path';
 // import fs from 'fs';
+import qs from 'qs';
+import axios from 'axios';
 
 export default class ProFinderService {
     constructor(axiosInstance) {
@@ -48,6 +50,7 @@ export default class ProFinderService {
             this.throwAndLogParameterError(`categoryId`);
         }
 
+        console.log(`paginationOffsetHeader is: ${paginationOffsetHeader}`);
         if (
             paginationOffsetHeader === undefined ||
             paginationOffsetHeader === null ||
@@ -63,21 +66,24 @@ export default class ProFinderService {
         // We always want this to be 20, this can be configured here.
         const xPaginationLimitHeader = 20;
         const proFinderApiUrl = 'https://demo.plentific.com/find-a-pro/api/v2/public/pro/search-pros/';
+        const data = {
+            'category_id': categoryId,
+            location
+        };
+        debugger;
         const axiosConfig = {
             method: 'post',
             url: proFinderApiUrl,
             headers: {
+                'content-type': 'application/x-www-form-urlencoded',
                 xPaginationLimitHeader,
                 paginationOffsetHeader
             },
-            body: {
-                categoryId,
-                location
-            }
+            data: qs.stringify(data),
         }
-
+        console.log(`axiosConfig is: ${JSON.stringify(axiosConfig)}`);
         return this.axios(axiosConfig).then(searchResults => {
-            return searchResults.response.pros;
+            return searchResults.data.response.pros;
         }).catch(error => {
             const searchError = new Error(`Error at proFinderService.searchForLocalProfessionals: ${error.message}`);
             console.error(searchError.message);

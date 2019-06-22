@@ -40,13 +40,12 @@ exports[`App renders the app as expected 1`] = `
           <button
             aria-expanded={false}
             aria-haspopup={true}
-            className="dropdown-toggle btn btn-success"
+            className="dropdown-toggle btn btn-primary"
             disabled={false}
-            id="dropdown-basic"
             onClick={[Function]}
             type="button"
           >
-            Choose category
+            Choose a category
           </button>
         </div>
         <div
@@ -65,6 +64,7 @@ exports[`App renders the app as expected 1`] = `
           className="search-form__search-btn btn btn-primary"
           data-testid="search-form__search-btn"
           disabled={false}
+          onClick={[Function]}
           type="button"
         >
           Search
