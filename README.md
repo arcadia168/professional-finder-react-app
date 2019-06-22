@@ -22,5 +22,5 @@ Notes:
 - Added loading state and spinner
 - Added error messaging for validation failures.
 
-Screenshots:
-- ![Example Search Results](example_results.png)
+Screenshot:
+![Example Search Results](example_results.png)
