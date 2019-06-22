@@ -11,12 +11,12 @@ $spacing-unit: 8px;
 @import "./professional-finder.scss";
 @import "./search-form.scss";
 
-
 [data-reactroot] {
   height: 100% !important;
 }
 
 body {
+  min-width: $spacing-unit * 40;
   background: rgb(255, 255, 255);
   color: rgb(25, 38, 21);
   text-align: center;
