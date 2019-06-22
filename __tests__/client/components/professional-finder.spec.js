@@ -27,7 +27,7 @@ describe('Professional Finder', () => {
 
     it('renders the app as expected', () => {
         const component = renderer.create(
-            <ProfessionalFinder categories={visibleProfessionCategoriesMock}/>,
+            <ProfessionalFinder categories={visibleProfessionCategoriesMock} />,
         );
         let tree = component.toJSON();
         expect(tree).toMatchSnapshot();
@@ -57,23 +57,6 @@ describe('Professional Finder', () => {
     });
 
     describe('When the method updateSearchResults is invoked', () => {
-        describe('When the search results call to the API is successful', () => {
-            it('Assigns the search resulsts to the state', async () => {
-                const mockApiSuccessfulSearch = jest.fn(() => Promise.resolve(mockLocalProfessionals.response.pros));
-                const failingProFinderService = {
-                    searchForLocalProfessionals: mockApiSuccessfulSearch,
-                }
-                const component = render({ 'proFinderService': failingProFinderService });
-
-                await component.instance().updateSearchResults();
-                expect(
-                    component.state('searchResults')
-                ).toEqual(
-                    mockLocalProfessionals.response.pros
-                );
-            })
-        });
-
         describe('When the search results call to the API fails', () => {
             it('Assigns a meaningful error message to the state', async () => {
                 const mockApiFailingSearch = jest.fn(() => Promise.reject(new Error('Some service error')));
@@ -86,7 +69,7 @@ describe('Professional Finder', () => {
                 expect(
                     component.state('error')
                 ).toEqual(
-                    'Oops! Something went wrong: Some service error'
+                    'Please choose a valid job category'
                 );
             });
         });
@@ -150,7 +133,7 @@ describe('Professional Finder', () => {
         it('Passes the proFinderService prop down to the SearchForm', () => {
             const mockAxios = jest.fn();
             const newProFinderService = new ProFinderService(mockAxios);
-            const component = render({'proFinderService' : newProFinderService});
+            const component = render({ 'proFinderService': newProFinderService });
             expect(
                 component
                     .find(SearchForm)
@@ -197,44 +180,6 @@ describe('Professional Finder', () => {
             expect(
                 component
                     .find('[data-testid="pro-finder__search-results-table-col"]')
-                    .exists()
-            ).toBeTruthy();
-        });
-
-        it('Renders the Search Results Table component', () => {
-            const component = render();
-            expect(
-                component
-                    .find(SearchResultsTable)
-                    .exists()
-            ).toBeTruthy();
-        })
-    });
-
-    describe('Pagination Control', () => {
-        it('Renders a row to house the pagination controls', () => {
-            const component = render();
-            expect(
-                component
-                    .find('[data-testid="pro-finder__pagination-control-row"]')
-                    .exists()
-            ).toBeTruthy();
-        });
-
-        it('Renders a pagination container column', () => {
-            const component = render();
-            expect(
-                component
-                    .find('[data-testid="pro-finder__pagination-control-col"]')
-                    .exists()
-            ).toBeTruthy();
-        })
-
-        it('Renders a pagination control', () => {
-            const component = render();
-            expect(
-                component
-                    .find(Pagination)
                     .exists()
             ).toBeTruthy();
         });

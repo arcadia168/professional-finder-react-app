@@ -50,6 +50,8 @@ describe('Search Form', () => {
         ).toEqual({
             postcode: '',
             categories: [],
+            categoryId: '',
+            categoryName: 'Choose a category'
         });
     });
 
@@ -108,7 +110,7 @@ describe('Search Form', () => {
                 .find('[data-testid="search-form__search-btn"]').at(0)
                 .text()
         ).toEqual(
-            'Search'
+            'Submit'
         );
     });
 
