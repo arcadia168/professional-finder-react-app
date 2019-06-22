@@ -6,10 +6,11 @@ $mq-breakpoints: (
 );
 
 @import 'mq';
+@import './professional-finder.scss';
 @import './search-form.scss';
 
 body {
-    background: #ACCEEC;
-    color: #005CC5;
+    background: rgb(255, 255, 255);
+    color: rgb(25, 38, 21);
     text-align: center;
 }
