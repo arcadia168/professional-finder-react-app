@@ -21,7 +21,7 @@ export default class SearchResultsTable extends Component {
             <Table striped bordered hover data-testid="search-form-results__container">
                 <thead>
                     <tr>
-                        <th>Id</th>
+                        <th>ID</th>
                         <th>Name</th>
                         <th>Postcode</th>
                         <th>Review rating</th>
@@ -32,7 +32,7 @@ export default class SearchResultsTable extends Component {
                         this.props.searchResults.map(searchResult => {
                             return <tr key={searchResult.id}>
                                 <td>{searchResult.id}</td>
-                                <td>{searchResult.name.slice(0, -32)}</td>
+                                <td>{searchResult.name.slice(0, -35)}</td>
                                 <td>{searchResult.main_address.postcode}</td>
                                 <td>
                                     <StarRatingComponent
