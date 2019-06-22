@@ -18,6 +18,8 @@ class ProfessionalFinder extends Component {
             numPages: 0,
             error: undefined,
             activePage: 1,
+            categoryId: undefined,
+            location: undefined
         };
 
         this.updateSearchResults = (
@@ -33,10 +35,23 @@ class ProfessionalFinder extends Component {
             ).then(searchResults => {
                 console.log(`updating search resulsts with ${searchResults.length}`);
                 let numPages = Math.ceil(searchResults.length / 20)
-                this.setState({
-                    searchResults: searchResults,
-                    numPages: numPages,
-                });
+
+                //If no results here also set an error
+                if (searchResults.length === 0) {
+                    debugger;
+                    this.setState({
+                        error: 'No local professionals found for this search. Please try again.'
+                    })
+                } else {
+                    debugger;
+                    this.setState({
+                        searchResults: searchResults,
+                        numPages: numPages,
+                        categoryId: categoryId,
+                        location: location,
+                        activePage: (offset / 20) + 1,
+                    });
+                }
             }).catch(error => {
                 console.log('error in search results')
                 const userFriendlyError = `Oops! Something went wrong: ${error.message}`;
@@ -45,14 +60,29 @@ class ProfessionalFinder extends Component {
                 });
             });
         }
+
+        this.handlePageChanged = evt => {
+            debugger;
+            const pageClicked = Number.parseInt(evt.target.text) - 1; // 0 indexed
+            const newPageResultsOffset = pageClicked * 20;
+
+            this.updateSearchResults(
+                this.state.categoryId,
+                this.state.location,
+                newPageResultsOffset
+            );
+        }
     };
 
     render() {
         let pages = [];
-        debugger;
         for (let i = 0; i < this.state.numPages; i++) {
             pages.push(
-                <Pagination.Item key={i} active={this.state.activePage}>
+                <Pagination.Item
+                    key={i}
+                    active={this.state.activePage === i + 1}
+                    onClick={this.handlePageChanged}
+                >
                     {i + 1}
                 </Pagination.Item>
             )
@@ -86,6 +116,7 @@ class ProfessionalFinder extends Component {
                             data-testid="pro-finder__search-results-table"
                             className="pro-finder__search-results-table"
                             searchResults={this.state.searchResults}
+                            error={this.state.error}
                         />
                     </Col>
                 </Row>
@@ -100,7 +131,9 @@ class ProfessionalFinder extends Component {
                                     data-testid="pro-finder__pagination-control"
                                     className="pro-finder__pagination-control"
                                 >
+                                    <Pagination.First />
                                     {pages}
+                                    <Pagination.Last />
                                 </Pagination> : null
                         }
                     </Col>

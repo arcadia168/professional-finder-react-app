@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col, Container } from 'react-bootstrap';
+import { Row, Col, Container, Alert } from 'react-bootstrap';
 import PropTypes from 'prop-types'
 import StarRatingComponent from 'react-star-rating-component';
 
@@ -8,9 +8,17 @@ export default class SearchResultsTable extends Component {
         super(props);
     }
 
-    render() {
+    renderError() {
         return (
-            <Container data-testid="search-form-results__container">
+            <Alert variant="danger">
+                {this.props.error}
+            </Alert>
+        )
+    }
+
+    renderSearchResults() {
+        return (
+            < Container data-testid="search-form-results__container">
                 <Row>
                     <Col>Id</Col>
                     <Col>Name</Col>
@@ -33,8 +41,16 @@ export default class SearchResultsTable extends Component {
                         </Row>
                     })
                 }
-            </Container>
-        );
+            </Container >
+        )
+    }
+
+    render() {
+        if (this.props.error) {
+            return this.renderError();
+        } else {
+            return this.renderSearchResults();
+        }
     }
 }
 
