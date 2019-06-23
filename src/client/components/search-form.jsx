@@ -66,7 +66,7 @@ class SearchForm extends Component {
         return (
             <div data-testid="search-form__container" className="search-form__container">
                 <DropdownButton
-                    title={this.props.localProValues.proCategories.categoryName || 'Choose a category'}
+                    title={this.props.localProValues.proCategory.categoryName || 'Choose a category'}
                     onSelect={(evtKey, evt) => {
                         debugger;
                         this.props.store.dispatch({

@@ -14,7 +14,6 @@ const proCategories = (
   state = {
     loadingCategories: false,
     categories: [],
-    categoryName: undefined
   },
   action
 ) => {
@@ -52,7 +51,7 @@ const proLocation = (state = { location: undefined }, action) => {
   }
 }
 
-const proCategory = (state = { category_id: undefined, category_name: undefined }, action) => {
+const proCategory = (state = { categoryId: undefined, categoryName: undefined }, action) => {
   switch (action.type) {
     case 'CHOOSE_PRO_CATEGORY':
       return {
