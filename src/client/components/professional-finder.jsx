@@ -78,7 +78,7 @@ class ProfessionalFinder extends Component {
                         className="pro-finder__search-results-table-col"
                     >
                         {
-                            this.props.localProValues.loading ?
+                            this.props.localProValues.searchResults.loading ?
                                 <Spinner animation="border" role="status">
                                     <span className="sr-only">Loading...</span>
                                 </Spinner>
