@@ -8,6 +8,7 @@ import {
     Spinner,
 } from 'react-bootstrap';
 import PropTypes from 'prop-types'
+import ProFinderService from '../service/pro-finder-service';
 import SearchForm from '../components/search-form.jsx'
 import SearchResultsTable from './search-results-table.jsx';
 
@@ -16,8 +17,8 @@ class ProfessionalFinder extends Component {
         super(props);
 
         this.maxResultsPerPage = 20;
-
         this.handlePageChanged = evt => {
+            debugger;
             let pageClicked;
 
             if (evt.target.innerText.indexOf("«") > -1) {
@@ -31,12 +32,14 @@ class ProfessionalFinder extends Component {
             const newPageResultsOffset = pageClicked * (this.maxResultsPerPage - 1) // 0 indexed;
 
             // Replace with action dispatch...
-
-            // this.updateSearchResults(
-            //     this.state.categoryId,
-            //     this.state.location,
-            //     newPageResultsOffset
-            // );
+            this.props.store.dispatch({
+                type: 'SEARCH_LOCAL_PROS',
+                payload: ProFinderService.searchForLocalProfessionals(
+                    Number.parseInt(this.props.localProValues.proCategory.categoryId),
+                    this.props.localProValues.proLocation.location,
+                    newPageResultsOffset
+                )
+            });
         }
     };
 
