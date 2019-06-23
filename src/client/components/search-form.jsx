@@ -7,19 +7,6 @@ class SearchForm extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            postcode: '',
-            categories: [],
-            categoryId: '',
-            categoryName: 'Choose a category',
-        }
-
-        this.validatePostcode = postcode => {
-            postcode = postcode.replace(/\s/g, "");
-            const regex = /^[A-Z]{1,2}[0-9]{1,2}[A-Z]{0,1}/i
-            return regex.test(postcode);
-        }
-
         this.updateInputValue = evt => {
             debugger;
             this.props.store.dispatch({
@@ -29,36 +16,50 @@ class SearchForm extends Component {
         }
 
         this.handleCategoryChosen = (evtKey, evt) => {
-            this.setState({
+            debugger;
+            this.props.store.dispatch({
+                type: 'UPDATE_PRO_CATEGORY',
                 categoryName: evt.currentTarget.text,
                 categoryId: evtKey
             })
         }
 
-        // this.handleSearchBtn = () => {
-        //     const postcode = this.state.postcode;
-        //     const categoryId = this.state.categoryId;
+        this.handleSearchBtn = () => {
+            debugger;
 
-        //     debugger;
-        //     this.props.store.dispatch({
+            let locationValidation;
+            const postcode = this.props.localProValues.proLocation.location;
 
-        //     })
+            if (postcode) {
+                const squishedPostcode = postcode.replace(/\s/g, "");
+                const regex = /^[A-Z]{1,2}[0-9]{1,2}[A-Z]{0,1}/i
+                locationValidation = regex.test(squishedPostcode);
+            }
 
-        // if (!this.validatePostcode(postcode) || !categoryId) {
-        //     this.props.updateSearchResults(
-        //         categoryId,
-        //         postcode,
-        //         0,
-        //         true
-        //     );
-        // } else {
-        //     this.props.updateSearchResults(
-        //         Number.parseInt(categoryId),
-        //         postcode,
-        //         0
-        //     );
-        // };
-        // }
+            if (!locationValidation) {
+                this.props.store.dispatch({
+                    type: 'SET_ERROR',
+                    error: 'Please enter a valid UK postcode...',
+                    loading: false,
+                })
+            }
+
+            if (!this.props.localProValues.proCategory.categoryId) {
+                this.props.store.dispatch({
+                    type: 'SET_ERROR',
+                    error: 'Please choose a valid category',
+                    loading: false,
+                });
+            }
+            this.props.store.dispatch({
+                type: 'SEARCH_LOCAL_PROS',
+                payload: ProFinderService.searchForLocalProfessionals(
+                    this.props.localProValues.proCategory.categoryId,
+                    this.props.localProValues.proLocation.location,
+                    0
+                )
+            })
+        }
     }
 
     render() {
@@ -67,15 +68,7 @@ class SearchForm extends Component {
             <div data-testid="search-form__container" className="search-form__container">
                 <DropdownButton
                     title={this.props.localProValues.proCategory.categoryName || 'Choose a category'}
-                    onSelect={(evtKey, evt) => {
-                        debugger;
-                        this.props.store.dispatch({
-                            type: 'CHOOSE_PRO_CATEGORY',
-                            categoryName: evt.currentTarget.text,
-                            categoryId: evtKey
-                        })
-                    }
-                    }
+                    onSelect={this.handleCategoryChosen}
                     data-testid="search-form__category-dropdown"
                     className="search-form__category-dropdown"
                 >
