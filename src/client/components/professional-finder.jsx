@@ -129,9 +129,10 @@ class ProfessionalFinder extends Component {
                         <SearchForm
                             data-testid="pro-finder__search-form"
                             className="pro-finder__search-form"
-                            categories={this.props.categories}
                             proFinderService={this.props.proFinderService}
                             updateSearchResults={this.updateSearchResults}
+                            proFinderValues={this.props.proFinderValues}
+                            store={this.props.store}
                         />
                     </Col>
                 </Row>
@@ -157,6 +158,7 @@ class ProfessionalFinder extends Component {
                                             className="pro-finder__search-results-table"
                                             searchResults={this.state.searchResults}
                                             error={this.state.error}
+                                            proFinderValues={this.proFinderValues}
                                         />
                         }
 

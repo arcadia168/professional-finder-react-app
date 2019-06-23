@@ -16,8 +16,9 @@ class App extends Component {
           path="/"
           render={() => {
             return <ProfessionalFinder
-              categories={this.props.categories}
+              localProValues={this.props.localProValues}
               proFinderService={this.props.proFinderService}
+              store={this.props.store}
             />
           }}
         />
