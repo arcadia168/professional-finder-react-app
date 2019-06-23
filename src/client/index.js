@@ -8,45 +8,42 @@ import ProFinderService from '../client/service/pro-finder-service';
 import Redux, { combineReducers, createStore, applyMiddleware } from 'redux';
 import promise from 'redux-promise-middleware'
 
-const axiosInstance = axios;
-const proFinderService = new ProFinderService(axiosInstance);
-
 // Simple reducers...
 
 const proCategories = (
-  state = {},
+  state = {
+    loadingCategories: false,
+    categories: [],
+    categoryName: undefined
+  },
   action
 ) => {
-  debugger;
   switch (action.type) {
     case 'PRO_CATEGORIES_PENDING':
-      debugger;
       return {
-        isFulfilled: false,
+        loadingCategories: true,
       }
     case 'PRO_CATEGORIES_FULFILLED':
       debugger;
       return {
-        isFulfilled: true,
+        loadingCategories: false,
         categories: action.payload
       }
     case 'PRO_CATEGORIES_REJECTED':
       debugger;
       return {
+        loadingCategories: false,
         isRejected: true,
         error: action.payload
       }
     default:
-      debugger;
       return state;
   };
 }
 
 const proLocation = (state = { location: undefined }, action) => {
-  debugger;
   switch (action.type) {
     case 'UPDATE_PRO_LOCATION':
-      debugger;
       return {
         location: action.location,
       }
@@ -56,10 +53,8 @@ const proLocation = (state = { location: undefined }, action) => {
 }
 
 const proCategory = (state = { category_id: undefined, category_name: undefined }, action) => {
-  debugger;
   switch (action.type) {
     case 'CHOOSE_PRO_CATEGORY':
-      debugger;
       return {
         categoryId: action.categoryId,
         categoryName: action.categoryName,
@@ -144,33 +139,26 @@ const proFinderApp = combineReducers({
 });
 
 
-const proFinderStore = createStore(proFinderApp,  applyMiddleware(promise));
+const proFinderStore = createStore(proFinderApp, applyMiddleware(promise));
 
-debugger;
+const renderProFinder = () => {
+  render(
+    <App
+      localProValues={proFinderStore.getState()}
+      store={proFinderStore}
+    />,
+    document.getElementById('root')
+  );
+}
+
 proFinderStore.dispatch({
   type: 'PRO_CATEGORIES',
-  payload: proFinderService.getProfessionCategories()
+  payload: ProFinderService.getProfessionCategories()
 });
 
-// const renderProFinder = (categories, proFinderService) => {
-//   render(
-//     <App
-//       categories={categories}
-//       localProValues={proFinderStore.getState()}
-//       store={proFinderStore}
-//     />,
-//     document.getElementById('root')
-//   );
-// }
-
 // Initial render
-// proFinderService.getProfessionCategories().then(
-//   categories => {
-//     debugger;
-//     // Subscribe for further state updates
-//     proFinderStore.subscribe(renderProFinder);
-//     renderProFinder(categories, proFinderService);
-//   }
-// )
+// Subscribe for further state updates
+proFinderStore.subscribe(renderProFinder);
+renderProFinder();
 
 

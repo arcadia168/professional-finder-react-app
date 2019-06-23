@@ -1,35 +1,22 @@
+import axios from 'axios';
+
 export default class ProFinderService {
-    constructor(axiosInstance) {
-        if (!axiosInstance) {
-            const proFinderServiceInstanceError = new Error(
-                'Error at ProFinderService.constructor: Please ensure you pass in a valid instance of axios when instantiating.'
-            );
-            console.error(proFinderServiceInstanceError.message);
-            throw proFinderServiceInstanceError;
+    static getProfessionCategories(port) {
+        const axiosConfig = {
+            method: 'get',
+            url: 'http://localhost:8080/api/categories'
         }
-        this.axios = axiosInstance;
-    }
 
-    getProfessionCategories(port) {
-        if (this.cachedVisibleCategories) {
-            return this.cachedVisibleCategories;
-        } else {
-            const axiosConfig = {
-                method: 'get',
-                url: 'http://localhost:8080/api/categories'
-            }
-
-            return this.axios(axiosConfig).then(professionCategories => {
-                const visibleProfessionCategories = professionCategories.data.filter(professionCategory => !professionCategory.hidden);
-                this.cachedVisibleCategories = visibleProfessionCategories;
-                return visibleProfessionCategories;
-            }).catch(error => {
-                const getCategoriesError =
-                    new Error(`Error at proFinderService.getProfessionCategories: ${error.message}`);
-                console.error(getCategoriesError.message);
-                throw getCategoriesError;
-            })
-        }
+        return axios(axiosConfig).then(professionCategories => {
+            const visibleProfessionCategories = professionCategories.data.filter(professionCategory => !professionCategory.hidden);
+            this.cachedVisibleCategories = visibleProfessionCategories;
+            return visibleProfessionCategories;
+        }).catch(error => {
+            const getCategoriesError =
+                new Error(`Error at proFinderService.getProfessionCategories: ${error.message}`);
+            console.error(getCategoriesError.message);
+            throw getCategoriesError;
+        })
     }
 
     throwAndLogParameterError(invalidParameter) {
@@ -40,7 +27,7 @@ export default class ProFinderService {
         throw searchProError
     }
 
-    searchForLocalProfessionals(categoryId, paginationOffsetHeader, location) {
+    static searchForLocalProfessionals(categoryId, paginationOffsetHeader, location) {
         if (!categoryId || typeof (categoryId) !== 'number') {
             this.throwAndLogParameterError(`categoryId`);
         }
@@ -74,7 +61,7 @@ export default class ProFinderService {
             },
             data: data,
         }
-        return this.axios(axiosConfig).then(response => {
+        return axios(axiosConfig).then(response => {
             return {
                 totalCount: response.headers['x-pagination-count'],
                 results: response.data.response.pros,

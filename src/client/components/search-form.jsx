@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Dropdown, DropdownButton, Button, InputGroup, FormControl } from 'react-bootstrap';
+import { Dropdown, DropdownButton, Button, InputGroup, FormControl, Spinner } from 'react-bootstrap';
 import PropTypes from 'prop-types'
+import ProFinderService from '../service/pro-finder-service';
 
 class SearchForm extends Component {
     constructor(props) {
@@ -34,11 +35,6 @@ class SearchForm extends Component {
             })
         }
 
-        debugger;
-        this.props.store.dispatch({
-            type: 'GET_PRO_CATEGORIES'
-        })
-
         // this.handleSearchBtn = () => {
         //     const postcode = this.state.postcode;
         //     const categoryId = this.state.categoryId;
@@ -48,28 +44,29 @@ class SearchForm extends Component {
 
         //     })
 
-            // if (!this.validatePostcode(postcode) || !categoryId) {
-            //     this.props.updateSearchResults(
-            //         categoryId,
-            //         postcode,
-            //         0,
-            //         true
-            //     );
-            // } else {
-            //     this.props.updateSearchResults(
-            //         Number.parseInt(categoryId),
-            //         postcode,
-            //         0
-            //     );
-            // };
+        // if (!this.validatePostcode(postcode) || !categoryId) {
+        //     this.props.updateSearchResults(
+        //         categoryId,
+        //         postcode,
+        //         0,
+        //         true
+        //     );
+        // } else {
+        //     this.props.updateSearchResults(
+        //         Number.parseInt(categoryId),
+        //         postcode,
+        //         0
+        //     );
+        // };
         // }
     }
 
     render() {
+        debugger;
         return (
             <div data-testid="search-form__container" className="search-form__container">
                 <DropdownButton
-                    title={this.props.proFinderValues && this.props.proFinderValues.categoryName || 'Choose a category'}
+                    title={this.props.localProValues.proCategories.categoryName || 'Choose a category'}
                     onSelect={(evtKey, evt) => {
                         debugger;
                         this.props.store.dispatch({
@@ -83,9 +80,14 @@ class SearchForm extends Component {
                     className="search-form__category-dropdown"
                 >
                     {
-                        this.props.proFinderValues && this.props.proFinderValues.categories.map(category => {
-                            return <Dropdown.Item key={category.id} eventKey={category.id}>{category.name}</Dropdown.Item>
-                        })
+                        this.props.localProValues.proCategories.loadingCategories ?
+                            <Spinner animation="border" role="status">
+                                <span className="sr-only">Loading Categories</span>
+                            </Spinner>
+                            :
+                            this.props.localProValues.proCategories.categories.map(category => {
+                                return <Dropdown.Item key={category.id} eventKey={category.id}>{category.name}</Dropdown.Item>
+                            })
                     }
                 </DropdownButton>
                 <InputGroup

@@ -17,8 +17,6 @@ class App extends Component {
           render={() => {
             return <ProfessionalFinder
               localProValues={this.props.localProValues}
-              categories={this.props.categories}
-              proFinderService={this.props.proFinderService}
               store={this.props.store}
             />
           }}
@@ -29,8 +27,8 @@ class App extends Component {
 }
 
 App.propTypes = {
-  proFinderService: PropTypes.object,
-  categories: PropTypes.array,
+  localProValues: PropTypes.object,
+  store: PropTypes.object
 }
 
 export default App;

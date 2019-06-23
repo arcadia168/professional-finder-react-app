@@ -129,9 +129,7 @@ class ProfessionalFinder extends Component {
                         <SearchForm
                             data-testid="pro-finder__search-form"
                             className="pro-finder__search-form"
-                            proFinderService={this.props.proFinderService}
-                            updateSearchResults={this.updateSearchResults}
-                            proFinderValues={this.props.proFinderValues}
+                            localProValues={this.props.localProValues}
                             store={this.props.store}
                         />
                     </Col>
