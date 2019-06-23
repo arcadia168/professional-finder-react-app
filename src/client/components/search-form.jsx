@@ -34,6 +34,11 @@ class SearchForm extends Component {
             })
         }
 
+        debugger;
+        this.props.store.dispatch({
+            type: 'GET_PRO_CATEGORIES'
+        })
+
         // this.handleSearchBtn = () => {
         //     const postcode = this.state.postcode;
         //     const categoryId = this.state.categoryId;
