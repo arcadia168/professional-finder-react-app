@@ -19,7 +19,7 @@ export default class ProFinderService {
         })
     }
 
-    throwAndLogParameterError(invalidParameter) {
+    static throwAndLogParameterError(invalidParameter) {
         const searchProError = new Error(
             `ProFinderService.searchForLocalProfessional: Please pass in valid parameter ${invalidParameter}`
         )
@@ -28,6 +28,7 @@ export default class ProFinderService {
     }
 
     static searchForLocalProfessionals(categoryId, location, paginationOffsetHeader) {
+        debugger;
         if (!categoryId || typeof (categoryId) !== 'number') {
             this.throwAndLogParameterError(`categoryId`);
         }
@@ -64,6 +65,7 @@ export default class ProFinderService {
         return axios(axiosConfig).then(response => {
             return {
                 totalCount: response.headers['x-pagination-count'],
+                offset: response.headers['x-pagination-offset'],
                 results: response.data.response.pros,
             };
         }).catch(error => {

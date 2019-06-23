@@ -36,29 +36,28 @@ class SearchForm extends Component {
                 locationValidation = regex.test(squishedPostcode);
             }
 
-            if (!locationValidation) {
-                this.props.store.dispatch({
-                    type: 'SET_ERROR',
-                    error: 'Please enter a valid UK postcode...',
-                    loading: false,
-                })
-            }
-
             if (!this.props.localProValues.proCategory.categoryId) {
                 this.props.store.dispatch({
                     type: 'SET_ERROR',
                     error: 'Please choose a valid category',
                     loading: false,
                 });
+            } else if (!locationValidation) {
+                this.props.store.dispatch({
+                    type: 'SET_ERROR',
+                    error: 'Please enter a valid UK postcode...',
+                    loading: false,
+                })
+            } else {
+                this.props.store.dispatch({
+                    type: 'SEARCH_LOCAL_PROS',
+                    payload: ProFinderService.searchForLocalProfessionals(
+                        Number.parseInt(this.props.localProValues.proCategory.categoryId),
+                        this.props.localProValues.proLocation.location,
+                        0
+                    )
+                })
             }
-            this.props.store.dispatch({
-                type: 'SEARCH_LOCAL_PROS',
-                payload: ProFinderService.searchForLocalProfessionals(
-                    this.props.localProValues.proCategory.categoryId,
-                    this.props.localProValues.proLocation.location,
-                    0
-                )
-            })
         }
     }
 

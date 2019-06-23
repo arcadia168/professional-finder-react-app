@@ -85,19 +85,19 @@ const searchResults = (
       return {
         error: action.error
       }
-    case 'SEARCH_RESULTS_PENDING':
+    case 'SEARCH_LOCAL_PROS_PENDING':
       debugger;
       return {
         searchResults: [],
-        searchResultsLoading: true,
+        loading: true,
         error: undefined,
       }
-    case 'SEARCH_RESULTS_FULFILLED':
+    case 'SEARCH_LOCAL_PROS_FULFILLED':
       debugger;
 
       // Parsing results and setting state
-      const searchResults = response.results;
-      const numPages = Math.ceil(response.totalCount / this.maxResultsPerPage);
+      const searchResults = action.payload.results;
+      const numPages = Math.ceil(action.payload.totalCount / this.maxResultsPerPage);
 
       if (searchResults.length === 0) {
         return {
@@ -111,12 +111,12 @@ const searchResults = (
         return {
           searchResults: searchResults,
           numPages: numPages,
-          activePage: Math.ceil((offset / this.maxResultsPerPage) + 1),
+          activePage: Math.ceil((action.payload.offset / this.maxResultsPerPage) + 1),
           error: undefined,
           loading: false,
         };
       }
-    case 'SEARCH_RESULTS_REJECTED':
+    case 'SEARCH_LOCAL_PROS_REJECTED':
       debugger;
       return {
         searchResults: [],
@@ -124,7 +124,7 @@ const searchResults = (
         activePage: 1,
         searchResults: [],
         loading: false,
-        error: data.payload,
+        error: action.payload,
       }
     default:
       return state;
