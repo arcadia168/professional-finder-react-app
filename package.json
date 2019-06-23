@@ -34,6 +34,8 @@
     "react-router-dom": "^5.0.1",
     "react-star-rating-component": "^1.4.1",
     "redux": "^4.0.1",
+    "redux-promise-middleware": "^6.1.1",
+    "redux-thunk": "^2.3.0",
     "sass-mq": "^5.0.0",
     "underscore": "^1.9.1"
   },
