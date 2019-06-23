@@ -40,6 +40,24 @@ const proCategories = (
   };
 }
 
+const proCategory = (
+  state = {
+    categoryName: undefined,
+    categoryId: undefined
+  },
+  action
+) => {
+  switch (action.type) {
+    case 'UPDATE_PRO_CATEGORY':
+      return {
+        categoryId: action.categoryId,
+        categoryName: action.categoryName,
+      }
+    default:
+      return state;
+  };
+}
+
 const proLocation = (state = { location: undefined }, action) => {
   switch (action.type) {
     case 'UPDATE_PRO_LOCATION':
@@ -48,92 +66,75 @@ const proLocation = (state = { location: undefined }, action) => {
       }
     default:
       return state;
-  }
+  };
 }
 
-const proCategory = (state = { categoryId: undefined, categoryName: undefined }, action) => {
+const searchResults = (
+  state = {
+    searchResults: [],
+    numPages: 1,
+    activePage: 1,
+    loading: false,
+    error: undefined,
+  },
+  action
+) => {
   switch (action.type) {
-    case 'CHOOSE_PRO_CATEGORY':
+    case 'SET_ERROR':
+      debugger;
       return {
-        categoryId: action.categoryId,
-        categoryName: action.categoryName,
+        error: action.error
       }
-    default:
-      return state;
-  }
-}
+    case 'SEARCH_RESULTS_PENDING':
+      debugger;
+      return {
+        searchResults: [],
+        searchResultsLoading: true,
+        error: undefined,
+      }
+    case 'SEARCH_RESULTS_FULFILLED':
+      debugger;
 
-const searchResults = (state = {}, action) => {
-  switch (action.type) {
-    case 'SEARCH_LOCAL_PROS':
+      // Parsing results and setting state
+      const searchResults = response.results;
+      const numPages = Math.ceil(response.totalCount / this.maxResultsPerPage);
 
-      // action dispatch should contain category_id, location and offset.
-
-      // Validate postcode
-      // split below into error reducer?
-      let locationValidation;
-      const postcode = action.location;
-      postcode = postcode.replace(/\s/g, "");
-      const regex = /^[A-Z]{1,2}[0-9]{1,2}[A-Z]{0,1}/i
-      locationValidation = regex.test(postcode);
-
-      if (!locationValidation) {
+      if (searchResults.length === 0) {
         return {
-          error: 'Please enter a valid UK postcode',
+          searchResults: [],
+          numPages: 1,
+          activePage: 1,
+          error: 'No local professionals found for this search. Please try again.',
           loading: false,
         }
-      }
-
-      // Validate category_id
-      if (!action.category_id) {
+      } else {
         return {
-          error: 'Please choose a valid category',
-          loading: false,
-        }
-      }
-      // above split into error reducer? //
-
-      return this.props.proFinderService.searchForLocalProfessionals(
-        action.category_id,
-        action.offset,
-        action.location
-      ).then(response => {
-
-        const searchResults = response.results;
-        const numPages = Math.ceil(response.totalCount / this.maxResultsPerPage);
-
-        if (searchResults.length === 0) {
-          return {
-            error: 'No local professionals found for this search. Please try again.',
-            loading: false,
-          }
-        } else {
-          return {
-            searchResults: searchResults,
-            numPages: numPages,
-            categoryId: categoryId,
-            location: location,
-            activePage: Math.ceil((offset / this.maxResultsPerPage) + 1),
-            error: undefined,
-            loading: false,
-          };
-        }
-      }).catch(error => {
-        const userFriendlyError = `Oops! Something went wrong: ${error.message}`;
-        return {
-          error: userFriendlyError,
+          searchResults: searchResults,
+          numPages: numPages,
+          activePage: Math.ceil((offset / this.maxResultsPerPage) + 1),
+          error: undefined,
           loading: false,
         };
-      });
+      }
+    case 'SEARCH_RESULTS_REJECTED':
+      debugger;
+      return {
+        searchResults: [],
+        numPages: 1,
+        activePage: 1,
+        searchResults: [],
+        loading: false,
+        error: data.payload,
+      }
     default:
       return state;
   }
 };
 
 const proFinderApp = combineReducers({
-  proCategories,
-  proLocation,
   proCategory,
+  proLocation,
+  proCategories,
   searchResults
 });
 

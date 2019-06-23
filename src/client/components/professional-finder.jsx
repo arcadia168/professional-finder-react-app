@@ -17,98 +17,36 @@ class ProfessionalFinder extends Component {
 
         this.maxResultsPerPage = 20;
 
-        this.state = {
-            searchResults: [],
-            numPages: 0,
-            error: undefined,
-            activePage: 1,
-            categoryId: undefined,
-            location: undefined,
-            loading: false,
-        };
-
-        this.updateSearchResults = (
-            categoryId,
-            location,
-            offset,
-            invalidPostcode
-        ) => {
-            this.setState({
-                loading: true
-            })
-
-            if (!categoryId) {
-                return this.setState({
-                    error: 'Please choose a valid job category',
-                    loading: false,
-                });
-            } else if (!location || invalidPostcode) {
-                return this.setState({
-                    error: 'Please enter a valid UK postcode',
-                    loading: false
-                });
-            }
-
-            return this.props.proFinderService.searchForLocalProfessionals(
-                categoryId,
-                offset,
-                location
-            ).then(response => {
-                const searchResults = response.results;
-                const numPages = Math.ceil(response.totalCount / this.maxResultsPerPage);
-                if (searchResults.length === 0) {
-                    this.setState({
-                        error: 'No local professionals found for this search. Please try again.',
-                        loading: false,
-                    })
-                } else {
-                    this.setState({
-                        searchResults: searchResults,
-                        numPages: numPages,
-                        categoryId: categoryId,
-                        location: location,
-                        activePage: Math.ceil((offset / this.maxResultsPerPage) + 1),
-                        error: undefined,
-                        loading: false,
-                    });
-                }
-            }).catch(error => {
-                const userFriendlyError = `Oops! Something went wrong: ${error.message}`;
-                this.setState({
-                    error: userFriendlyError,
-                    loading: false,
-                });
-            });
-        }
-
         this.handlePageChanged = evt => {
             let pageClicked;
 
             if (evt.target.innerText.indexOf("«") > -1) {
                 pageClicked = 0;
             } else if (evt.target.innerText.indexOf("»") > -1) {
-                pageClicked = this.state.numPages - 1;
+                pageClicked = this.props.localProValues.searchResults.numPages - 1;
             } else {
                 pageClicked = Number.parseInt(evt.target.text) - 1; // 0 indexed
             }
 
             const newPageResultsOffset = pageClicked * (this.maxResultsPerPage - 1) // 0 indexed;
 
-            this.updateSearchResults(
-                this.state.categoryId,
-                this.state.location,
-                newPageResultsOffset
-            );
+            // Replace with action dispatch...
+
+            // this.updateSearchResults(
+            //     this.state.categoryId,
+            //     this.state.location,
+            //     newPageResultsOffset
+            // );
         }
     };
 
     render() {
         let pages = [];
-        for (let i = 0; i < this.state.numPages; i++) {
+        for (let i = 0; i < this.props.localProValues.searchResults.numPages; i++) {
             pages.push(
                 <Pagination.Item
                     key={i}
-                    active={this.state.activePage === (i + 1)}
+                    active={this.props.localProValues.searchResults.activePage === (i + 1)}
                     onClick={this.handlePageChanged}
                 >
                     {i + 1}
@@ -140,22 +78,22 @@ class ProfessionalFinder extends Component {
                         className="pro-finder__search-results-table-col"
                     >
                         {
-                            this.state.loading ?
+                            this.props.localProValues.loading ?
                                 <Spinner animation="border" role="status">
                                     <span className="sr-only">Loading...</span>
                                 </Spinner>
-                                : this.state.error ?
+                                : this.props.localProValues.searchResults.error ?
                                     <Alert variant="danger">
-                                        {this.state.error}
+                                        {this.props.localProValues.searchResults.error}
                                     </Alert>
-                                    : this.state.searchResults.length === 0 ?
+                                    : this.props.localProValues.searchResults.searchResults.length === 0 ?
                                         <Alert variant="info">Make a search above!</Alert>
                                         :
                                         <SearchResultsTable
                                             data-testid="pro-finder__search-results-table"
                                             className="pro-finder__search-results-table"
-                                            searchResults={this.state.searchResults}
-                                            error={this.state.error}
+                                            searchResults={this.props.localProValues.searchResults.searchResults}
+                                            error={this.props.localProValues.searchResults.error}
                                             proFinderValues={this.proFinderValues}
                                         />
                         }
@@ -163,7 +101,7 @@ class ProfessionalFinder extends Component {
                     </Col>
                 </Row>
                 {
-                    this.state.loading === true ? null :
+                    this.props.localProValues.searchResults.loading === true ? null :
                         <Row data-testid="pro-finder__pagination-control-row" className="pro-finder__pagination-control-row">
                             <Col
                                 data-testid="pro-finder__pagination-control-col"
@@ -184,7 +122,7 @@ class ProfessionalFinder extends Component {
                                             <Pagination.Last
                                                 className="pro-finder__pagination-last-item"
                                                 onClick={this.handlePageChanged}
-                                                key={this.state.numPages - 1}
+                                                key={this.props.localProValues.searchResults.numPages - 1}
                                             />
                                         </Pagination> : null
                                 }
