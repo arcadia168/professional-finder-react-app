@@ -1,71 +1,85 @@
 import React, { Component } from 'react';
-import { Dropdown, DropdownButton, Button, InputGroup, FormControl } from 'react-bootstrap';
+import { Dropdown, DropdownButton, Button, InputGroup, FormControl, Spinner } from 'react-bootstrap';
 import PropTypes from 'prop-types'
+import ProFinderService from '../service/pro-finder-service';
 
 class SearchForm extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            postcode: '',
-            categories: [],
-            categoryId: '',
-            categoryName: 'Choose a category',
-        }
-
-        this.validatePostcode = postcode => {
-            postcode = postcode.replace(/\s/g, "");
-            const regex = /^[A-Z]{1,2}[0-9]{1,2}[A-Z]{0,1}/i
-            return regex.test(postcode);
-        }
-
         this.updateInputValue = evt => {
-            this.setState({
-                postcode: evt.target.value
+            debugger;
+            this.props.store.dispatch({
+                type: 'UPDATE_PRO_LOCATION',
+                location: evt.target.value
             });
         }
 
         this.handleCategoryChosen = (evtKey, evt) => {
-            this.setState({
+            debugger;
+            this.props.store.dispatch({
+                type: 'UPDATE_PRO_CATEGORY',
                 categoryName: evt.currentTarget.text,
                 categoryId: evtKey
             })
         }
 
         this.handleSearchBtn = () => {
-            const postcode = this.state.postcode;
-            const categoryId = this.state.categoryId;
+            debugger;
 
-            if (!this.validatePostcode(postcode) || !categoryId) {
-                this.props.updateSearchResults(
-                    categoryId,
-                    postcode,
-                    0,
-                    true
-                );
+            let locationValidation;
+            const postcode = this.props.localProValues.proLocation.location;
+
+            if (postcode) {
+                const squishedPostcode = postcode.replace(/\s/g, "");
+                const regex = /^[A-Z]{1,2}[0-9]{1,2}[A-Z]{0,1}/i
+                locationValidation = regex.test(squishedPostcode);
+            }
+
+            if (!this.props.localProValues.proCategory.categoryId) {
+                this.props.store.dispatch({
+                    type: 'SET_ERROR',
+                    error: 'Please choose a valid category',
+                    loading: false,
+                });
+            } else if (!locationValidation) {
+                this.props.store.dispatch({
+                    type: 'SET_ERROR',
+                    error: 'Please enter a valid UK postcode...',
+                    loading: false,
+                })
             } else {
-                this.props.updateSearchResults(
-                    Number.parseInt(categoryId),
-                    postcode,
-                    0
-                );
-            };
+                this.props.store.dispatch({
+                    type: 'SEARCH_LOCAL_PROS',
+                    payload: ProFinderService.searchForLocalProfessionals(
+                        Number.parseInt(this.props.localProValues.proCategory.categoryId),
+                        this.props.localProValues.proLocation.location,
+                        0
+                    )
+                })
+            }
         }
     }
 
     render() {
+        debugger;
         return (
             <div data-testid="search-form__container" className="search-form__container">
                 <DropdownButton
-                    title={this.state.categoryName || 'Choose a category'}
+                    title={this.props.localProValues.proCategory.categoryName || 'Choose a category'}
                     onSelect={this.handleCategoryChosen}
                     data-testid="search-form__category-dropdown"
                     className="search-form__category-dropdown"
                 >
                     {
-                        this.props.categories.map(category => {
-                            return <Dropdown.Item key={category.id} eventKey={category.id}>{category.name}</Dropdown.Item>
-                        })
+                        this.props.localProValues.proCategories.loadingCategories ?
+                            <Spinner animation="border" role="status">
+                                <span className="sr-only">Loading Categories</span>
+                            </Spinner>
+                            :
+                            this.props.localProValues.proCategories.categories.map(category => {
+                                return <Dropdown.Item key={category.id} eventKey={category.id}>{category.name}</Dropdown.Item>
+                            })
                     }
                 </DropdownButton>
                 <InputGroup
