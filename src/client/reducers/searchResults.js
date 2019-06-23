@@ -1,3 +1,4 @@
+const maxResultsPerPage = 20;
 export default (
     state = {
         searchResults: [],
@@ -26,7 +27,7 @@ export default (
 
             // Parsing results and setting state
             const searchResults = action.payload.results;
-            const numPages = Math.ceil(action.payload.totalCount / this.maxResultsPerPage);
+            const numPages = Math.ceil(action.payload.totalCount / maxResultsPerPage);
 
             if (searchResults.length === 0) {
                 return {
@@ -40,7 +41,7 @@ export default (
                 return {
                     searchResults: searchResults,
                     numPages: numPages,
-                    activePage: Math.ceil((action.payload.offset / this.maxResultsPerPage) + 1),
+                    activePage: Math.ceil((action.payload.offset / maxResultsPerPage) + 1),
                     error: undefined,
                     loading: false,
                 };
@@ -53,7 +54,7 @@ export default (
                 activePage: 1,
                 searchResults: [],
                 loading: false,
-                error: action.payload,
+                error: action.payload.message,
             }
         default:
             return state;
