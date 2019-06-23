@@ -20,8 +20,10 @@ class SearchForm extends Component {
         }
 
         this.updateInputValue = evt => {
-            this.setState({
-                postcode: evt.target.value
+            debugger;
+            this.props.store.dispatch({
+                type: 'UPDATE_PRO_LOCATION',
+                location: evt.target.value
             });
         }
 
@@ -32,38 +34,51 @@ class SearchForm extends Component {
             })
         }
 
-        this.handleSearchBtn = () => {
-            const postcode = this.state.postcode;
-            const categoryId = this.state.categoryId;
+        // this.handleSearchBtn = () => {
+        //     const postcode = this.state.postcode;
+        //     const categoryId = this.state.categoryId;
 
-            if (!this.validatePostcode(postcode) || !categoryId) {
-                this.props.updateSearchResults(
-                    categoryId,
-                    postcode,
-                    0,
-                    true
-                );
-            } else {
-                this.props.updateSearchResults(
-                    Number.parseInt(categoryId),
-                    postcode,
-                    0
-                );
-            };
-        }
+        //     debugger;
+        //     this.props.store.dispatch({
+
+        //     })
+
+            // if (!this.validatePostcode(postcode) || !categoryId) {
+            //     this.props.updateSearchResults(
+            //         categoryId,
+            //         postcode,
+            //         0,
+            //         true
+            //     );
+            // } else {
+            //     this.props.updateSearchResults(
+            //         Number.parseInt(categoryId),
+            //         postcode,
+            //         0
+            //     );
+            // };
+        // }
     }
 
     render() {
         return (
             <div data-testid="search-form__container" className="search-form__container">
                 <DropdownButton
-                    title={this.state.categoryName || 'Choose a category'}
-                    onSelect={this.handleCategoryChosen}
+                    title={this.props.proFinderValues && this.props.proFinderValues.categoryName || 'Choose a category'}
+                    onSelect={(evtKey, evt) => {
+                        debugger;
+                        this.props.store.dispatch({
+                            type: 'CHOOSE_PRO_CATEGORY',
+                            categoryName: evt.currentTarget.text,
+                            categoryId: evtKey
+                        })
+                    }
+                    }
                     data-testid="search-form__category-dropdown"
                     className="search-form__category-dropdown"
                 >
                     {
-                        this.props.categories.map(category => {
+                        this.props.proFinderValues && this.props.proFinderValues.categories.map(category => {
                             return <Dropdown.Item key={category.id} eventKey={category.id}>{category.name}</Dropdown.Item>
                         })
                     }
