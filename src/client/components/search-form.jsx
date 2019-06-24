@@ -105,18 +105,10 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => ({
-    setError: errorMessage => {
-        dispatch(setError(errorMessage))
-    },
-    updateLocation: postcode => {
-        dispatch(updateLocation(postcode))
-    },
-    updateCategory: category => {
-        dispatch(updateCategory(category))
-    },
-    searchLocalPros: searchParams => {
-        dispatch(searcLocalPro(searchParams))
-    }
+    setError: errorMessage => dispatch(setError(errorMessage)),
+    updateLocation: postcode => dispatch(updateLocation(postcode)),
+    updateCategory: category => dispatch(updateCategory(category)),
+    searchLocalPros: searchParams => dispatch(searcLocalPro(searchParams))
 })
 
 export default connect(
