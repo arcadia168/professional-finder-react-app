@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import {
     Container,
     Row,
@@ -7,10 +8,10 @@ import {
     Alert,
     Spinner,
 } from 'react-bootstrap';
-import ProFinderService from '../service/pro-finder-service';
-import SearchForm from '../components/search-form.jsx'
 import SearchResultsTable from './search-results-table.jsx';
-import { connect } from 'react-redux';
+import SearchForm from '../components/search-form.jsx'
+import updatePage from '../actionCreators/updatePage';
+
 
 class ProfessionalFinder extends Component {
     constructor(props) {
@@ -30,7 +31,13 @@ class ProfessionalFinder extends Component {
 
             const newPageResultsOffset = pageClicked * (20 - 1) // 0 indexed;
 
-            this.props.updatePage(newPageResultsOffset);
+            const searchParams = {
+                categoryId: this.props.categoryId,
+                location: this.props.location,
+                searchResultsOffset: newPageResultsOffset,
+            }
+
+            this.props.updatePage(searchParams);
         };
     }
 
@@ -115,19 +122,12 @@ const mapStateToProps = state => ({
     searchError: state.searchResults.error,
     activePage: state.searchResults.activePage,
     numPages: state.searchResults.numPages,
+    categoryId: state.proCategory.categoryId,
+    location: state.proLocation.location,
 })
 
 const mapDispatchToProps = dispatch => ({
-    updatePage: searchResultsOffset => {
-        dispatch({
-            type: 'SEARCH_LOCAL_PROS',
-            payload: ProFinderService.searchForLocalProfessional(
-                Number.parseInt(searchParams.categoryId),
-                searchParams.location,
-                0
-            )
-        })
-    }
+    updatePage: searchParams => dispatch(updatePage(searchParams))
 });
 
 export default connect(
