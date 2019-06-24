@@ -1,8 +1,22 @@
 import React, { Component } from 'react';
-import { Table, Alert } from 'react-bootstrap';
+import { Table, Alert, Spinner } from 'react-bootstrap';
 import PropTypes from 'prop-types'
 import StarRatingComponent from 'react-star-rating-component';
 import { connect } from 'react-redux';
+
+const renderLoadingSpinner = () => {
+    return (
+        <Spinner animation="border" role="status">
+            <span className="sr-only">Loading...</span>
+        </Spinner>
+    )
+}
+
+const renderInitialBlankResults = () => {
+    return (
+        <Alert variant="info">Make a search above!</Alert>
+    )
+}
 
 const renderError = errorMessage => {
     return (
@@ -49,11 +63,15 @@ const renderSearchResults = searchResults => {
 const SearchResultsTable = ({
     searchResults,
     errorMessage,
+    loading
 }) => {
     debugger;
-    if (errorMessage) {
-        debugger;
+    if (loading) {
+        return renderLoadingSpinner();
+    } else if (errorMessage) {
         return renderError(errorMessage);
+    } else if (searchResults.length === 0) {
+        return renderInitialBlankResults(); // future 0 result searches render the above error
     } else {
         return renderSearchResults(searchResults);
     }
@@ -63,7 +81,8 @@ const mapStateToProps = state => {
     debugger;
     return {
         searchResults: state.searchResults.searchResults,
-        errorMessage: state.searchResults.error
+        errorMessage: state.searchResults.error,
+        loading: state.searchResults.loading
     }
 }
 
