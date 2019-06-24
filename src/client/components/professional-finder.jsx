@@ -75,7 +75,7 @@ class ProfessionalFinder extends Component {
                                 <Spinner animation="border" role="status">
                                     <span className="sr-only">Loading...</span>
                                 </Spinner>
-                                : this.props.error ?
+                                : this.props.searchError ?
                                     <Alert variant="danger">
                                         {this.props.searchError}
                                     </Alert>
