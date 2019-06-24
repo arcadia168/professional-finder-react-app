@@ -5,7 +5,6 @@ import StarRatingComponent from 'react-star-rating-component';
 import { connect } from 'react-redux';
 
 const renderError = errorMessage => {
-    debugger;
     return (
         <Alert variant="danger">
             {errorMessage}
@@ -53,6 +52,7 @@ const SearchResultsTable = ({
 }) => {
     debugger;
     if (errorMessage) {
+        debugger;
         return renderError(errorMessage);
     } else {
         return renderSearchResults(searchResults);
