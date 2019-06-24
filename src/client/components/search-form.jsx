@@ -9,9 +9,10 @@ const SearchForm = ({
     categoriesLoading,
     categories,
     location,
+    setError,
     updateCategory,
     updateLocation,
-    searchLocalPros
+    searchLocalPros,
 }) => {
     return (
         <div data-testid="search-form__container" className="search-form__container">
