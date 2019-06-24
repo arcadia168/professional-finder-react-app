@@ -5,6 +5,7 @@ export default (
     },
     action
   ) => {
+    debugger;
     switch (action.type) {
       case 'UPDATE_PRO_CATEGORY':
         return {
