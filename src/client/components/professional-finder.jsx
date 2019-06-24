@@ -7,79 +7,25 @@ import {
     Alert,
     Spinner,
 } from 'react-bootstrap';
-import PropTypes from 'prop-types'
+import ProFinderService from '../service/pro-finder-service';
 import SearchForm from '../components/search-form.jsx'
 import SearchResultsTable from './search-results-table.jsx';
+import { connect } from 'react-redux';
+
+// mapStateToProps = (state) => {
+//     return {
+
+//     }
+// }
 
 class ProfessionalFinder extends Component {
-    constructor(props) {
-        super(props);
-
+    componentDidMount() {
         this.maxResultsPerPage = 20;
-
-        this.state = {
-            searchResults: [],
-            numPages: 0,
-            error: undefined,
-            activePage: 1,
-            categoryId: undefined,
-            location: undefined,
-            loading: false,
-        };
-
-        this.updateSearchResults = (
-            categoryId,
-            location,
-            offset,
-            invalidPostcode
-        ) => {
-            this.setState({
-                loading: true
-            })
-
-            if (!categoryId) {
-                return this.setState({
-                    error: 'Please choose a valid job category',
-                    loading: false,
-                });
-            } else if (!location || invalidPostcode) {
-                return this.setState({
-                    error: 'Please enter a valid UK postcode',
-                    loading: false
-                });
-            }
-
-            return this.props.proFinderService.searchForLocalProfessionals(
-                categoryId,
-                offset,
-                location
-            ).then(response => {
-                const searchResults = response.results;
-                const numPages = Math.ceil(response.totalCount / this.maxResultsPerPage);
-                if (searchResults.length === 0) {
-                    this.setState({
-                        error: 'No local professionals found for this search. Please try again.',
-                        loading: false,
-                    })
-                } else {
-                    this.setState({
-                        searchResults: searchResults,
-                        numPages: numPages,
-                        categoryId: categoryId,
-                        location: location,
-                        activePage: Math.ceil((offset / this.maxResultsPerPage) + 1),
-                        error: undefined,
-                        loading: false,
-                    });
-                }
-            }).catch(error => {
-                const userFriendlyError = `Oops! Something went wrong: ${error.message}`;
-                this.setState({
-                    error: userFriendlyError,
-                    loading: false,
-                });
-            });
-        }
+        const { store } = this.context;
+        const state = store.getState();
+        this.unsubscribe = store.subscribe(() =>
+            this.forceUpdate()
+        );
 
         this.handlePageChanged = evt => {
             let pageClicked;
@@ -87,28 +33,40 @@ class ProfessionalFinder extends Component {
             if (evt.target.innerText.indexOf("«") > -1) {
                 pageClicked = 0;
             } else if (evt.target.innerText.indexOf("»") > -1) {
-                pageClicked = this.state.numPages - 1;
+                pageClicked = state.searchResults.numPages - 1;
             } else {
                 pageClicked = Number.parseInt(evt.target.text) - 1; // 0 indexed
             }
 
             const newPageResultsOffset = pageClicked * (this.maxResultsPerPage - 1) // 0 indexed;
 
-            this.updateSearchResults(
-                this.state.categoryId,
-                this.state.location,
-                newPageResultsOffset
-            );
+            // Replace with action dispatch...
+            this.props.dispatch({
+                type: 'SEARCH_LOCAL_PROS',
+                payload: ProFinderService.searchForLocalProfessionals(
+                    Number.parseInt(state.proCategory.categoryId),
+                    state.proLocation.location,
+                    newPageResultsOffset
+                )
+            });
         }
-    };
+    }
+
+    componentWillUnmount() {
+        this.unsubscribe();
+    }
 
     render() {
+        const props = this.props;
+        const { store } = this.context;
+        const state = store.getState();
+
         let pages = [];
-        for (let i = 0; i < this.state.numPages; i++) {
+        for (let i = 0; i < state.searchResults.numPages; i++) {
             pages.push(
                 <Pagination.Item
                     key={i}
-                    active={this.state.activePage === (i + 1)}
+                    active={state.searchResults.activePage === (i + 1)}
                     onClick={this.handlePageChanged}
                 >
                     {i + 1}
@@ -127,11 +85,9 @@ class ProfessionalFinder extends Component {
                 <Row data-testid="pro-finder__search-form-row" className="pro-finder__search-form-row">
                     <Col data-testid="pro-finder__search-form-col" className="pro-finder__search-form-col">
                         <SearchForm
+                            dispatch={this.props.dispatch}
                             data-testid="pro-finder__search-form"
                             className="pro-finder__search-form"
-                            categories={this.props.categories}
-                            proFinderService={this.props.proFinderService}
-                            updateSearchResults={this.updateSearchResults}
                         />
                     </Col>
                 </Row>
@@ -141,29 +97,30 @@ class ProfessionalFinder extends Component {
                         className="pro-finder__search-results-table-col"
                     >
                         {
-                            this.state.loading ?
+                            state.searchResults.loading ?
                                 <Spinner animation="border" role="status">
                                     <span className="sr-only">Loading...</span>
                                 </Spinner>
-                                : this.state.error ?
+                                : state.searchResults.error ?
                                     <Alert variant="danger">
-                                        {this.state.error}
+                                        {state.searchResults.error}
                                     </Alert>
-                                    : this.state.searchResults.length === 0 ?
+                                    : state.searchResults.searchResults.length === 0 ?
                                         <Alert variant="info">Make a search above!</Alert>
                                         :
                                         <SearchResultsTable
                                             data-testid="pro-finder__search-results-table"
                                             className="pro-finder__search-results-table"
-                                            searchResults={this.state.searchResults}
-                                            error={this.state.error}
+                                            searchResults={state.searchResults.searchResults}
+                                            error={state.searchResults.error}
+                                            proFinderValues={this.proFinderValues}
                                         />
                         }
 
                     </Col>
                 </Row>
                 {
-                    this.state.loading === true ? null :
+                    state.searchResults.loading === true ? null :
                         <Row data-testid="pro-finder__pagination-control-row" className="pro-finder__pagination-control-row">
                             <Col
                                 data-testid="pro-finder__pagination-control-col"
@@ -194,11 +151,6 @@ class ProfessionalFinder extends Component {
             </Container>
         );
     };
-}
-
-ProfessionalFinder.propTypes = {
-    proFinderService: PropTypes.object,
-    categories: PropTypes.array
 }
 
 export default ProfessionalFinder;

@@ -57,7 +57,3 @@ export default class SearchResultsTable extends Component {
         }
     }
 }
-
-SearchResultsTable.propTypes = {
-    searchResults: PropTypes.array,
-}
