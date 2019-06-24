@@ -1,7 +1,7 @@
 export default (
     state = {
-      categoryName: '',
-      categoryId: ''
+      categoryName: undefined,
+      categoryId: undefined
     },
     action
   ) => {

@@ -28,6 +28,7 @@ class ProfessionalFinder extends Component {
         );
 
         this.handlePageChanged = evt => {
+            debugger;
             let pageClicked;
 
             if (evt.target.innerText.indexOf("«") > -1) {
@@ -141,7 +142,7 @@ class ProfessionalFinder extends Component {
                                             <Pagination.Last
                                                 className="pro-finder__pagination-last-item"
                                                 onClick={this.handlePageChanged}
-                                                key={this.state.numPages - 1}
+                                                key={this.props.localProValues.searchResults.numPages - 1}
                                             />
                                         </Pagination> : null
                                 }

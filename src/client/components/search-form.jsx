@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Dropdown, DropdownButton, Button, InputGroup, FormControl } from 'react-bootstrap';
+import { Dropdown, DropdownButton, Button, InputGroup, FormControl, Spinner } from 'react-bootstrap';
 import PropTypes from 'prop-types'
 import ProFinderService from '../service/pro-finder-service';
 import { connect } from 'react-redux';
@@ -47,6 +47,7 @@ class SearchForm extends Component {
     }
 
     render() {
+        debugger;
         return (
             <div data-testid="search-form__container" className="search-form__container">
                 <DropdownButton
