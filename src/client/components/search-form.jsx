@@ -4,6 +4,7 @@ import { Dropdown, DropdownButton, Button, InputGroup, FormControl, Spinner } fr
 import searcLocalPro from '../actionCreators/searchLocalPro';
 import updateCategory from '../actionCreators/updateCategory';
 import updateLocation from '../actionCreators/updateLocation';
+import setError from '../actionCreators/setError';
 
 const SearchForm = ({
     chosenCategoryName,
@@ -105,12 +106,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
     setError: errorMessage => {
-        debugger;
-        dispatch({
-            type: 'SET_ERROR',
-            error: errorMessage,
-            loading: false,
-        })
+        dispatch(setError(errorMessage))
     },
     updateLocation: postcode => {
         dispatch(updateLocation(postcode))
