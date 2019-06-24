@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { Dropdown, DropdownButton, Button, InputGroup, FormControl, Spinner } from 'react-bootstrap';
-import ProFinderService from '../service/pro-finder-service';
 import searcLocalPro from '../actionCreators/searchLocalPro';
 import updateCategory from '../actionCreators/updateCategory';
+import updateLocation from '../actionCreators/updateLocation';
 
 const SearchForm = ({
     chosenCategoryName,
@@ -113,10 +113,7 @@ const mapDispatchToProps = dispatch => ({
         })
     },
     updateLocation: postcode => {
-        dispatch({
-            type: 'UPDATE_PRO_LOCATION',
-            location: postcode,
-        })
+        dispatch(updateLocation(postcode))
     },
     updateCategory: category => {
         dispatch(updateCategory(category))
