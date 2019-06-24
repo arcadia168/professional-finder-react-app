@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { Dropdown, DropdownButton, Button, InputGroup, FormControl, Spinner } from 'react-bootstrap';
-import PropTypes from 'prop-types'
-import ProFinderService from '../service/pro-finder-service';
 import { connect } from 'react-redux';
+import { Dropdown, DropdownButton, Button, InputGroup, FormControl, Spinner } from 'react-bootstrap';
+import ProFinderService from '../service/pro-finder-service';
 
 const SearchForm = ({
     chosenCategoryName,
@@ -92,7 +91,6 @@ const SearchForm = ({
 };
 
 const mapStateToProps = state => {
-    debugger;
     return {
         chosenCategoryName: state.proCategory.categoryName,
         chosenCategoryId: state.proCategory.categoryId,
@@ -104,7 +102,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
     setError: errorMessage => {
-        debugger;
         dispatch({
             type: 'SET_ERROR',
             error: errorMessage,
@@ -112,14 +109,12 @@ const mapDispatchToProps = dispatch => ({
         })
     },
     updateLocation: postcode => {
-        debugger;
         dispatch({
             type: 'UPDATE_PRO_LOCATION',
             location: postcode,
         })
     },
     updateCategory: category => {
-        debugger;
         dispatch({
             type: 'UPDATE_PRO_CATEGORY',
             categoryName: category.categoryName,
@@ -127,7 +122,6 @@ const mapDispatchToProps = dispatch => ({
         })
     },
     searchLocalPros: searchParams => {
-        debugger;
         dispatch({
             type: 'SEARCH_LOCAL_PROS',
             payload: ProFinderService.searchForLocalProfessionals(
