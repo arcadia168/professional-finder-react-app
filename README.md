@@ -1,4 +1,6 @@
-# Professional Finder React Redux Express App
+# Professional Finder App
+
+### Written using React and Redux running on a Node Express server.
 
 See the finished project running on Google Cloud here: https://professional-finder-app.appspot.com/
 
