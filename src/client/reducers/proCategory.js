@@ -5,7 +5,6 @@ export default (
   },
   action
 ) => {
-  debugger;
   switch (action.type) {
     case 'UPDATE_PRO_CATEGORY':
       console.log(`updating the chosen category on state: ${action.categoryId} ${action.categoryName}`);
