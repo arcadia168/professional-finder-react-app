@@ -79,19 +79,20 @@ class ProfessionalFinder extends Component {
                                     <Alert variant="danger">
                                         {this.props.searchError}
                                     </Alert>
-                                    : this.props.searchResults.length === 0 ?
+                                    : this.props.searchResults ? this.props.searchResults.length === 0 ?
                                         <Alert variant="info">Make a search above!</Alert>
                                         :
                                         <SearchResultsTable
                                             data-testid="pro-finder__search-results-table"
                                             className="pro-finder__search-results-table"
                                         />
+                                        : null
                         }
 
                     </Col>
                 </Row>
                 {
-                        this.props.searchResults.loading === true ? null :
+                    this.props.loading === true ? null :
                         <Row data-testid="pro-finder__pagination-control-row" className="pro-finder__pagination-control-row">
                             <Col
                                 data-testid="pro-finder__pagination-control-col"

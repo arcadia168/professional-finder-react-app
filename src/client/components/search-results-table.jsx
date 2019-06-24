@@ -2,11 +2,8 @@ import React, { Component } from 'react';
 import { Table, Alert } from 'react-bootstrap';
 import PropTypes from 'prop-types'
 import StarRatingComponent from 'react-star-rating-component';
-
-export default class SearchResultsTable extends Component {
-    constructor(props) {
-        super(props);
-    }
+import { connect } from 'react-redux';
+class SearchResultsTable extends Component {
 
     renderError() {
         return (
@@ -57,3 +54,13 @@ export default class SearchResultsTable extends Component {
         }
     }
 }
+
+const mapStateToProps = state => ({
+    searchResults: state.searchResults.searchResults,
+    error: state.searchResults.error
+})
+
+export default connect(
+    mapStateToProps,
+    null
+)(SearchResultsTable)
