@@ -1,5 +1,5 @@
-this.props.dispatch({
+export default errorMessage => ({
     type: 'SET_ERROR',
-    error: 'Please choose a valid category',
+    error: errorMessage,
     loading: false,
-});
+})
