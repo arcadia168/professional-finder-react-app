@@ -14,7 +14,6 @@ import searchResults from './reducers/searchResults.js';
 import ProFinderService from '../client/service/pro-finder-service';
 import SearchForm from '../client/components/search-form.jsx';
 
-
 const proFinderApp = combineReducers({
   proCategory,
   proLocation,

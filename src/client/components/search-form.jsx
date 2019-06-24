@@ -121,14 +121,14 @@ const mapDispatchToProps = dispatch => ({
     updateLocation: postcode => {
         debugger;
         dispatch({
-            type: 'UPDATE_LOCATION',
+            type: 'UPDATE_PRO_LOCATION',
             location: postcode,
         })
     },
     updateCategory: category => {
         debugger;
         dispatch({
-            type: 'UPDATE_CATEGORY',
+            type: 'UPDATE_PRO_CATEGORY',
             categoryName: category.categoryName,
             categoryId: category.categoryId
         })
