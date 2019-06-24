@@ -24,7 +24,6 @@ export default (
                 error: undefined,
             }
         case 'SEARCH_LOCAL_PROS_FULFILLED':
-
             debugger;
             // Parsing results and setting state
             const searchResults = action.payload.results;

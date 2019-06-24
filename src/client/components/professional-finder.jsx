@@ -12,20 +12,9 @@ import SearchForm from '../components/search-form.jsx'
 import SearchResultsTable from './search-results-table.jsx';
 import { connect } from 'react-redux';
 
-// mapStateToProps = (state) => {
-//     return {
-
-//     }
-// }
-
 class ProfessionalFinder extends Component {
-    componentDidMount() {
-        this.maxResultsPerPage = 20;
-        const { store } = this.context;
-        const state = store.getState();
-        this.unsubscribe = store.subscribe(() =>
-            this.forceUpdate()
-        );
+    constructor(props) {
+        super(props);
 
         this.handlePageChanged = evt => {
             debugger;
@@ -34,40 +23,25 @@ class ProfessionalFinder extends Component {
             if (evt.target.innerText.indexOf("«") > -1) {
                 pageClicked = 0;
             } else if (evt.target.innerText.indexOf("»") > -1) {
-                pageClicked = state.searchResults.numPages - 1;
+                pageClicked = this.props.numPages - 1;
             } else {
                 pageClicked = Number.parseInt(evt.target.text) - 1; // 0 indexed
             }
 
-            const newPageResultsOffset = pageClicked * (this.maxResultsPerPage - 1) // 0 indexed;
+            const newPageResultsOffset = pageClicked * (20 - 1) // 0 indexed;
 
             // Replace with action dispatch...
-            this.props.dispatch({
-                type: 'SEARCH_LOCAL_PROS',
-                payload: ProFinderService.searchForLocalProfessionals(
-                    Number.parseInt(state.proCategory.categoryId),
-                    state.proLocation.location,
-                    newPageResultsOffset
-                )
-            });
-        }
-    }
-
-    componentWillUnmount() {
-        this.unsubscribe();
+            this.props.updatePage(newPageResultsOffset);
+        };
     }
 
     render() {
-        const props = this.props;
-        const { store } = this.context;
-        const state = store.getState();
-
         let pages = [];
-        for (let i = 0; i < state.searchResults.numPages; i++) {
+        for (let i = 0; i < this.props.numPages; i++) {
             pages.push(
                 <Pagination.Item
                     key={i}
-                    active={state.searchResults.activePage === (i + 1)}
+                    active={this.props.activePage === (i + 1)}
                     onClick={this.handlePageChanged}
                 >
                     {i + 1}
@@ -86,7 +60,6 @@ class ProfessionalFinder extends Component {
                 <Row data-testid="pro-finder__search-form-row" className="pro-finder__search-form-row">
                     <Col data-testid="pro-finder__search-form-col" className="pro-finder__search-form-col">
                         <SearchForm
-                            dispatch={this.props.dispatch}
                             data-testid="pro-finder__search-form"
                             className="pro-finder__search-form"
                         />
@@ -98,30 +71,27 @@ class ProfessionalFinder extends Component {
                         className="pro-finder__search-results-table-col"
                     >
                         {
-                            state.searchResults.loading ?
+                            this.props.searchLoading ?
                                 <Spinner animation="border" role="status">
                                     <span className="sr-only">Loading...</span>
                                 </Spinner>
-                                : state.searchResults.error ?
+                                : this.props.error ?
                                     <Alert variant="danger">
-                                        {state.searchResults.error}
+                                        {this.props.searchError}
                                     </Alert>
-                                    : state.searchResults.searchResults.length === 0 ?
+                                    : this.props.searchResults.length === 0 ?
                                         <Alert variant="info">Make a search above!</Alert>
                                         :
                                         <SearchResultsTable
                                             data-testid="pro-finder__search-results-table"
                                             className="pro-finder__search-results-table"
-                                            searchResults={state.searchResults.searchResults}
-                                            error={state.searchResults.error}
-                                            proFinderValues={this.proFinderValues}
                                         />
                         }
 
                     </Col>
                 </Row>
                 {
-                    state.searchResults.loading === true ? null :
+                        this.props.searchResults.loading === true ? null :
                         <Row data-testid="pro-finder__pagination-control-row" className="pro-finder__pagination-control-row">
                             <Col
                                 data-testid="pro-finder__pagination-control-col"
@@ -142,7 +112,7 @@ class ProfessionalFinder extends Component {
                                             <Pagination.Last
                                                 className="pro-finder__pagination-last-item"
                                                 onClick={this.handlePageChanged}
-                                                key={this.props.localProValues.searchResults.numPages - 1}
+                                                key={this.props.numPages - 1}
                                             />
                                         </Pagination> : null
                                 }
@@ -154,4 +124,28 @@ class ProfessionalFinder extends Component {
     };
 }
 
-export default ProfessionalFinder;
+const mapStateToProps = state => ({
+    searchResults: state.searchResults.searchResults,
+    searchResultsLoading: state.searchResults.loading,
+    searchError: state.searchResults.error,
+    activePage: state.searchResults.activePage,
+    numPages: state.searchResults.numPages,
+})
+
+const mapDispatchToProps = dispatch => ({
+    updatePage: searchResultsOffset => {
+        dispatch({
+            type: 'SEARCH_LOCAL_PROS',
+            payload: ProFinderService.searchForLocalProfessional(
+                Number.parseInt(searchParams.categoryId),
+                searchParams.location,
+                0
+            )
+        })
+    }
+});
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps,
+)(ProfessionalFinder);
