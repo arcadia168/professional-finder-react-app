@@ -3,16 +3,16 @@
 See the finished project running on Google Cloud here: https://professional-finder-app.appspot.com/
 
 To use:
-- npm install
-- npm run webpack
-- npm start
+- `npm install`
+- `npm run webpack`
+- `npm start`
 
 Watchers:
-- npm run webpack:watch
-- npm run test:watch
+- `npm run webpack:watch`
+- `npm run test:watch`
 
 To test:
-- npm test
+- `npm test`
 
 Notes:
 - Started out TDD then this became time consuming *please check out the unit tests, I think they get overlooked, and they take ages to write*
