@@ -32,14 +32,14 @@ class SearchForm extends Component {
                 locationValidation = regex.test(squishedPostcode);
             }
 
-            if (!this.props.chosenCategory.categoryId) {
+            if (!this.props.chosenCategoryId) {
                 this.props.setError('Please choose a category of job.');
             } else if (!locationValidation) {
                 this.props.setError('Please enter a valid UK postcode...');
             } else {
                 const searchParams = {
                     location: this.props.location,
-                    categoryId: this.props.chosenCategory.categoryId
+                    categoryId: this.props.chosenCategoryId
                 };
                 this.props.searchLocalPros(searchParams)
             }
@@ -105,7 +105,7 @@ const mapStateToProps = state => {
         chosenCategoryId: state.proCategory.categoryId,
         categories: state.proCategories.categories,
         categoriesLoading: state.proCategories.categoriesLoading,
-        location: state.proLocation,
+        location: state.proLocation.location,
     }
 };
 

@@ -11,6 +11,7 @@ export default (
                 loadingCategories: true,
             }
         case 'PRO_CATEGORIES_FULFILLED':
+            console.log(`updating the categories on state: ${action.payload}`);
             return {
                 loadingCategories: false,
                 categories: action.payload
