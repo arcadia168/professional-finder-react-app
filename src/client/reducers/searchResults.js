@@ -1,3 +1,5 @@
+import { log } from "util";
+
 const maxResultsPerPage = 20;
 export default (
     state = {
@@ -11,6 +13,7 @@ export default (
 ) => {
     switch (action.type) {
         case 'SET_ERROR':
+            console.log(`setting an error on the state: ${action.error}`);
             return {
                 error: action.error
             }
@@ -22,6 +25,7 @@ export default (
             }
         case 'SEARCH_LOCAL_PROS_FULFILLED':
 
+            debugger;
             // Parsing results and setting state
             const searchResults = action.payload.results;
             const numPages = Math.ceil(action.payload.totalCount / maxResultsPerPage);
