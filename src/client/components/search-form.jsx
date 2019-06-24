@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Dropdown, DropdownButton, Button, InputGroup, FormControl, Spinner } from 'react-bootstrap';
 import ProFinderService from '../service/pro-finder-service';
 import searcLocalPro from '../actionCreators/searchLocalPro';
+import updateCategory from '../actionCreators/updateCategory';
 
 const SearchForm = ({
     chosenCategoryName,
@@ -118,11 +119,7 @@ const mapDispatchToProps = dispatch => ({
         })
     },
     updateCategory: category => {
-        dispatch({
-            type: 'UPDATE_PRO_CATEGORY',
-            categoryName: category.categoryName,
-            categoryId: category.categoryId
-        })
+        dispatch(updateCategory(category))
     },
     searchLocalPros: searchParams => {
         dispatch(searcLocalPro(searchParams))
