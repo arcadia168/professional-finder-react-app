@@ -70,29 +70,14 @@ class ProfessionalFinder extends Component {
                         data-testid="pro-finder__search-results-table-col"
                         className="pro-finder__search-results-table-col"
                     >
-                        {
-                            this.props.searchLoading ?
-                                <Spinner animation="border" role="status">
-                                    <span className="sr-only">Loading...</span>
-                                </Spinner>
-                                : this.props.searchError ?
-                                    <Alert variant="danger">
-                                        {this.props.searchError}
-                                    </Alert>
-                                    : this.props.searchResults ? this.props.searchResults.length === 0 ?
-                                        <Alert variant="info">Make a search above!</Alert>
-                                        :
-                                        <SearchResultsTable
-                                            data-testid="pro-finder__search-results-table"
-                                            className="pro-finder__search-results-table"
-                                        />
-                                        : null
-                        }
-
+                        <SearchResultsTable
+                            data-testid="pro-finder__search-results-table"
+                            className="pro-finder__search-results-table"
+                        />
                     </Col>
                 </Row>
                 {
-                    this.props.loading === true ? null :
+                    this.props.searchLoading === true ? null :
                         <Row data-testid="pro-finder__pagination-control-row" className="pro-finder__pagination-control-row">
                             <Col
                                 data-testid="pro-finder__pagination-control-col"
