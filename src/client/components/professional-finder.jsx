@@ -30,7 +30,6 @@ class ProfessionalFinder extends Component {
 
             const newPageResultsOffset = pageClicked * (20 - 1) // 0 indexed;
 
-            // Replace with action dispatch...
             this.props.updatePage(newPageResultsOffset);
         };
     }

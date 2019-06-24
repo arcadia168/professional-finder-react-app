@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Dropdown, DropdownButton, Button, InputGroup, FormControl, Spinner } from 'react-bootstrap';
 import ProFinderService from '../service/pro-finder-service';
+import searcLocalPro from '../actionCreators/searchLocalPro';
 
 const SearchForm = ({
     chosenCategoryName,
@@ -124,14 +125,7 @@ const mapDispatchToProps = dispatch => ({
         })
     },
     searchLocalPros: searchParams => {
-        dispatch({
-            type: 'SEARCH_LOCAL_PROS',
-            payload: ProFinderService.searchForLocalProfessionals(
-                Number.parseInt(searchParams.categoryId),
-                searchParams.location,
-                0
-            )
-        })
+        dispatch(searcLocalPro(searchParams))
     }
 })
 
