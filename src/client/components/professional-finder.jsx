@@ -127,7 +127,7 @@ class ProfessionalFinder extends Component {
 
 const mapStateToProps = state => ({
     searchResults: state.searchResults.searchResults,
-    searchResultsLoading: state.searchResults.loading,
+    searchLoading: state.searchResults.loading,
     searchError: state.searchResults.error,
     activePage: state.searchResults.activePage,
     numPages: state.searchResults.numPages,

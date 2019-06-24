@@ -1,3 +1,5 @@
+import { stringLiteral } from "@babel/types";
+
 import { log } from "util";
 
 const maxResultsPerPage = 20;
@@ -13,6 +15,7 @@ export default (
 ) => {
     switch (action.type) {
         case 'SET_ERROR':
+            debugger;
             console.log(`setting an error on the state: ${action.error}`);
             return {
                 error: action.error
@@ -27,6 +30,7 @@ export default (
             debugger;
             // Parsing results and setting state
             const searchResults = action.payload.results;
+            console.log(`searchResults are: ${JSON.stringify(searchResults)}`);
             const numPages = Math.ceil(action.payload.totalCount / maxResultsPerPage);
 
             if (searchResults.length === 0) {

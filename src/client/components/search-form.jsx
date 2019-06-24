@@ -103,6 +103,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
     setError: errorMessage => {
+        debugger;
         dispatch({
             type: 'SET_ERROR',
             error: errorMessage,
