@@ -20,13 +20,4 @@ describe('Search Results', () => {
         }
         return mount(<SearchResultsTable {...props} />);
     }
-
-    it('Renders the container for the layout', () => {
-        const renderedApp = render();
-        expect(
-            renderedApp
-                .find('[data-testid="search-form-results__container"]')
-                .exists()
-        ).toBeTruthy();
-    });
 });

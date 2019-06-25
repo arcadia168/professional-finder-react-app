@@ -27,7 +27,6 @@ const renderError = errorMessage => {
 }
 
 const renderSearchResults = searchResults => {
-    debugger;
     return (
         <Table striped bordered hover data-testid="search-form-results__container">
             <thead>
@@ -65,7 +64,6 @@ const SearchResultsTable = ({
     errorMessage,
     loading
 }) => {
-    debugger;
     if (loading) {
         return renderLoadingSpinner();
     } else if (errorMessage) {
@@ -78,7 +76,6 @@ const SearchResultsTable = ({
 }
 
 const mapStateToProps = state => {
-    debugger;
     return {
         searchResults: state.searchResults.searchResults,
         errorMessage: state.searchResults.error,

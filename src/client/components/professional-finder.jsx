@@ -18,7 +18,6 @@ class ProfessionalFinder extends Component {
         super(props);
 
         this.handlePageChanged = evt => {
-            debugger;
             let pageClicked;
 
             if (evt.target.innerText.indexOf("«") > -1) {
