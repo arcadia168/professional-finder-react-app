@@ -29,7 +29,7 @@ class ProfessionalFinder extends Component {
                 pageClicked = Number.parseInt(evt.target.text) - 1; // 0 indexed
             }
 
-            const newPageResultsOffset = pageClicked * (20 - 1) // 0 indexed;
+            const newPageResultsOffset = pageClicked * 20 // 0 indexed;
 
             const searchParams = {
                 categoryId: this.props.categoryId,
