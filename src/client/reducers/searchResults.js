@@ -1,3 +1,7 @@
+import { stringLiteral } from "@babel/types";
+
+import { log } from "util";
+
 const maxResultsPerPage = 20;
 export default (
     state = {
@@ -12,11 +16,11 @@ export default (
     switch (action.type) {
         case 'SET_ERROR':
             debugger;
+            console.log(`setting an error on the state: ${action.error}`);
             return {
                 error: action.error
             }
         case 'SEARCH_LOCAL_PROS_PENDING':
-            debugger;
             return {
                 searchResults: [],
                 loading: true,
@@ -24,9 +28,9 @@ export default (
             }
         case 'SEARCH_LOCAL_PROS_FULFILLED':
             debugger;
-
             // Parsing results and setting state
             const searchResults = action.payload.results;
+            console.log(`searchResults are: ${JSON.stringify(searchResults)}`);
             const numPages = Math.ceil(action.payload.totalCount / maxResultsPerPage);
 
             if (searchResults.length === 0) {
@@ -47,7 +51,6 @@ export default (
                 };
             }
         case 'SEARCH_LOCAL_PROS_REJECTED':
-            debugger;
             return {
                 searchResults: [],
                 numPages: 1,

@@ -11,13 +11,12 @@ export default (
                 loadingCategories: true,
             }
         case 'PRO_CATEGORIES_FULFILLED':
-            debugger;
+            console.log(`updating the categories on state: ${JSON.stringify(action.payload)}`);
             return {
                 loadingCategories: false,
                 categories: action.payload
             }
         case 'PRO_CATEGORIES_REJECTED':
-            debugger;
             return {
                 loadingCategories: false,
                 isRejected: true,
