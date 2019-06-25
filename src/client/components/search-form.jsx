@@ -1,116 +1,118 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
 import { Dropdown, DropdownButton, Button, InputGroup, FormControl, Spinner } from 'react-bootstrap';
-import PropTypes from 'prop-types'
-import ProFinderService from '../service/pro-finder-service';
+import searcLocalPro from '../actionCreators/searchLocalPro';
+import updateCategory from '../actionCreators/updateCategory';
+import updateLocation from '../actionCreators/updateLocation';
+import setError from '../actionCreators/setError';
 
-class SearchForm extends Component {
-    constructor(props) {
-        super(props);
-
-        this.updateInputValue = evt => {
-            debugger;
-            this.props.store.dispatch({
-                type: 'UPDATE_PRO_LOCATION',
-                location: evt.target.value
-            });
-        }
-
-        this.handleCategoryChosen = (evtKey, evt) => {
-            debugger;
-            this.props.store.dispatch({
-                type: 'UPDATE_PRO_CATEGORY',
-                categoryName: evt.currentTarget.text,
-                categoryId: evtKey
-            })
-        }
-
-        this.handleSearchBtn = () => {
-            debugger;
-
-            let locationValidation;
-            const postcode = this.props.localProValues.proLocation.location;
-
-            if (postcode) {
-                const squishedPostcode = postcode.replace(/\s/g, "");
-                const regex = /^[A-Z]{1,2}[0-9]{1,2}[A-Z]{0,1}/i
-                locationValidation = regex.test(squishedPostcode);
-            }
-
-            if (!this.props.localProValues.proCategory.categoryId) {
-                this.props.store.dispatch({
-                    type: 'SET_ERROR',
-                    error: 'Please choose a valid category',
-                    loading: false,
-                });
-            } else if (!locationValidation) {
-                this.props.store.dispatch({
-                    type: 'SET_ERROR',
-                    error: 'Please enter a valid UK postcode...',
-                    loading: false,
-                })
-            } else {
-                this.props.store.dispatch({
-                    type: 'SEARCH_LOCAL_PROS',
-                    payload: ProFinderService.searchForLocalProfessionals(
-                        Number.parseInt(this.props.localProValues.proCategory.categoryId),
-                        this.props.localProValues.proLocation.location,
-                        0
-                    )
-                })
-            }
-        }
-    }
-
-    render() {
-        debugger;
-        return (
-            <div data-testid="search-form__container" className="search-form__container">
-                <DropdownButton
-                    title={this.props.localProValues.proCategory.categoryName || 'Choose a category'}
-                    onSelect={this.handleCategoryChosen}
-                    data-testid="search-form__category-dropdown"
-                    className="search-form__category-dropdown"
+const SearchForm = ({
+    chosenCategoryName,
+    chosenCategoryId,
+    categoriesLoading,
+    categories,
+    location,
+    setError,
+    updateCategory,
+    updateLocation,
+    searchLocalPros,
+}) => {
+    return (
+        <div data-testid="search-form__container" className="search-form__container">
+            <DropdownButton
+                title={chosenCategoryName || 'Choose a category'}
+                onSelect={(evtKey, evt) => {
+                    const categoryParams = {
+                        categoryName: evt.currentTarget.text,
+                        categoryId: evtKey
+                    };
+                    updateCategory(categoryParams);
+                }}
+                data-testid="search-form__category-dropdown"
+                className="search-form__category-dropdown"
+            >
+                {
+                    categoriesLoading ?
+                        <Spinner animation="border" role="status">
+                            <span className="sr-only">Loading Categories</span>
+                        </Spinner>
+                        :
+                        categories ? categories.map(category => {
+                            return <Dropdown.Item
+                                key={category.id}
+                                eventKey={category.id}
+                            >
+                                {category.name}
+                            </Dropdown.Item>
+                        }) : null
+                }
+            </DropdownButton>
+            <InputGroup
+                data-testid="search-form__search-field"
+                className="search-form__search-field"
+            >
+                <FormControl
+                    data-testid="search-form__search-field-input"
+                    className="search-form__search-field-input"
+                    placeholder="Enter UK Postcode here..."
+                    aria-label="Enter UK Postcode here..."
+                    onChange={evt => {
+                        updateLocation(evt.target.value);
+                    }}
                 >
-                    {
-                        this.props.localProValues.proCategories.loadingCategories ?
-                            <Spinner animation="border" role="status">
-                                <span className="sr-only">Loading Categories</span>
-                            </Spinner>
-                            :
-                            this.props.localProValues.proCategories.categories.map(category => {
-                                return <Dropdown.Item key={category.id} eventKey={category.id}>{category.name}</Dropdown.Item>
-                            })
+                </FormControl>
+            </InputGroup>
+            <Button
+                data-testid="search-form__search-btn"
+                className="search-form__search-btn"
+                onClick={() => {
+                    let locationValidation;
+                    const postcode = location;
+
+                    if (postcode) {
+                        const squishedPostcode = postcode.replace(/\s/g, "");
+                        const regex = /^[A-Z]{1,2}[0-9]{1,2}[A-Z]{0,1}/i
+                        locationValidation = regex.test(squishedPostcode);
                     }
-                </DropdownButton>
-                <InputGroup
-                    data-testid="search-form__search-field"
-                    className="search-form__search-field"
-                >
-                    <FormControl
-                        data-testid="search-form__search-field-input"
-                        className="search-form__search-field-input"
-                        placeholder="Enter UK Postcode here..."
-                        aria-label="Enter UK Postcode here..."
-                        ref="searchField"
-                        onChange={this.updateInputValue}
-                    >
-                    </FormControl>
-                </InputGroup>
-                <Button
-                    data-testid="search-form__search-btn"
-                    className="search-form__search-btn"
-                    onClick={this.handleSearchBtn}
-                >
-                    Submit
+
+                    if (!chosenCategoryId) {
+                        setError('Please choose a category of job.');
+                    } else if (!locationValidation) {
+                        setError('Please enter a valid UK postcode...');
+                    } else {
+                        const searchParams = {
+                            location: location,
+                            categoryId: chosenCategoryId
+                        };
+                        searchLocalPros(searchParams)
+                    }
+                }}
+            >
+                Submit
                 </Button>
-            </div >
-        );
-    };
-}
+        </div >
+    );
+};
 
-SearchForm.propTypes = {
-    updateSearchResults: PropTypes.func,
-    categories: PropTypes.array,
-}
+const mapStateToProps = state => {
+    return {
+        chosenCategoryName: state.proCategory.categoryName,
+        chosenCategoryId: state.proCategory.categoryId,
+        categories: state.proCategories.categories,
+        categoriesLoading: state.proCategories.categoriesLoading,
+        location: state.proLocation.location,
+    }
+};
 
-export default SearchForm;
+const mapDispatchToProps = dispatch => ({
+    setError: errorMessage => dispatch(setError(errorMessage)),
+    updateLocation: postcode => dispatch(updateLocation(postcode)),
+    updateCategory: category => dispatch(updateCategory(category)),
+    searchLocalPros: searchParams => dispatch(searcLocalPro(searchParams))
+})
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(SearchForm)
+

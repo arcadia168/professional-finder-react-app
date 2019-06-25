@@ -1,63 +1,92 @@
 import React, { Component } from 'react';
-import { Table, Alert } from 'react-bootstrap';
+import { Table, Alert, Spinner } from 'react-bootstrap';
 import PropTypes from 'prop-types'
 import StarRatingComponent from 'react-star-rating-component';
+import { connect } from 'react-redux';
 
-export default class SearchResultsTable extends Component {
-    constructor(props) {
-        super(props);
-    }
+const renderLoadingSpinner = () => {
+    return (
+        <Spinner animation="border" role="status">
+            <span className="sr-only">Loading...</span>
+        </Spinner>
+    )
+}
 
-    renderError() {
-        return (
-            <Alert variant="danger">
-                {this.props.error}
-            </Alert>
-        )
-    }
+const renderInitialBlankResults = () => {
+    return (
+        <Alert variant="info">Make a search above!</Alert>
+    )
+}
 
-    renderSearchResults() {
-        return (
-            <Table striped bordered hover data-testid="search-form-results__container">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Postcode</th>
-                        <th>Review rating</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        this.props.searchResults.map(searchResult => {
-                            return <tr key={searchResult.id}>
-                                <td>{searchResult.id}</td>
-                                <td>{searchResult.name.slice(0, -35)}</td>
-                                <td>{searchResult.main_address.postcode}</td>
-                                <td>
-                                    <StarRatingComponent
-                                        name={searchResult.name}
-                                        starCount={5}
-                                        value={searchResult.review_rating}
-                                    />
-                                </td>
-                            </tr>
-                        })
-                    }
-                </tbody>
-            </Table >
-        )
-    }
+const renderError = errorMessage => {
+    return (
+        <Alert variant="danger">
+            {errorMessage}
+        </Alert>
+    )
+}
 
-    render() {
-        if (this.props.error) {
-            return this.renderError();
-        } else {
-            return this.renderSearchResults();
-        }
+const renderSearchResults = searchResults => {
+    debugger;
+    return (
+        <Table striped bordered hover data-testid="search-form-results__container">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Postcode</th>
+                    <th>Review rating</th>
+                </tr>
+            </thead>
+            <tbody>
+                {
+                    searchResults.map(searchResult => {
+                        return <tr key={searchResult.id}>
+                            <td>{searchResult.id}</td>
+                            <td>{searchResult.name.slice(0, -35)}</td>
+                            <td>{searchResult.main_address.postcode}</td>
+                            <td>
+                                <StarRatingComponent
+                                    name={searchResult.name}
+                                    starCount={5}
+                                    value={searchResult.review_rating}
+                                />
+                            </td>
+                        </tr>
+                    })
+                }
+            </tbody>
+        </Table >
+    )
+}
+
+const SearchResultsTable = ({
+    searchResults,
+    errorMessage,
+    loading
+}) => {
+    debugger;
+    if (loading) {
+        return renderLoadingSpinner();
+    } else if (errorMessage) {
+        return renderError(errorMessage);
+    } else if (searchResults.length === 0) {
+        return renderInitialBlankResults(); // future 0 result searches render the above error
+    } else {
+        return renderSearchResults(searchResults);
     }
 }
 
-SearchResultsTable.propTypes = {
-    searchResults: PropTypes.array,
+const mapStateToProps = state => {
+    debugger;
+    return {
+        searchResults: state.searchResults.searchResults,
+        errorMessage: state.searchResults.error,
+        loading: state.searchResults.loading
+    }
 }
+
+export default connect(
+    mapStateToProps,
+    null
+)(SearchResultsTable)
