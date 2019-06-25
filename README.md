@@ -18,7 +18,7 @@ To test:
 
 Notes:
 - Started out TDD then this became time consuming *please check out the unit tests, I think they get overlooked, and they take ages to write*
-- Used React, Redux, [`redux-promise-middleware`](https://github.com/pburtchaell/redux-promise-middleware) for async calls, React Bootstrap, Axios and and sass-mq
+- Used React, Redux, `react-redux`, Context API, [`redux-promise-middleware`](https://github.com/pburtchaell/redux-promise-middleware) for async calls, React Bootstrap, Axios and and sass-mq
 - Setup my own Webpack and Babel configs.
 - Took more time on this just as an opportunity to practice
 - Added loading state and spinner
