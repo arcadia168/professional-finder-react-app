@@ -15,7 +15,7 @@ const mockCategoriesPathName = path.resolve(__dirname, `../../__mocks__/professi
 const mockProfessionCategories = JSON.parse(fs.readFileSync(mockCategoriesPathName, 'utf8'));
 const visibleProfessionCategoriesMock = mockProfessionCategories.filter(currentProfessionCategory => !currentProfessionCategory.hidden);
 
-describe('Professional Finder', () => {
+xdescribe('Professional Finder', () => {
     const render = customProps => {
         const props = {
             // Default props

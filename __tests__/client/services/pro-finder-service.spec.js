@@ -31,7 +31,7 @@ async function testSearchLocalProfessionalWithParams(proService, params, paramTo
     }
 }
 
-describe('Pro Finder Api Service', () => {
+xdescribe('Pro Finder Api Service', () => {
     let mockAxios = jest.fn(() => Promise.resolve(mockLocalProfessionals));
     let proFinderServiceInstance;
     let validCategoryId = 5;

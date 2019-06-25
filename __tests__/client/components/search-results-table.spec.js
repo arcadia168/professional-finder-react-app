@@ -11,7 +11,7 @@ const mockLocalProfessionals = JSON.parse(fs.readFileSync(mockLocalProfessionals
 // const pathName = path.resolve(__dirname, `../../__mocks__/validCardResults.json`);
 // const mockCards = fs.readFileSync(pathName, 'utf8');
 
-describe('Search Results', () => {
+xdescribe('Search Results', () => {
     const render = customProps => {
         const props = {
             // Default props
