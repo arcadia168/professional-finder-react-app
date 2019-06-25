@@ -45,7 +45,8 @@ export default class ProFinderService {
         }
 
         // We always want this to be 20, this can be configured here.
-        const xPaginationLimitHeader = 20;
+        const maxResultsPerPage = 20;
+        const xPaginationLimitHeader = maxResultsPerPage;
         const proFinderApiUrl = 'https://demo.plentific.com/find-a-pro/api/v2/public/pro/search-pros/';
         const data = {
             'category_id': categoryId,

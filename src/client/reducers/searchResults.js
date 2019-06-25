@@ -2,7 +2,6 @@ import { stringLiteral } from "@babel/types";
 
 import { log } from "util";
 
-const maxResultsPerPage = 20;
 export default (
     state = {
         searchResults: [],
@@ -29,6 +28,7 @@ export default (
         case 'SEARCH_LOCAL_PROS_FULFILLED':
             debugger;
             // Parsing results and setting state
+            const maxResultsPerPage = 20;
             const searchResults = action.payload.results;
             console.log(`searchResults are: ${JSON.stringify(searchResults)}`);
             const numPages = Math.ceil(action.payload.totalCount / maxResultsPerPage);
