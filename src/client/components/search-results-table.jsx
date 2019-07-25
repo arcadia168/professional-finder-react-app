@@ -1,6 +1,5 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Table, Alert, Spinner } from 'react-bootstrap';
-import PropTypes from 'prop-types'
 import StarRatingComponent from 'react-star-rating-component';
 import { connect } from 'react-redux';
 
@@ -27,7 +26,6 @@ const renderError = errorMessage => {
 }
 
 const renderSearchResults = searchResults => {
-    debugger;
     return (
         <Table striped bordered hover data-testid="search-form-results__container">
             <thead>

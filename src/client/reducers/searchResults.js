@@ -1,7 +1,3 @@
-import { stringLiteral } from "@babel/types";
-
-import { log } from "util";
-
 export default (
     state = {
         searchResults: [],
@@ -14,7 +10,6 @@ export default (
 ) => {
     switch (action.type) {
         case 'SET_ERROR':
-            debugger;
             console.log(`setting an error on the state: ${action.error}`);
             return {
                 error: action.error
@@ -26,7 +21,6 @@ export default (
                 error: undefined,
             }
         case 'SEARCH_LOCAL_PROS_FULFILLED':
-            debugger;
             // Parsing results and setting state
             const maxResultsPerPage = 20;
             const searchResults = action.payload.results;
