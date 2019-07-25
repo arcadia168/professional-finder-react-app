@@ -181,8 +181,6 @@ describe('Pro Finder Api Service', () => {
     });
 
     describe('When the searchForLocalProfessional method is invoked', () => {
-        const apiUrl = 'https://demo.plentific.com/find-a-pro/api/v2/public/pro/search-pros/';
-
         describe('When invalid parameters are passed to the method', () => {
             describe('When incorrect categoryId is passed to the method', () => {
                 describe('When an invalid categoryId is passed to the method', () => {
